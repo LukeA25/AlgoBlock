@@ -1,6 +1,6 @@
 function Home() {
   return (
-    <div className="color-green-500">Home</div>
+    <div class="text-green-500 bg-black h-screen">Home</div>
   )
 }
 
