@@ -11,7 +11,7 @@ function NavBar(props) {
       id="background"
       className={
         props.isActive
-          ? "bg-background transition-all duration-500 ease-in"
+          ? "bg-shaded-500 transition-all duration-500 ease-in"
           : "bg-transparent transition-all duration-500 ease-in"
       }
     >

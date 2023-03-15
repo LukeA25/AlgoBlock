@@ -10,7 +10,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        "background": "rgba(0, 0, 0, 0.5)"
+        "shaded-500": "rgba(0, 0, 0, 0.5)",
+        "shaded-750": "rgba(0, 0, 0, 0.75)",
       }
     },
   },
