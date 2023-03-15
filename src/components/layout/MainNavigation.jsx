@@ -1,20 +1,23 @@
-import { Link } from "react-router-dom";
-import logo from "../../assets/AlgoBlock.png"
+import logo from "../../assets/AlgoBlock.png";
+import { CgProfile, CgMenu } from "react-icons/cg";
 
-function MainNavigation() {
+import { Link } from "react-router-dom";
+
+function MainNavigation(props) {
   return (
-    <header class="h-20 w-screen flex justify-between items-center 
-    bg-black py-0 px-[1%] border-b-2 border-b-white">
+    <header
+      className="h-20 w-screen flex justify-between items-center 
+    bg-black py-0 px-[1%] border-b-2 border-b-white"
+    >
+      <button onClick={props.toggleNavBar}>
+        <CgMenu size="40" color="white" />
+      </button>
       <Link to="/">
         <img src={logo} className="h-12" />
       </Link>
-      <nav> 
-        <ul>
-          <li class="text-white font-bold">
-            <Link to="/workspace">Workspace</Link>
-          </li>
-        </ul>
-      </nav>
+      <Link to="/login">
+        <CgProfile size="40" color="white" className="mr-1" />
+      </Link>
     </header>
   );
 }

@@ -1,16 +1,10 @@
-import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-
-import Home from "./pages/Home";
-import Workspace from "./pages/Workspace";
+import AnimatedRoutes from "./components/AnimatedRoutes";
 
 function App() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/workspace" exact element={<Workspace />} />
-      </Routes>
+      <AnimatedRoutes />
     </Layout>
   );
 }
