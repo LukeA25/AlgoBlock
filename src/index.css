@@ -16,7 +16,7 @@
         @apply w-20 flex flex-col bg-white h-screen absolute -left-20
     }
 
-    #background {
+    .background {
         @apply h-screen w-screen absolute top-20 left-0
     }
 }

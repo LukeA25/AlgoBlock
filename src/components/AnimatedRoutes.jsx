@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "../pages/Home";
-import Workspace from "../pages/Workspace";
+import Strategies from "../pages/Strategies";
 import Login from "../pages/Login";
 import Marketplace from "../pages/Marketplace";
 
@@ -12,7 +12,7 @@ function AnimatedRoutes() {
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route path="/" exact element={<Home />} />
-        <Route path="/workspace" exact element={<Workspace />} />
+        <Route path="/strategies" exact element={<Strategies />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/marketplace" exact element={<Marketplace />} />
       </Routes>

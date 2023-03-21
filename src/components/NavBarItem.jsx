@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function NavBarItem(props) {
-    return <Link to={props.to} className="sidebar-icon group" onClick={props.toggleActive}>
+    return <Link to={props.to} className="sidebar-icon group pointer-events-auto" onClick={props.toggleActive}>
         {props.icon}
         <span className="sidebar-tooltip group-hover:scale-100">{props.tooltip}</span>
     </Link>
