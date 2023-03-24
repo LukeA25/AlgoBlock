@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer components {
-    body {
-        @apply overflow-x-hidden
+    html {
+        @apply overflow-x-hidden text-[16px]
     }
 
     .sidebar-icon {
