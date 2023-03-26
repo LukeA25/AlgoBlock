@@ -7,7 +7,7 @@ function MainNavigation(props) {
   return (
     <header
       className="h-20 flex justify-between items-center 
-    bg-black py-0 px-[1%] border-b-2 border-b-white fixed w-screen z-10"
+    bg-black py-0 px-[1%] border-b-2 border-b-white fixed w-screen z-50"
     >
       <button onClick={props.toggleNavBar}>
         <CgMenu size="40" color="white" />

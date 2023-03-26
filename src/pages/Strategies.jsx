@@ -26,7 +26,7 @@ function Workspace() {
             onClick={toggleStratActive}
           >
             <MdOutlineAddCircleOutline
-              size="80"
+              size="5rem"
               color="white"
               className="relative m-auto"
             />

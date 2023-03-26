@@ -4,7 +4,7 @@
 
 @layer components {
     html {
-        @apply overflow-x-hidden text-[16px]
+        @apply overflow-x-hidden text-[5px] sm:text-[6px] md:text-[7px] lg:text-[10px] 2xl:text-[15px] min-h-screen
     }
 
     .sidebar-icon {

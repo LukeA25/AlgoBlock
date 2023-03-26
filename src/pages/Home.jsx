@@ -77,11 +77,22 @@ function Home() {
         <div className="relative w-2 h-[36rem] m-auto -left-2 -top-16 -z-20 bg-gray-900" />
         <div className="fixed w-2 h-1/2 left-0 right-0 m-auto top-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
       </div>
-      <div className="absolute left-1/2 top-24 w-[54rem] h-[40rem] rounded-2xl bg-gray-800 overflow-hidden">
-        <img src={stocks} className="m-auto scale-x-110 mt-3" />
-        <div className="bg-gray-800 w-[98%] h-[40rem] ml-[2%] rounded-r-2xl relative mt-1 -top-[39rem] animate-stock-cover transition-all">
-          {/* <div className="bg-gradient-to-l from-gray-800 to transparent w-[2%] h-full rounded-l-2xl relative -left-[2%]" /> */}
+      <div className="absolute right-10 top-24 w-[54rem] h-[40rem] rounded-2xl bg-gray-800 overflow-hidden">
+        <div className="h-10 w-10 border-green-600 border-4 rounded-full relative top-[74.6%] left-[10.7%] z-10 animate-buy-flash transition-all">
+          <h1 className="text-green-600 font-bold text-3xl relative top-full left-full">
+            BUY
+          </h1>
         </div>
+        <div className="h-10 w-10 border-red-600 border-4 rounded-full relative top-[20.5%] left-[90.1%] z-10 animate-sell-flash transition-all">
+          <h1 className="text-red-600 font-bold text-3xl relative -top-[130%] left-[40%]">
+            SELL
+          </h1>
+        </div>
+        <img
+          src={stocks}
+          className="m-auto h-[95%] w-[90%] relative -top-[10%]"
+        />
+        <div className="bg-gray-800 w-[95%] h-[95%] ml-[2%] rounded-r-2xl relative mt-1 -top-[105%] animate-stock-cover transition-all" />
       </div>
     </motion.div>
   );
