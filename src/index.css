@@ -4,7 +4,11 @@
 
 @layer components {
     html {
-        @apply overflow-x-hidden text-[5px] sm:text-[6px] md:text-[7px] lg:text-[10px] 2xl:text-[15px] min-h-screen
+        @apply overflow-x-hidden min-h-screen scroll-smooth
+    }
+
+    section {
+        @apply scroll-mt-20
     }
 
     .sidebar-icon {
@@ -21,6 +25,6 @@
     }
 
     .background {
-        @apply h-screen w-screen absolute top-20 left-0
+        @apply h-screen w-screen fixed top-0 left-0
     }
 }

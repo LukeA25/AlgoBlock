@@ -10,8 +10,8 @@ function NavBar(props) {
     <div
       className={
         props.isActive
-          ? "background bg-shaded-500 transition-all duration-500 ease-in pointer-events-auto fixed z-10"
-          : "background bg-transparent transition-all duration-500 ease-in pointer-events-none fixed z-10"
+          ? "background bg-shaded-500 transition-all duration-500 ease-in pointer-events-auto z-10"
+          : "background bg-transparent transition-all duration-500 ease-in pointer-events-none z-10"
       }
     onClick={props.toggleActive}
     >
@@ -19,14 +19,14 @@ function NavBar(props) {
         id="navBar"
         className={
           props.isActive
-            ? "translate-x-20 transition-all duration-500 ease-out pointer-events-auto"
-            : "-translate-x-20 transition-all duration-500 ease-in pointer-events-auto"
+            ? "translate-x-20 transition-all duration-500 ease-out pointer-events-auto top-20"
+            : "-translate-x-20 transition-all duration-500 ease-in pointer-events-auto top-20"
         }
       >
         <ul>
-          <NavBarItem to="/" toggleActive={props.toggleActive} icon={<AiFillHome size="40" />} tooltip="Home" />
-          <NavBarItem to="/strategies" toggleActive={props.toggleActive} icon={<BsTools size="40" />} tooltip="Strategies" />
-          <NavBarItem to="/marketplace" toggleActive={props.toggleActive} icon={<FaShoppingCart size="40" />} tooltip="Marketplace" />
+          <NavBarItem to="/" toggleActive={props.toggleActive} icon={<AiFillHome size="3rem" />} tooltip="Home" />
+          <NavBarItem to="/strategies" toggleActive={props.toggleActive} icon={<BsTools size="3rem" />} tooltip="Strategies" />
+          <NavBarItem to="/marketplace" toggleActive={props.toggleActive} icon={<FaShoppingCart size="3rem" />} tooltip="Marketplace" />
         </ul>
       </div>
     </div>

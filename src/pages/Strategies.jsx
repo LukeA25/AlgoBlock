@@ -14,7 +14,7 @@ function Workspace() {
 
   return (
     <motion.div
-      className="bg-gradient-to-r from-green-600 to-green-800 h-screen relative top-20" /*initial={{width: 0}} animate={{width: "100%"}} exit={{x: window.innerWidth, transition: {duration: 0.1}}}*/
+      className="bg-gradient-to-r from-green-600 to-green-800 h-screen relative pt-20" /*initial={{width: 0}} animate={{width: "100%"}} exit={{x: window.innerWidth, transition: {duration: 0.1}}}*/
     >
       <div>
         <h1 className="text-white text-7xl text-center relative top-8">
