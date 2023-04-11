@@ -2,6 +2,7 @@ import MainNavigation from "./MainNavigation";
 import NavBar from "./NavBar";
 import Popup from "../Popup";
 import Login from "../Login";
+import Signup from "../Signup";
 
 import { useState } from "react";
 
@@ -29,11 +30,11 @@ function Layout(props) {
         {props.children}
         {isSignUpActive ? (
           <Popup toggle={toggleLogin} getActive={isLoginActive} title="Sign Up">
-            <Login toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} accountQuestion="Already have an account? " switchButton="Login" />
+            <Signup toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} />
           </Popup>
         ) : (
           <Popup toggle={toggleLogin} getActive={isLoginActive} title="Login">
-            <Login toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} accountQuestion="Need an account? " switchButton="Sign Up" />
+            <Login toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} />
           </Popup>
         )}
         <NavBar isActive={isNavBarActive} toggleActive={toggleNavBar} />

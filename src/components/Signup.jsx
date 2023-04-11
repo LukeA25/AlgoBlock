@@ -3,7 +3,7 @@ import { BiShow, BiHide } from "react-icons/bi";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login(props) {
+function Signup(props) {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -13,20 +13,16 @@ function Login(props) {
     setShowPassword(!showPassword);
   }
 
-  function loginHandler(loginData) {
-    fetch("https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData.json").then((response) => {
-        return response.json();
-    }).then((data) => {
-        for (const key in data) {
-          if (JSON.stringify(data[key]) == JSON.stringify(loginData)) {
-            console.log("Login Successful!");
-            return;
-          }
-        }
-      console.log("login failed :(");
+  function signupHandler(signupData) {
+    fetch("https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData.json", {
+      method: "POST",
+      body: JSON.stringify(signupData),
+      headers: {
+        "Content-Type": "appliation/json",
+      },
     }).then(() => {
-        props.toggleLogin();
-        navigate("/strategies", { replace: true });
+      props.toggleLogin();
+      navigate("/strategies", { replace: true });
     });
   }
 
@@ -40,7 +36,7 @@ function Login(props) {
       },
     };
 
-    loginHandler(loginData);
+    signupHandler(loginData);
   }
 
   return (
@@ -50,13 +46,13 @@ function Login(props) {
           E-mail
         </label>
         <p>
-          {"Need an account? "}
+          {"Already have an account? "}
           <button
             type="button"
             className="text-green-600 font-bold hover:text-green-400 duration-300 transition-colors active:text-green-700"
-            onClick={props.toggleSignUp}
+            onClick={props.toggleLogin}
           >
-            Sign Up
+            Login
           </button>
         </p>
       </div>
@@ -107,4 +103,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Signup;
