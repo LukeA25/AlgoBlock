@@ -41,7 +41,7 @@ function Signup(props) {
 
   return (
     <form className="flex flex-col" onSubmit={submitHandler}>
-      <div className="flex flex-row w-full justify-between">
+      <div className="flex flex-row w-full justify-between mt-4">
         <label htmlFor="email-input" className="text-xl font-semibold">
           E-mail
         </label>
@@ -50,7 +50,7 @@ function Signup(props) {
           <button
             type="button"
             className="text-green-600 font-bold hover:text-green-400 duration-300 transition-colors active:text-green-700"
-            onClick={props.toggleLogin}
+            onClick={props.toggleSignUp}
           >
             Login
           </button>
@@ -59,9 +59,19 @@ function Signup(props) {
       <input
         id="email-input"
         type="email"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 my-2 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mt-1 z-10"
         required
         ref={emailRef}
+      />
+      <label htmlFor="username-input" className="text-xl font-semibold mt-4">
+        Username
+      </label>
+      <input
+        id="username-input"
+        type="text"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
+        required
+        ref={null}
       />
       <div className="flex flex-row w-full justify-between">
         <label htmlFor="password-input" className="text-xl font-semibold">
@@ -83,7 +93,7 @@ function Signup(props) {
       <input
         type={showPassword ? "text" : "password"}
         id="password-input"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 my-2 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
         required
         ref={passwordRef}
       />

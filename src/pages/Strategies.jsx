@@ -2,14 +2,41 @@ import { AiFillHome } from "react-icons/ai";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
+import UserContext from "../components/UserContext";
 import Popup from "../components/Popup";
 
-function Workspace() {
+function Strategies() {
   const [isNewStratActive, setNewStratActive] = useState(false);
+  const strategyNameRef = useRef();
+  const { userKey } = useContext(UserContext);
 
   function toggleStratActive() {
     setNewStratActive(!isNewStratActive);
+  }
+
+  function newStrategyHandler(strategyData) {
+    fetch(
+      "https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData/" + userKey + "/strategies.json",
+      {
+        method: "POST",
+        body: JSON.stringify(strategyData),
+        headers: {
+          "Content-Type": "appliation/json",
+        },
+      }
+    ).then(() => {
+      toggleStratActive();
+    });
+  }
+
+  function submitHandler(event) {
+    event.preventDefault();
+    const strategyData = {
+      name: strategyNameRef.current.value,
+    };
+
+    newStrategyHandler(strategyData);
   }
 
   return (
@@ -24,7 +51,7 @@ function Workspace() {
           <button
             className="rounded-xl h-96 w-64 bg-shaded-750 border-4 border-white hover:bg-shaded-500 active:bg-black transition-all duration-300"
             onClick={toggleStratActive}
-          >
+          > 
             <MdOutlineAddCircleOutline
               size="5rem"
               color="white"
@@ -41,24 +68,26 @@ function Workspace() {
         getActive={isNewStratActive}
         title="New Strategy"
       >
-        <form>
+        <form className="flex flex-col" onSubmit={submitHandler}>
+          <label htmlFor="strat-name" className="text-xl font-semibold pt-2">
+            Strategy Name
+          </label>
           <input
             type="text"
-            className="border-black border-4 bg-green-500 focus:bg-green-600 transition-all duration-300 m-auto text-white w-96 h-20 rounded-xl block relative top-20 text-3xl pl-2 py-2"
+            id="strat-name"
+            className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 my-1 z-10"
+            ref={strategyNameRef}
             required
           />
-          <div className="flex relative top-32">
+          <div className="flex gap-8 mt-8">
             <button
               type="button"
-              className="w-48  h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-4 rounded-lg text-white text-2xl font-semibold"
+              className="w-48  h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-semibold"
               onClick={toggleStratActive}
             >
               Cancel
             </button>
-            <button
-              className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-4 rounded-lg text-white text-2xl font-semibold"
-              onClick={toggleStratActive}
-            >
+            <button className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-semibold">
               Submit
             </button>
           </div>
@@ -68,4 +97,4 @@ function Workspace() {
   );
 }
 
-export default Workspace;
+export default Strategies;

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "./UserContext";
 
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
+  const [failedLogin, setFailedLogin] = useState(false);
+  const { setUserKey, setIsLoggedIn } = useContext(UserContext);
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -18,20 +20,27 @@ function Login(props) {
         return response.json();
     }).then((data) => {
         for (const key in data) {
-          if (JSON.stringify(data[key]) == JSON.stringify(loginData)) {
-            console.log("Login Successful!");
-            return;
+          if (JSON.stringify(data[key]["loginData"]) == JSON.stringify(loginData["loginData"])) {
+            setIsLoggedIn(true);
+            setUserKey(key);
+            return true;
           }
         }
-      console.log("login failed :(");
-    }).then(() => {
-        props.toggleLogin();
-        navigate("/strategies", { replace: true });
+      return false;
+    }).then((key) => {
+        if (key) {
+          props.toggleLogin();
+          navigate("/strategies", { replace: true });
+        } else {
+          setFailedLogin(true);
+          return false;
+        }
     });
   }
 
   function submitHandler(event) {
     event.preventDefault();
+    setFailedLogin(false);
 
     const loginData = {
       loginData: {
@@ -40,12 +49,13 @@ function Login(props) {
       },
     };
 
-    loginHandler(loginData);
+    return loginHandler(loginData);
   }
 
   return (
     <form className="flex flex-col" onSubmit={submitHandler}>
-      <div className="flex flex-row w-full justify-between">
+      {failedLogin ? <p className="text-lg text-red-600 text-center">Incorrect email or password. Please try again.</p> : null}
+      <div className="flex flex-row w-full justify-between mt-4">
         <label htmlFor="email-input" className="text-xl font-semibold">
           E-mail
         </label>
@@ -63,7 +73,7 @@ function Login(props) {
       <input
         id="email-input"
         type="email"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 my-2 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
         required
         ref={emailRef}
       />
@@ -87,7 +97,7 @@ function Login(props) {
       <input
         type={showPassword ? "text" : "password"}
         id="password-input"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 my-2 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
         required
         ref={passwordRef}
       />

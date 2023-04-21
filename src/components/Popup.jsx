@@ -8,7 +8,7 @@ function Popup(props) {
       }
     >
       <div className="rounded-lg bg-white w-[30rem] h-auto m-auto z-[1] py-6 px-12 mt-[20vh]">
-        <h1 className="text-black text-center text-5xl mb-8">{props.title}</h1>
+        <h1 className="text-black text-center text-5xl mb-4">{props.title}</h1>
         {props.children}
       </div>
       <div className="background -z-50" onClick={props.toggle} />
