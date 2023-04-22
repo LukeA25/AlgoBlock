@@ -21,7 +21,7 @@ module.exports = {
       },
       keyframes: {
         "cursor-flash": {"0%, 100%": {opacity: 0}, "25%, 60%": {opacity: 1}},
-        "stock-cover": {"0%": {left: 0}, "75%, 100%": {left: "98%"}},
+        "stock-cover": {"0%": {left: 0}, "75%, 100%": {left: "100%"}},
         "buy-flash": {"0%, 9%, 18%, 21%": {opacity: 0}, "12%, 15%, 24%, 100%": {opacity: 1}},
         "sell-flash": {"0%, 69%, 78%, 81%": {opacity: 0}, "72%, 75%, 84%, 100%": {opacity: 1}}
       }
