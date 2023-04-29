@@ -12,13 +12,13 @@ function Home() {
     document.addEventListener("scroll", (e) => {
       const target = (screen.height / 2) - 80;
       console.log("Screen hieght: " + screen.height);
-      if (document.getElementById("scrollTo-3").getBoundingClientRect().top < target) {
+      if (document.getElementById("scrollTo-3").getBoundingClientRect().top - (document.getElementById("scrollTo-3").scrollHeight / 2) < target) {
         setPos(4);
-      } else if (document.getElementById("scrollTo-2").getBoundingClientRect().top < target) {
+      } else if (document.getElementById("scrollTo-2").getBoundingClientRect().top - (document.getElementById("scrollTo-2").scrollHeight / 2) < target) {
         setPos(3);
-      } else if (document.getElementById("scrollTo-1").getBoundingClientRect().top < target) {
+      } else if (document.getElementById("scrollTo-1").getBoundingClientRect().top - (document.getElementById("scrollTo-1").scrollHeight / 2) < target) {
         setPos(2);
-      } else if (document.getElementById("scrollTo-0").getBoundingClientRect().top < target) {
+      } else if (document.getElementById("scrollTo-0").getBoundingClientRect().top - (document.getElementById("scrollTo-0").scrollHeight / 2) < target) {
         setPos(1);
       } else {
         setPos(0);
