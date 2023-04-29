@@ -28,6 +28,7 @@ function ScrollInfo(props) {
       </p>
       <div
         className="w-8 h-8 m-auto rounded-full relative -top-24 z-10 transition-all duration-300"
+        id={"scrollTo-" + props.index.toString()}
         style={
           props.isActive <= props.index
             ? { backgroundColor: "rgb(7, 54, 25)" }

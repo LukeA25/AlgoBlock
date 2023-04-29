@@ -10,16 +10,15 @@ function Home() {
 
   useEffect(() => {
     document.addEventListener("scroll", (e) => {
-      let scrolled = document.scrollingElement.scrollTop;
-      console.log(pos);
-      console.log(scrolled);
-      if (scrolled >= 1340) {
+      const target = (screen.height / 2) - 80;
+      console.log("Screen hieght: " + screen.height);
+      if (document.getElementById("scrollTo-3").getBoundingClientRect().top < target) {
         setPos(4);
-      } else if (scrolled >= 1170) {
+      } else if (document.getElementById("scrollTo-2").getBoundingClientRect().top < target) {
         setPos(3);
-      } else if (scrolled >= 1000) {
+      } else if (document.getElementById("scrollTo-1").getBoundingClientRect().top < target) {
         setPos(2);
-      } else if (scrolled >= 830) {
+      } else if (document.getElementById("scrollTo-0").getBoundingClientRect().top < target) {
         setPos(1);
       } else {
         setPos(0);
@@ -124,7 +123,7 @@ function Home() {
         <ScrollInfo
           position="-top-[38rem]"
           isActive={pos}
-          left=" ml-[38rem]"
+          left=" ml-[42vw]"
           index={1}
           title="Download Your Program"
           description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
@@ -140,13 +139,13 @@ function Home() {
         <ScrollInfo
           position="-top-[34rem]"
           isActive={pos}
-          left=" ml-[38rem]"
+          left=" ml-[42vw]"
           index={3}
           title="Run Your Program"
           description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
         />
-        <div className="fixed w-2 h-1/2 right-0 m-auto top-0 left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
       </section>
+      <div className="fixed w-2 h-1/2 right-0 top-0 m-auto left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
     </motion.div>
   );
 }
