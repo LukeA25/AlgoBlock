@@ -33,13 +33,13 @@ function NavBar(props) {
           <NavBarItem
             to="/"
             toggleActive={props.toggleActive}
-            icon={<AiFillHome size="3rem" />}
+            icon={<AiFillHome size="50" />}
             tooltip="Home"
           />
           <NavBarItem
             to="/strategies"
             toggleActive={props.toggleActive}
-            icon={<BsTools size="3rem" />}
+            icon={<BsTools size="50" />}
             tooltip="Strategies"
           />
           {isLoggedIn ? (
@@ -50,8 +50,8 @@ function NavBar(props) {
             <NavBarItem
               to="/marketplace"
               toggleActive={props.toggleActive}
-              icon={<FaShoppingCart size="3rem" />}
-              tooltip="Marketplace"
+              icon={<FaShoppingCart size="50" />}
+              tooltip="Marketplace (Coming Soon!)"
             />
           )}
         </ul>

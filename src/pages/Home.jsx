@@ -1,10 +1,31 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import stocks from "../assets/Stocks.png";
+import ScrollInfo from "../components/ScrollInfo";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
+  const [pos, setPos] = useState(0);
   const title = "AlgoBlock";
+
+  useEffect(() => {
+    document.addEventListener("scroll", (e) => {
+      let scrolled = document.scrollingElement.scrollTop;
+      console.log(pos);
+      console.log(scrolled);
+      if (scrolled >= 1340) {
+        setPos(4);
+      } else if (scrolled >= 1170) {
+        setPos(3);
+      } else if (scrolled >= 1000) {
+        setPos(2);
+      } else if (scrolled >= 830) {
+        setPos(1);
+      } else {
+        setPos(0);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -30,7 +51,7 @@ function Home() {
     >
       <section id="home" className="w-screen h-[calc(100vh-5rem)]">
         <article className="h-full w-full rounded-2xl overflow-hidden aspect-[27/20] m-auto">
-          <div className="w-full h-[calc(100vh-5rem)] bg-black bg-opacity-75 absolute z-10">
+          <div className="w-full h-[calc(100vh-5rem)] bg-black bg-opacity-75 absolute z-10 border-b-2 border-white">
             <div className="w-2/3 mt-[30vh] mx-auto">
               <div className="flex mb-4">
                 <h1 className="text-white lg:text-8xl text-7xl">
@@ -69,29 +90,61 @@ function Home() {
         </article>
       </section>
 
-      <section id="what-is-it" className="bg-gray-900 w-screen h-96">
-        <div className="bg-gradient-to-t from-gray-900 to-transparent h-48 w-screen relative -top-48 z-20" />
-        <h1 className="text-green-600 relative -top-32 ml-24 text-6xl font-semibold">
+      <section id="what-is-it" className="bg-gray-900 w-screen py-10 px-[10%]">
+        <h1 className="text-green-600 text-6xl font-semibold mb-8">
           What is it?
         </h1>
-        <p className="text-white text-2xl relative -top-28 ml-24">
+        <p className="text-white text-2xl">
           AlgoBlock allows you to buy and sell stocks automatically by creating
-          <br /> your own strategy. This is known as <b>
-            algorithmic trading.
-          </b>{" "}
-          This normally
-          <br /> requires programming experience, but AlgoBlock makes it simple.
+          your own strategy. This is known as <b>algorithmic trading.</b> This
+          normally requires programming experience, but AlgoBlock makes it
+          simple.
         </p>
       </section>
 
-      <section id="how-does-it-work" className="w-screen h-[64rem]">
-        <div className="w-full h-full bg-gray-900 absolute -z-20" />
-        <h1 className="text-green-600 absolute ml-24 text-6xl font-semibold">
+      <hr className="border-white m-auto w-1/2" />
+
+      <section id="how-does-it-work" className="w-screen py-10 -z-20 px-[10%]">
+        <div className="w-[80%] h-full bg-gray-900 absolute -z-20" />
+        <h1 className="text-green-600 absolute text-6xl font-semibold z-10">
           How does it work?
         </h1>
-        <div className="w-8 h-16 m-auto -top-20 bg-gradient-to-b from-gray-900 to-transparent" />
-        <div className="relative w-2 h-[36rem] m-auto -top-20 -z-20 bg-black" />
-        <div className="w-8 h-8 m-auto rounded-full z-10 bg-red-500" />
+        <div className="w-8 h-16 m-auto relative top-20 bg-gradient-to-b from-gray-900 to-transparent" />
+        <div className="w-8 h-[7.5rem] m-auto relative -top-[6.5rem] bg-gray-900" />
+        <div className="relative w-2 h-[36rem] m-auto -top-[6.5rem] -z-20 bg-black" />
+        <ScrollInfo
+          position="-top-[40rem]"
+          isActive={pos}
+          left=""
+          index={0}
+          title="Create a Strategy"
+          description="Use technical indicators to create your own algorithim using the
+        workshop. Alternatively, you can use the community algorithims."
+        />
+        <ScrollInfo
+          position="-top-[38rem]"
+          isActive={pos}
+          left=" ml-[38rem]"
+          index={1}
+          title="Download Your Program"
+          description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
+        />
+        <ScrollInfo
+          position="-top-[36rem]"
+          isActive={pos}
+          left=""
+          index={2}
+          title="Connect Your Broker"
+          description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
+        />
+        <ScrollInfo
+          position="-top-[34rem]"
+          isActive={pos}
+          left=" ml-[38rem]"
+          index={3}
+          title="Run Your Program"
+          description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
+        />
         <div className="fixed w-2 h-1/2 right-0 m-auto top-0 left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
       </section>
     </motion.div>

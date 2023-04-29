@@ -4,7 +4,7 @@
 
 @layer components {
     html {
-        @apply overflow-x-hidden min-h-screen scroll-smooth
+        @apply overflow-x-hidden min-h-screen scroll-smooth bg-gray-900
     }
 
     section {
