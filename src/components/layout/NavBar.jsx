@@ -1,17 +1,13 @@
 import NavBarItem from "../NavBarItem";
-import { useState } from "react";
+import { useContext } from "react";
+import UserContext from "../UserContext";
 
 import { AiFillHome } from "react-icons/ai";
 import { BsTools } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 
 function NavBar(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  function toggleIsLoggedIn() {
-    setIsLoggedIn(!isLoggedIn);
-  }
-
+  const { isLoggedIn } = useContext(UserContext);
   return (
     <div
       className={
@@ -36,24 +32,30 @@ function NavBar(props) {
             icon={<AiFillHome size="50" />}
             tooltip="Home"
           />
-          <NavBarItem
-            to="/strategies"
-            toggleActive={props.toggleActive}
-            icon={<BsTools size="50" />}
-            tooltip="Strategies"
-          />
           {isLoggedIn ? (
-            <div className="flex">
-              <p></p>
-            </div>
-          ) : (
             <NavBarItem
-              to="/marketplace"
+              to="/strategies"
               toggleActive={props.toggleActive}
-              icon={<FaShoppingCart size="50" />}
-              tooltip="Marketplace (Coming Soon!)"
+              icon={<BsTools size="50" />}
+              tooltip="Strategies"
             />
+          ) : (
+            <button
+              className="sidebar-icon group pointer-events-auto"
+              onClick={props.toggleLogin}
+            >
+              <BsTools size="50" />
+              <span className="sidebar-tooltip group-hover:scale-100">
+                Strategies
+              </span>
+            </button>
           )}
+          <NavBarItem
+            to="/marketplace"
+            toggleActive={props.toggleActive}
+            icon={<FaShoppingCart size="50" />}
+            tooltip="Marketplace (Coming Soon!)"
+          />
         </ul>
       </div>
     </div>

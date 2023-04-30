@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import stocks from "../assets/Stocks.png";
+import InfoCard from "../components/InfoCard";
 import ScrollInfo from "../components/ScrollInfo";
+
+import { TbShieldLockFilled } from "react-icons/tb";
+import { BsFillLightningChargeFill } from "react-icons/bs";
+import { AiFillDollarCircle } from "react-icons/ai";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
@@ -10,15 +15,31 @@ function Home() {
 
   useEffect(() => {
     document.addEventListener("scroll", (e) => {
-      const target = (screen.height / 2) - 80;
+      const target = screen.height / 2 - 80;
       console.log("Screen hieght: " + screen.height);
-      if (document.getElementById("scrollTo-3").getBoundingClientRect().top - (document.getElementById("scrollTo-3").scrollHeight / 2) < target) {
+      if (
+        document.getElementById("scrollTo-3").getBoundingClientRect().top -
+          document.getElementById("scrollTo-2").scrollHeight / 2 <
+        target
+      ) {
         setPos(4);
-      } else if (document.getElementById("scrollTo-2").getBoundingClientRect().top - (document.getElementById("scrollTo-2").scrollHeight / 2) < target) {
+      } else if (
+        document.getElementById("scrollTo-2").getBoundingClientRect().top -
+          document.getElementById("scrollTo-2").scrollHeight / 2 <
+        target
+      ) {
         setPos(3);
-      } else if (document.getElementById("scrollTo-1").getBoundingClientRect().top - (document.getElementById("scrollTo-1").scrollHeight / 2) < target) {
+      } else if (
+        document.getElementById("scrollTo-1").getBoundingClientRect().top -
+          document.getElementById("scrollTo-1").scrollHeight / 2 <
+        target
+      ) {
         setPos(2);
-      } else if (document.getElementById("scrollTo-0").getBoundingClientRect().top - (document.getElementById("scrollTo-0").scrollHeight / 2) < target) {
+      } else if (
+        document.getElementById("scrollTo-0").getBoundingClientRect().top -
+          document.getElementById("scrollTo-0").scrollHeight / 2 <
+        target
+      ) {
         setPos(1);
       } else {
         setPos(0);
@@ -90,62 +111,89 @@ function Home() {
       </section>
 
       <section id="what-is-it" className="bg-gray-900 w-screen py-10 px-[10%]">
-        <h1 className="text-green-600 text-6xl font-semibold mb-8">
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-6xl font-semibold mb-8">
           What is it?
         </h1>
         <p className="text-white text-2xl">
           AlgoBlock allows you to buy and sell stocks automatically by creating
           your own strategy. This is known as <b>algorithmic trading.</b> This
           normally requires programming experience, but AlgoBlock makes it
-          simple.
+          simple. By creating a simple user interface, AlgoBlock makes it easier
+          to understand advanced trading concepts, and allows the users to have
+          creative freedom even with limited trading experience.
         </p>
       </section>
 
       <hr className="border-white m-auto w-1/2" />
 
       <section id="how-does-it-work" className="w-screen py-10 -z-20 px-[10%]">
-        <div className="w-[80%] h-full bg-gray-900 absolute -z-20" />
-        <h1 className="text-green-600 absolute text-6xl font-semibold z-10">
+        <div className="w-2 h-full ml-[calc(40vw-0.25rem)] absolute -z-10 bg-black" />
+        <div className="w-2 h-28 absolute ml-[calc(40vw-0.25rem)] -mt-10 bg-gray-900" />
+        <div className="w-2 h-16 ml-[calc(40vw-0.25rem)] mt-[4.5rem] absolute bg-gradient-to-b from-gray-900 to-transparent" />
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-6xl font-semibold z-10">
           How does it work?
         </h1>
-        <div className="w-8 h-16 m-auto relative top-20 bg-gradient-to-b from-gray-900 to-transparent" />
-        <div className="w-8 h-[7.5rem] m-auto relative -top-[6.5rem] bg-gray-900" />
-        <div className="relative w-2 h-[36rem] m-auto -top-[6.5rem] -z-20 bg-black" />
         <ScrollInfo
-          position="-top-[40rem]"
           isActive={pos}
-          left=""
           index={0}
-          title="Create a Strategy"
+          title="Step 1 - Create a "
+          boldTitle="Strategy"
           description="Use technical indicators to create your own algorithim using the
         workshop. Alternatively, you can use the community algorithims."
         />
         <ScrollInfo
-          position="-top-[38rem]"
           isActive={pos}
-          left=" ml-[42vw]"
           index={1}
-          title="Download Your Program"
+          title="Step 2 - Download Your "
+          boldTitle="Program"
           description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
         />
         <ScrollInfo
-          position="-top-[36rem]"
           isActive={pos}
-          left=""
           index={2}
-          title="Connect Your Broker"
+          title="Step 3 - Connect to Your "
+          boldTitle="Broker"
           description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
         />
         <ScrollInfo
-          position="-top-[34rem]"
           isActive={pos}
-          left=" ml-[42vw]"
           index={3}
-          title="Run Your Program"
+          title="Step 4 - Run Your "
+          boldTitle="Program"
           description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
         />
+        <div className="w-2 ml-[calc(40vw-0.25rem)] -mt-4 h-[3.5rem] m-auto absolute bg-gray-900" />
+        <div className="w-2 ml-[calc(40vw-0.25rem)] -mt-20 h-16 m-auto absolute bg-gradient-to-t from-gray-900 to-transparent" />
       </section>
-      <div className="fixed w-2 h-1/2 right-0 top-0 m-auto left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
+
+      <hr className="border-white m-auto w-1/2" />
+
+      <section
+        id="why-algoblock"
+        className="bg-gray-900 w-screen py-10 px-[10%]"
+      >
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-20 text-6xl font-semibold mb-8">
+          Why AlgoBlock?
+        </h1>
+        <div className="flex flex-col sm:flex-row justify-center gap-[10vw]">
+          <InfoCard
+            icon={<TbShieldLockFilled size="150" color="rgb(22, 163, 74)" />}
+            title="Security"
+            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+          />
+          <InfoCard
+            icon={<BsFillLightningChargeFill size="150" color="rgb(22, 163, 74)" />}
+            title="Speed"
+            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+          />
+          <InfoCard
+            icon={<AiFillDollarCircle size="150" color="rgb(22, 163, 74)" />}
+            title="Low Price"
+            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+          />
+        </div>
+      </section>
+      <div className="fixed w-2 h-1/2 right-0 top-0 ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
     </motion.div>
   );
 }

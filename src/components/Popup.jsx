@@ -1,5 +1,5 @@
 function Popup(props) {
-  return (
+  return props.getActive ? (
     <div
       className={
         props.getActive
@@ -13,6 +13,8 @@ function Popup(props) {
       </div>
       <div className="background -z-50" onClick={props.toggle} />
     </div>
+  ) : (
+    <div />
   );
 }
 

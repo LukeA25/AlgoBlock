@@ -37,7 +37,7 @@ function Layout(props) {
             <Login toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} />
           </Popup>
         )}
-        <NavBar isActive={isNavBarActive} toggleActive={toggleNavBar} />
+        <NavBar isActive={isNavBarActive} toggleActive={toggleNavBar} toggleLogin={toggleLogin} />
       </main>
     </div>
   );
