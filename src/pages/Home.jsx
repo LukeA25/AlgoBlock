@@ -15,6 +15,7 @@ import {
 } from "react-icons/ai";
 import { IoIosMail } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
@@ -251,10 +252,12 @@ function Home() {
 
       <section
         id="footer"
-        className="bg-black w-screen py-10 px-[10%] border-t-2 border-t-white flex justify-center gap-[25%]"
+        className="bg-black w-screen py-10 px-[10%] border-t-2 border-t-white flex justify-between gap-8"
       >
         <div className="flex flex-col gap-4">
-          <img src={logo} className="w-64" />
+          <HashLink to="/#top" required>
+            <img src={logo} className="w-64" />
+          </HashLink>
           <div className="flex justify-center gap-[16.6%]">
             <a href="https://instagram.com" target="_blank">
               <AiOutlineInstagram size="40" color="rgb(22, 163, 74)" />
@@ -267,7 +270,7 @@ function Home() {
             </a>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-30">
           <Link
             to="/about-us"
             className="text-gray-300 hover:text-white active:text-gray-500 text-xl duration-300"

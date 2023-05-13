@@ -115,7 +115,7 @@ function Strategies() {
               {loadedStrategies.map((strategy) => (
                 <div className="rounded-xl h-80 w-64 bg-green-600 border-4 border-white group">
                   <div className="h-full w-full flex justify-center items-center flex-col">
-                    <h2 className="text-white text-center text-3xl font-semibold">
+                    <h2 className="text-white text-center text-3xl font-semibold w-full px-1">
                       {strategy.name}
                     </h2>
                     <h3 className="text-gray-300 text-center text-xl">

@@ -16,18 +16,22 @@ function Login(props) {
   }
 
   function loginHandler(loginData) {
-    fetch("https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData.json").then((response) => {
+    fetch("https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData.json")
+      .then((response) => {
         return response.json();
-    }).then((data) => {
+      })
+      .then((data) => {
         for (const key in data) {
-          if (JSON.stringify(data[key]["loginData"]) == JSON.stringify(loginData["loginData"])) {
+          if (JSON.stringify(data[key]["loginData"]).localeCompare(JSON.stringify(loginData))) {
             setIsLoggedIn(true);
             setUserKey(key);
             return true;
           }
         }
-      return false;
-    }).then((key) => {
+
+        return false;
+      })
+      .then((key) => {
         if (key) {
           props.toggleLogin();
           navigate("/strategies", { replace: true });
@@ -35,7 +39,7 @@ function Login(props) {
           setFailedLogin(true);
           return false;
         }
-    });
+      });
   }
 
   function submitHandler(event) {
@@ -43,10 +47,8 @@ function Login(props) {
     setFailedLogin(false);
 
     const loginData = {
-      loginData: {
-        email: emailRef.current.value.toLowerCase(),
-        password: passwordRef.current.value,
-      },
+      email: emailRef.current.value.toLowerCase(),
+      password: passwordRef.current.value,
     };
 
     return loginHandler(loginData);
@@ -54,7 +56,11 @@ function Login(props) {
 
   return (
     <form className="flex flex-col" onSubmit={submitHandler}>
-      {failedLogin ? <p className="text-lg text-red-600 text-center">Incorrect email or password. Please try again.</p> : null}
+      {failedLogin ? (
+        <p className="text-lg text-red-600 text-center">
+          Incorrect email or password. Please try again.
+        </p>
+      ) : null}
       <div className="flex flex-row w-full justify-between mt-4">
         <label htmlFor="email-input" className="text-xl font-semibold">
           E-mail
