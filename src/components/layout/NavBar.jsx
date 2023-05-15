@@ -42,7 +42,12 @@ function NavBar(props) {
           ) : (
             <button
               className="sidebar-icon group pointer-events-auto"
-              onClick={props.toggleLogin}
+              onClick={() => {
+                if (props.isSignUpActive) {
+                  props.toggleSignUp();
+                }
+                props.toggleLogin();
+              }}
             >
               <BsTools size="50" />
               <span className="sidebar-tooltip group-hover:scale-100">

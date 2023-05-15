@@ -1,11 +1,11 @@
 function Popup(props) {
-  return props.getActive ? (
+  return (
     <div
-      className={
+      className={`background z-40 bg-shaded-500 transition-opacity duration-500 ease-in ${
         props.getActive
-          ? "background z-40 bg-shaded-500 opacity-100 transition-opacity duration-500 ease-in pointer-events-auto"
-          : "background z-40 bg-shaded-500 opacity-0 transition-opacity duration-500 ease-in  pointer-events-none"
-      }
+          ? "opacity-100 pointer-events-auto block"
+          : "opacity-0 pointer-events-none"
+      }`}
     >
       <div className="rounded-lg bg-white w-[30rem] h-auto m-auto z-[1] py-6 px-12 mt-[20vh]">
         <h1 className="text-black text-center text-5xl mb-4">{props.title}</h1>
@@ -13,8 +13,6 @@ function Popup(props) {
       </div>
       <div className="background -z-50" onClick={props.toggle} />
     </div>
-  ) : (
-    <div />
   );
 }
 

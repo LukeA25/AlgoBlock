@@ -25,7 +25,13 @@ function Layout(props) {
 
   return (
     <div>
-      <MainNavigation toggleNavBar={toggleNavBar} toggleLogin={toggleLogin} />
+      <MainNavigation
+        toggleNavBar={toggleNavBar}
+        toggleLogin={toggleLogin}
+        toggleSignUp={toggleSignUp}
+        isSignUpActive={isSignUpActive}
+        isLoginActive={isLoginActive}
+      />
       <main>
         {props.children}
         {isSignUpActive ? (
@@ -37,7 +43,13 @@ function Layout(props) {
             <Login toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} />
           </Popup>
         )}
-        <NavBar isActive={isNavBarActive} toggleActive={toggleNavBar} toggleLogin={toggleLogin} />
+        <NavBar
+          isActive={isNavBarActive}
+          toggleActive={toggleNavBar}
+          toggleLogin={toggleLogin}
+          isSignUpActive={isSignUpActive}
+          toggleSignUp={toggleSignUp}
+        />
       </main>
     </div>
   );

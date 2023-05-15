@@ -10,7 +10,7 @@ import Popup from "../components/Popup";
 function Strategies() {
   const [isNewStratActive, setNewStratActive] = useState(false);
   const strategyNameRef = useRef();
-  const { userKey, setCurrentStrategy } = useContext(UserContext);
+  const { userKey, setCurrentStrategy, username } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedStrategies, setLoadedStrategies] = useState([]);
   const [isDeleteStratActive, setIsDeleteStratActive] = useState(false);
@@ -119,7 +119,7 @@ function Strategies() {
                       {strategy.name}
                     </h2>
                     <h3 className="text-gray-300 text-center text-xl">
-                      Luke Anderson
+                      {username}
                     </h3>
                   </div>
                   <div className="w-full h-full relative -top-full rounded-lg bg-shaded-500 opacity-0 group-hover:opacity-100 duration-300 flex flex-col py-[10%]">

@@ -12,12 +12,37 @@ function Workspace() {
       <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-24 font-semibold text-7xl text-center relative top-8">
         {currentStrategy}
       </h1>
-      <div className="w-64 rounded-xl bg-shaded-750 p-4 pb-8 mt-8">
+      <div className="w-96 border-2 border-white rounded-xl bg-shaded-750 p-4 mt-8 mx-auto">
+        <h1 className="text-white text-center text-3xl mb-4 font-semibold">
+          Trigger
+        </h1>
+        <hr className="w-4/5 m-auto" />
+        <div className="w-40 text-lg text-white bg-gray-500 rounded-lg py-2 duration-300 ">
+          <ul>
+            <li>
+              <button className="w-full px-2 py-1 text-left hover:bg-gray-400 active:bg-gray-600 duration-300">
+                Dashboard
+              </button>
+            </li>
+            <li>
+              <button className="w-full px-2 py-1 text-left hover:bg-gray-400 active:bg-gray-600 duration-300">
+                Settings
+              </button>
+            </li>
+            <li>
+              <button className="w-full px-2 py-1 text-left hover:bg-gray-400 active:bg-gray-600 duration-300">
+                Subscription
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* <div className="w-64 rounded-xl bg-shaded-750 p-4 pb-8 mt-8">
         <h1 className="text-white text-center text-3xl mb-4 font-semibold">
           Variables
         </h1>
         <hr className="w-4/5 m-auto" />
-        <div className="flex flex-col gap-4 h-[20rem] overflow-y-scroll pt-4">
+        <div className="flex flex-col gap-4 h-[20rem] overflow-y-scroll pt-4 pl-4">
           <button className="w-3/4 h-20 bg-green-600 m-auto text-white text-center rounded-xl flex-shrink-0 hover:bg-green-500 active:bg-green-800 duration-300">
             Variable 1
           </button>
@@ -37,7 +62,7 @@ function Workspace() {
             Variable 6
           </button>
         </div>
-      </div>
+      </div> */}
     </motion.div>
   );
 }

@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "flowbite": "^1.6.5",
     "framer-motion": "^10.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
-    "react-router-hash-link": "^2.4.3"
+    "react-router-hash-link": "^2.4.3",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

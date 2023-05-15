@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
-import { useRef } from "react";
+import UserContext from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
 function Signup(props) {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef();
+  const usernameRef = useRef();
   const passwordRef = useRef();
+  const { setUserKey, setUsername, setIsLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   function togglePassword() {
@@ -20,7 +22,12 @@ function Signup(props) {
       headers: {
         "Content-Type": "appliation/json",
       },
-    }).then(() => {
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      setIsLoggedIn(true);
+      setUsername(usernameRef.current.value);
+      setUserKey(data['name']);
       props.toggleLogin();
       navigate("/strategies", { replace: true });
     });
@@ -32,6 +39,7 @@ function Signup(props) {
     const loginData = {
       loginData: {
         email: emailRef.current.value.toLowerCase(),
+        username: usernameRef.current.value,
         password: passwordRef.current.value,
       },
     };
@@ -71,7 +79,7 @@ function Signup(props) {
         type="text"
         className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
         required
-        ref={null}
+        ref={usernameRef}
       />
       <div className="flex flex-row w-full justify-between">
         <label htmlFor="password-input" className="text-xl font-semibold">

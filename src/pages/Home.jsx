@@ -19,9 +19,10 @@ import { HashLink } from "react-router-hash-link";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formValue, setFormValue] = useState("");
   const [pos, setPos] = useState(0);
-  const title = "AlgoBlock";
+  const words = ["simpler", "faster", "smarter"];
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const emailRef = useRef();
 
   useEffect(() => {
@@ -59,19 +60,33 @@ function Home() {
   }, []);
 
   useEffect(() => {
+    const word = words[currentWordIndex];
     const intervalId = setInterval(() => {
       setChangingTitle((prevTitle) => {
-        if (prevTitle === title) {
+        if (prevTitle === word) {
           clearInterval(intervalId);
+          setTimeout(() => {
+            let deletedTitle = prevTitle;
+            const deleteIntervalId = setInterval(() => {
+              deletedTitle = deletedTitle.slice(0, -1);
+              setChangingTitle(deletedTitle);
+              if (deletedTitle === "") {
+                clearInterval(deleteIntervalId);
+                setCurrentWordIndex(
+                  (prevIndex) => (prevIndex + 1) % words.length
+                );
+              }
+            }, 100);
+          }, 1000);
           return prevTitle;
         } else {
-          return prevTitle + title[prevTitle.length];
+          return prevTitle + word[prevTitle.length];
         }
       });
     }, 400);
 
     return () => clearInterval(intervalId);
-  }, [title]);
+  }, [currentWordIndex]);
 
   function addEmailHandler(email) {
     var emails = [];
@@ -110,6 +125,7 @@ function Home() {
   }
 
   function submitHandler(event) {
+    setFormValue("");
     scrollTo(top);
     event.preventDefault();
     const email = emailRef.current.value.toLowerCase();
@@ -126,21 +142,21 @@ function Home() {
       <section id="home" className="w-screen h-[calc(100vh-5rem)]">
         <article className="h-full w-full rounded-2xl overflow-hidden aspect-[27/20] m-auto">
           <div className="w-full h-[calc(100vh-5rem)] bg-black bg-opacity-75 absolute z-10 border-b-2 border-white">
-            <div className="w-2/3 mt-[30vh] mx-auto">
-              <div className="flex mb-4">
-                <h1 className="text-white lg:text-8xl text-7xl">
-                  {changingTitle}
-                </h1>
-                <div className="h-16 lg:h-20 aspect-[4/7] bg-white relative top-1 left-2 my-auto animate-cursor-flash"></div>
+            <div className="w-1/2 mt-[30vh] mx-auto">
+              <h1 className="text-white text-8xl h-24 mb-4">AlgoBlock</h1>
+              <p className="text-white text-4xl">Making automatic stock</p>
+              <div className="flex">
+                <p className="text-white text-4xl">
+                  trading&nbsp;
+                  <b className="font-semibold text-green-600">
+                    {changingTitle}
+                  </b>
+                </p>
+                <div className="h-8 aspect-[4/7] bg-white relative top-[0.15rem] left-1 my-auto animate-cursor-flash" />
               </div>
-              <p className="text-white text-2xl lg:text-3xl">
-                Automatic stock trading
-                <br />
-                made simple.
-              </p>
               <button
                 className="bg-green-600 hover:bg-green-500 active:bg-green-800 transition-colors duration-300 border-white border-4 w-48 h-12
-          rounded-lg text-white text-2xl font-semibold my-2"
+          rounded-lg text-white text-2xl font-semibold my-4"
                 onClick={() => window.location.replace("/#what-is-it")}
               >
                 Learn More
@@ -149,16 +165,6 @@ function Home() {
           </div>
           <div className="m-auto h-full w-full relative">
             <img src={stocks} className="h-full w-full absolute" />
-            {/* <div className="h-10 w-10 border-green-600 border-4 rounded-full relative left-[7.6vw] top-[69vh] animate-buy-flash">
-              <h1 className="text-green-600 font-semibold text-[150%] relative top-[80%] left-[80%]">
-                BUY
-              </h1>
-            </div>
-            <div className="h-10 w-10 border-red-600 border-4 rounded-full relative top-[19vh] left-[95.8vw] animate-sell-flash">
-              <h1 className="text-red-600 font-semibold text-[150%] absolute -top-10 -right-5">
-                SELL
-              </h1>
-            </div> */}
           </div>
           <div className="bg-black w-full h-full relative -top-full animate-stock-cover" />
         </article>
@@ -315,6 +321,10 @@ function Home() {
               type="email"
               placeholder="Enter your email..."
               ref={emailRef}
+              onChange={(event) => {
+                setFormValue(event.target.value);
+              }}
+              value={formValue}
               required
               className="bg-transparent border-b-2 border-b-gray-400 w-full text-lg py-1 text-gray-200"
             />
