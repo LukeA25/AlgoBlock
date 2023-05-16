@@ -69,7 +69,7 @@ function MainNavigation(props) {
         </div>
       )}
       <div
-        className={`w-40 text-lg text-white absolute -top-4 left-[108rem] bg-gray-500 rounded-lg py-2 duration-300 ${
+        className={`w-40 text-lg text-white absolute -top-4 left-[86vw] bg-gray-500 rounded-lg py-2 duration-300 ${
           isUserDropdownActive
             ? "translate-y-20 scale-y-100"
             : "translate-y-0 scale-y-0"

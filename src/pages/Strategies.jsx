@@ -46,6 +46,7 @@ function Strategies() {
     event.preventDefault();
     const strategyData = {
       name: strategyNameRef.current.value,
+      creator: username,
     };
     newStrategyHandler(strategyData);
   }
@@ -119,7 +120,7 @@ function Strategies() {
                       {strategy.name}
                     </h2>
                     <h3 className="text-gray-300 text-center text-xl">
-                      {username}
+                      {strategy.creator}
                     </h3>
                   </div>
                   <div className="w-full h-full relative -top-full rounded-lg bg-shaded-500 opacity-0 group-hover:opacity-100 duration-300 flex flex-col py-[10%]">

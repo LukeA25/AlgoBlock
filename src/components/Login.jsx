@@ -22,7 +22,10 @@ function Login(props) {
       })
       .then((data) => {
         for (const key in data) {
-          if (JSON.stringify(data[key]["loginData"]["username"]).localeCompare(JSON.stringify(loginData["username"])) + JSON.stringify(data[key]["loginData"]["password"]).localeCompare(JSON.stringify(loginData["password"])) == 0) {
+          console.log(JSON.stringify(loginData["password"]));
+          console.log(JSON.stringify(data[key]["loginData"]["password"]));
+          console.log(JSON.stringify(data[key]["loginData"]["password"]).localeCompare(JSON.stringify(loginData["password"])));
+          if (JSON.stringify(data[key]["loginData"]["username"]).localeCompare(JSON.stringify(loginData["username"])) == 0 && JSON.stringify(data[key]["loginData"]["password"]).localeCompare(JSON.stringify(loginData["password"])) == 0) {
             setIsLoggedIn(true);
             setUsername(loginData["username"]);
             setUserKey(key);

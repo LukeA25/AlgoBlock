@@ -142,7 +142,7 @@ function Home() {
       <section id="home" className="w-screen h-[calc(100vh-5rem)]">
         <article className="h-full w-full rounded-2xl overflow-hidden aspect-[27/20] m-auto">
           <div className="w-full h-[calc(100vh-5rem)] bg-black bg-opacity-75 absolute z-10 border-b-2 border-white">
-            <div className="w-1/2 mt-[30vh] mx-auto">
+            <div className="w-2/3 mt-[30vh] mx-auto">
               <h1 className="text-white text-8xl h-24 mb-4">AlgoBlock</h1>
               <p className="text-white text-4xl">Making automatic stock</p>
               <div className="flex">
