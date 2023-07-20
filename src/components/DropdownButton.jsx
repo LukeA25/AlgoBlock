@@ -13,10 +13,10 @@ function DropdownButton(props) {
             className="w-full px-2 py-1 hover:cursor-pointer hover:bg-gray-400 active:bg-gray-600 duration-300 flex items-center gap-2 group"
           >
             {props.icon}
-            <p className="text-white text-left text-md">{props.name}</p>
+            <p className="text-white text-left">{props.name}</p>
           </div>
         </li>
-        {!props.lineBreak && <hr />}
+        {!props.lineBreak && <hr key={props.name + "hr"} />}
       </>
     );
   } else {

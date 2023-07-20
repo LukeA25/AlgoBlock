@@ -8,12 +8,10 @@ function ValueMiniDropdown(props) {
     <>
       <div className="flex-grow">
         <input
-          onMouseEnter={() => {
-            props.setDisabled(true);
-          }}
-          onMouseLeave={() => {
-            props.setDisabled(false);
-          }}
+          onMouseEnter={() => props.setDisabled(true)}
+          onMouseLeave={() => props.setDisabled(false)}
+          onTouchStart={() => setDisabled(true)}
+          onTouchEnd={() => setDisabled(false)}
           value={currentNum}
           onChange={(event) => {
             setNum(event.target.value);

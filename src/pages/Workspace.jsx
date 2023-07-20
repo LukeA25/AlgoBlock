@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import UserContext from "../components/UserContext";
 import { motion } from "framer-motion";
 import InputButton from "../components/workspace/InputButton";
 import TriggerDropdown from "../components/workspace/TriggerDropdown";
@@ -13,7 +12,6 @@ import TradeDetails from "../components/workspace/TradeDetails";
 import StrategyContext from "../components/strategyContext";
 
 function Workspace() {
-  const { currentStrategy } = useContext(UserContext);
   const { strategy, setStrategy, updateStrategy, disregardChanges } =
     useContext(StrategyContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,11 +77,11 @@ function Workspace() {
 
   if (!strategy.name) {
     return (
-      <div className="w-screen h-[calc(100vh-13.6rem)] relative pt-20">
-        <h1 className="text-white text-7xl text-center font-semibold pt-20">
+      <div className="w-screen min-h-[calc(100vh-12.6rem)] sm:min-h-[calc(100vh-13.6rem)] relative pt-20">
+        <h1 className="text-white text-6xl sm:text-7xl text-center font-semibold pt-20">
           Oops...
         </h1>
-        <h3 className="text-white text-5xl text-center pt-6 m-auto w-2/3">
+        <h3 className="text-white text-3xl sm:text-5xl text-center pt-6 m-auto w-2/3">
           You're not supposed to be here yet. Visit the{" "}
           <Link
             to="/"
@@ -112,18 +110,18 @@ function Workspace() {
     <motion.div
       className="pb-20 relative pt-20" /*initial={{width: 0 border-2 border-white}} animate={{width: "100%"}} exit={{x: window.innerWidth, transition: {duration: 0 border-2 border-white.1}}}*/
     >
-      <div className="flex items-center justify-center mt-8 gap-4 bg-green-600 w-fit m-auto px-8 pt-4 rounded-lg border-4 border-white">
-        <h1 className="text-white w-fit h-20 font-semibold text-6xl text-center">
+      <div className="flex items-center justify-center mt-8 gap-4 bg-green-600 max-w-[80%] sm:w-fit m-auto px-8 pt-4 rounded-lg border-4 border-white">
+        <h1 className="text-white w-fit h-20 font-semibold text-3xl sm:text-6xl text-center">
           {strategy.name}
         </h1>
       </div>
 
       <div
-        className={`w-2/3 h-16 fixed bg-gray-700 z-50 rounded-xl left-[16.67%] top-32 flex items-center justify-between p-4 duration-500 ${
+        className={`w-[90%] sm:w-2/3 h-16 fixed bg-gray-700 z-50 rounded-xl left-[5%] sm:left-[16.67%] top-32 flex items-center justify-between p-4 duration-500 ${
           !hasStrategyChanged && "scale-x-50 scale-y-0 -translate-y-[8rem]"
         }`}
       >
-        <h1 className="text-white text-xl">You have unsaved changes.</h1>
+        <h1 className="text-white sm:text-xl">You have unsaved changes.</h1>
         {isUpdateLoading ? (
           <AiOutlineLoading
             size="24"
@@ -131,16 +129,16 @@ function Workspace() {
             className="animate-spin"
           />
         ) : (
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4">
             <button
               onClick={disregardStrategyChanges}
-              className="text-gray-200 hover:text-white active:text-gray-500 duration-300"
+              className="text-gray-200 hover:text-white active:text-gray-500 duration-300 text-xs sm:text-base"
             >
               Disregard Changes
             </button>
             <button
               onClick={saveStrategyChanges}
-              className="text-white text-md w-36 h-10 rounded-md border-2 border-white bg-green-600 hover:bg-green-400 active:bg-green-700 duration-300"
+              className="text-white text-xs sm:text-base w-24 sm:w-36 sm:h-10 rounded-md border-2 border-white bg-green-600 hover:bg-green-400 active:bg-green-700 duration-300"
             >
               Save Changes
             </button>
@@ -150,10 +148,10 @@ function Workspace() {
 
       <section
         id="workspace"
-        className="w-[75vw] border-2 border-white rounded-xl bg-shaded-750 p-10 mt-8 ml-[12.5vw] z-10"
+        className="w-[90%] sm:w-3/4 border-2 border-white rounded-xl bg-shaded-750 p-8 sm:p-10 mt-8 ml-[5%] sm:ml-[12.5vw] z-10"
       >
-        <article className="w-96 border-2 boder-white rounded-xl bg-shaded-750 p-4 mx-auto">
-          <h1 className="text-white text-center text-3xl mb-4 font-semibold">
+        <article className="w-full sm:w-96 border-2 boder-white rounded-xl bg-shaded-750 p-4 mx-auto">
+          <h1 className="text-white text-center text-2xl sm:text-3xl mb-4 font-semibold">
             Trigger
           </h1>
           <hr className="w-4/5 m-auto" />
@@ -196,7 +194,7 @@ function Workspace() {
         <hr className="h-16 border-2 w-1 m-auto" />
 
         <article className="w-full border-2 border-white rounded-xl bg-shaded-750 p-4 mx-auto">
-          <h1 className="text-white text-center text-3xl mb-4 font-semibold">
+          <h1 className="text-white text-center text-2xl sm:text-3xl mb-4 font-semibold">
             Entry Conditions
           </h1>
           <hr className="w-4/5 m-auto" />
@@ -233,7 +231,7 @@ function Workspace() {
         <hr className="h-16 border-2 w-1 m-auto" />
 
         <article className="w-full border-2 border-white rounded-xl bg-shaded-750 p-4 mx-auto">
-          <h1 className="text-white text-center text-3xl mb-4 font-semibold">
+          <h1 className="text-white text-center text-2xl sm:text-3xl mb-4 font-semibold">
             Exit Conditions
           </h1>
           <hr className="w-4/5 m-auto" />
@@ -273,7 +271,7 @@ function Workspace() {
         <hr className="h-16 border-2 w-1 m-auto" />
 
         <article className="w-full border-2 border-white rounded-xl bg-shaded-750 p-4 mx-auto">
-          <h1 className="text-white text-center text-3xl mb-4 font-semibold">
+          <h1 className="text-white text-center text-2xl sm:text-3xl mb-4 font-semibold">
             Details
           </h1>
           <hr className="w-4/5 m-auto" />
@@ -289,9 +287,9 @@ function Workspace() {
       <div className="w-full flex justify-center">
         <Link
           to="/checkout"
-          className="p-4 bg-green-600 border-2 border-white duration-300 hover:bg-green-500 active:bg-green-800 text-white text-4xl rounded-lg mt-16 font-semibold"
+          className="p-4 bg-green-600 border-2 border-white duration-300 hover:bg-green-500 active:bg-green-800 text-white text-2xl sm:text-4xl rounded-lg mt-16 font-semibold"
         >
-          {"Download Strategy >"}
+          Download Strategy
         </Link>
       </div>
       {/* <WorkspaceTutorial id={["selectTrigger", "Crossover"]} /> */}

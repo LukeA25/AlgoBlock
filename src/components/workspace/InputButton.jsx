@@ -34,7 +34,8 @@ function InputButton(props) {
     );
     const items = [];
 
-    for (const piece in blocks[convertToVariableName(props.object.name)].info.items) {
+    for (const piece in blocks[convertToVariableName(props.object.name)].info
+      .items) {
       const item = {
         ...blocks[convertToVariableName(props.object.name)].info.items[piece],
       };
@@ -42,7 +43,11 @@ function InputButton(props) {
     }
     setLoadedItems(items);
     setIsLoading(false);
-  }, [blocks[convertToVariableName(props.object.name)].info.items, leftRef, props.updateStrategy]);
+  }, [
+    blocks[convertToVariableName(props.object.name)].info.items,
+    leftRef,
+    props.updateStrategy,
+  ]);
 
   return (
     <button
@@ -82,6 +87,10 @@ function InputButton(props) {
       <div
         onMouseEnter={() => setIsButtonActive(false)}
         onMouseLeave={() => {
+          props.icon ? null : setIsButtonActive(true);
+        }}
+        onTouchStart={() => setIsButtonActive(false)}
+        onTouchEnd={() => {
           props.icon ? null : setIsButtonActive(true);
         }}
         className="bg-shaded-500 border-2 border-white rounded-lg w-full p-4 flex flex-col gap-2"

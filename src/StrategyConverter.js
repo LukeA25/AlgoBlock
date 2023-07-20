@@ -4,7 +4,7 @@ export default function convertScript(strategy) {
 // © AlgoBlock
 
 //@version=5
-strategy("${strategy.name}", overlay=true)
+strategy("${strategy.name}", overlay=true, default_qty_type=${strategy.details.orderQuantity.type === "%" ? "strategy.percent_of_equity" : "strategy.fixed"}, default_qty_value=${strategy.details.orderQuantity.amount})
 `;
 
   function appendFile(content) {
@@ -15,7 +15,7 @@ strategy("${strategy.name}", overlay=true)
 
   var inputLines = [
     `riskRewardRatio = input.float(${strategy.details.riskReward}, title="Risk/Reward Ratio")`,
-    `orderQuantity = input.int(${strategy.details.orderQuantity}, title="Order Quantity")`
+    `orderQuantity = input.int(${strategy.details.orderQuantity.amount}, title="Order Quantity")`
   ];
   var calculationLines = [];
   var plotLines = [];

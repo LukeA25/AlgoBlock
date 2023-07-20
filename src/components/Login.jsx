@@ -47,7 +47,7 @@ function Login(props) {
         </div>
       )}
       <div className="flex flex-row w-full justify-between mt-4">
-        <label htmlFor="email-input" className="text-xl font-semibold">
+        <label htmlFor="email-input" className="text-lg sm:text-xl font-semibold">
           Email
         </label>
         <p>
@@ -64,12 +64,12 @@ function Login(props) {
       <input
         id="email-input"
         type="email"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-full rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
         required
         ref={emailRef}
       />
       <div className="flex flex-row w-full justify-between">
-        <label htmlFor="password-input" className="text-xl font-semibold">
+        <label htmlFor="password-input" className="text-lg sm:text-xl font-semibold">
           Password
         </label>
         <button
@@ -88,14 +88,14 @@ function Login(props) {
       <input
         type={showPassword ? "text" : "password"}
         id="password-input"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-full rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
         required
         ref={passwordRef}
       />
       <div className="flex gap-8 mt-4">
         <button
           type="button"
-          className="w-48  h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-medium"
+          className="w-48 h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-xl sm:text-2xl font-medium"
           onClick={props.toggleLogin}
         >
           Cancel
@@ -106,7 +106,7 @@ function Login(props) {
             loading
               ? "bg-green-300"
               : "bg-green-600 hover:bg-green-500 active:bg-green-700"
-          } transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-semibold`}
+          } transition-all duration-300 border-black border-2 rounded-lg text-white text-xl sm:text-2xl font-semibold`}
         >
           Submit
         </button>

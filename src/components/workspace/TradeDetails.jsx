@@ -13,6 +13,7 @@ function TradeDetails(props) {
   const [miniIndicatorDropdown, setMiniIndicatorDropdown] = useState(false);
   const [miniButtonDisabled, setMiniButtonDisabled] = useState(false);
   const [indicatorPopupActive, setIndicatorPopupActive] = useState(false);
+  const [quantityTypeDropdown, setQuantityTypeDropdown] = useState(false);
 
   const [error, setError] = useState("");
   const [quantityError, setQuantityError] = useState("");
@@ -20,16 +21,18 @@ function TradeDetails(props) {
   const [riskRewardError, setRiskRewardError] = useState("");
 
   const [typeDropdown, setTypeDropdown] = useState(false);
-  const [riskDropdown, setRiskDropdown] = useState(false);
-//   const [riskNum, setRiskNum] = useState(
-//     props.strategy.details.riskManagement
-//       ? props.strategy.details.riskManagement.value
-//       : 1
-//   );
-//   const [riskManagementError, setRiskManagementError] = useState("");
-//   const [riskManagementDisabled, setRiskManagementDisabled] = useState(false);
+  //   const [riskDropdown, setRiskDropdown] = useState(false);
+  //   const [riskNum, setRiskNum] = useState(
+  //     props.strategy.details.riskManagement
+  //       ? props.strategy.details.riskManagement.value
+  //       : 1
+  //   );
+  //   const [riskManagementError, setRiskManagementError] = useState("");
+  //   const [riskManagementDisabled, setRiskManagementDisabled] = useState(false);
   const [quantity, setQuantity] = useState(
     props.strategy.details.orderQuantity
+      ? props.strategy.details.orderQuantity.amount
+      : 1
   );
   const [riskReward, setRiskReward] = useState(
     props.strategy.details.riskReward
@@ -46,11 +49,15 @@ function TradeDetails(props) {
   const [typeTop, setTypeTop] = useState(0.0);
   const [typeLeft, setTypeLeft] = useState(0.0);
   const riskManagementRef = useRef();
-//   const [riskManagementTop, setRiskManagementTop] = useState(0.0);
-//   const [riskManagementLeft, setRiskManagementLeft] = useState(0.0);
+  //   const [riskManagementTop, setRiskManagementTop] = useState(0.0);
+  //   const [riskManagementLeft, setRiskManagementLeft] = useState(0.0);
   const stopLossRef = useRef();
   const [stopLossTop, setStopLossTop] = useState(0.0);
   const [stopLossLeft, setStopLossLeft] = useState(0.0);
+
+  const quantityTypeRef = useRef();
+  const [quantTypeTop, setQuantTypeTop] = useState(0.0);
+  const [quantTypeLeft, setQuantTypeLeft] = useState(0.0);
 
   function toggleStopLossDropdown() {
     setStopLossDropdown(!stopLossDropdown);
@@ -68,40 +75,44 @@ function TradeDetails(props) {
     setMiniIndicatorDropdown(!miniIndicatorDropdown);
   }
 
-//   function toggleRiskDropdown() {
-//     setRiskDropdown(!riskDropdown);
-//   }
+  function toggleQuantityTypeDropdown() {
+    setQuantityTypeDropdown(!quantityTypeDropdown);
+  }
+
+  //   function toggleRiskDropdown() {
+  //     setRiskDropdown(!riskDropdown);
+  //   }
 
   function toggleIndicatorPopup() {
     setError("");
     setIndicatorPopupActive(!indicatorPopupActive);
   }
 
-//   function riskNumChangeHandler(event) {
-//     const newValue = event.target.value;
-//     setRiskNum(newValue);
-//     console.log(newValue);
-//     if (newValue > 0) {
-//       if (
-//         props.strategy.details.riskManagement.title ===
-//         "Percentage of Portfolio"
-//       ) {
-//         setRiskManagementError("");
-//         props.strategy.details.riskManagement.value = newValue;
-//         props.updateStrategy();
-//       } else {
-//         if (/^\d*$/.test(newValue)) {
-//           setRiskManagementError("");
-//           props.strategy.details.riskManagement.value = newValue;
-//           props.updateStrategy();
-//         } else {
-//           setRiskManagementError("Please enter a whole number.");
-//         }
-//       }
-//     } else {
-//       setRiskManagementError("Please enter a value greater than 0.");
-//     }
-//   }
+  //   function riskNumChangeHandler(event) {
+  //     const newValue = event.target.value;
+  //     setRiskNum(newValue);
+  //     console.log(newValue);
+  //     if (newValue > 0) {
+  //       if (
+  //         props.strategy.details.riskManagement.title ===
+  //         "Percentage of Portfolio"
+  //       ) {
+  //         setRiskManagementError("");
+  //         props.strategy.details.riskManagement.value = newValue;
+  //         props.updateStrategy();
+  //       } else {
+  //         if (/^\d*$/.test(newValue)) {
+  //           setRiskManagementError("");
+  //           props.strategy.details.riskManagement.value = newValue;
+  //           props.updateStrategy();
+  //         } else {
+  //           setRiskManagementError("Please enter a whole number.");
+  //         }
+  //       }
+  //     } else {
+  //       setRiskManagementError("Please enter a value greater than 0.");
+  //     }
+  //   }
 
   function changeHandler(event) {
     const newValue = event.target.value;
@@ -172,12 +183,31 @@ function TradeDetails(props) {
       (stopLossRef.current.offsetTop + stopLossRef.current.offsetHeight) *
         0.0625
     );
-  }, [typeRef, riskManagementRef, stopLossRef, props.updateStrategy]);
+    setQuantTypeLeft(
+      (quantityTypeRef.current.offsetLeft +
+        quantityTypeRef.current.offsetWidth / 2) *
+        0.0625 -
+        6
+    );
+    setQuantTypeTop(
+      (quantityTypeRef.current.offsetTop +
+        quantityTypeRef.current.offsetHeight) *
+        0.0625
+    );
+  }, [
+    typeRef,
+    riskManagementRef,
+    stopLossRef,
+    quantityTypeRef,
+    props.updateStrategy,
+  ]);
 
   return (
-    <div className="w-5/6 flex flex-col justify-between gap-4 mt-4 border-2 border-white rounded-lg bg-shaded-500 m-auto text-white p-4">
-      <div className="flex justify-between items-center">
-        <p className="text-2xl font-semibold flex-grow">Order Type:</p>
+    <div className="sm:w-5/6 flex flex-col justify-between gap-4 mt-4 border-2 border-white rounded-lg sm:bg-shaded-500 m-auto text-white p-4">
+      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+        <p className="text-lg sm:text-2xl font-semibold flex-grow">
+          Order Type:
+        </p>
         <div
           ref={typeRef}
           onClick={toggleTypeDropdown}
@@ -228,26 +258,89 @@ function TradeDetails(props) {
         </Dropdown>
       </div>
       <hr className="w-full" />
-      <div className="flex justify-between items-center">
-        <p className="text-2xl font-semibold flex-grow">Order Quantity:</p>
+      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+        <p className="text-lg sm:text-2xl font-semibold flex-grow">
+          Order Quantity:
+        </p>
         <div className="flex flex-col items-end">
-          <input
-            value={quantity}
-            onChange={(event) => {
-              setQuantity(event.target.value);
-              if (/^\d*$/.test(event.target.value)) {
-                setQuantityError("");
-                props.strategy.details.orderQuantity = event.target.value;
-                props.updateStrategy();
-              } else {
-                setQuantityError("Please enter a whole number.");
-              }
-            }}
-            className="h-8 bg-green-600 hover:bg-green-400 active:bg-green-700 border-white text-white border-2 rounded-md w-20 text-xl font-semibold px-1 py-4 duration-300"
-            type="number"
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              value={quantity}
+              onChange={(event) => {
+                setQuantity(event.target.value);
+                if (event.target.value < 0) {
+                  setQuantityError("Please enter a positive number.");
+                } else if (props.strategy.details.orderQuantity.type === "%") {
+                  setQuantityError("");
+                  props.strategy.details.orderQuantity.amount =
+                    event.target.value;
+                  props.updateStrategy();
+                } else if (/^\d*$/.test(event.target.value)) {
+                  setQuantityError("");
+                  props.strategy.details.orderQuantity.amount =
+                    event.target.value;
+                  props.updateStrategy();
+                } else {
+                  setQuantityError("Please enter a whole number.");
+                }
+              }}
+              className="h-8 bg-green-600 hover:bg-green-400 active:bg-green-700 border-white text-white border-2 rounded-md w-20 text-xl font-semibold px-1 py-4 duration-300"
+              type="number"
+            />
+            <div
+              ref={quantityTypeRef}
+              onClick={toggleQuantityTypeDropdown}
+              className={`rounded-lg flex justify-between items-center border-2 border-white duration-300 cursor-pointer origin-bottom
+           ${
+             props.strategy.details.orderQuantity
+               ? "bg-green-600 hover:bg-green-500 active:bg-green-800"
+               : "bg-gray-600 hover:bg-gray-500 active:bg-gray-800"
+           }`}
+            >
+              {props.strategy.details.orderQuantity ? (
+                <div className="flex flex-col items-center justify-center">
+                  <h3 className="leading-tight text-xl flex-grow py-2 px-4 font-semibold">
+                    {props.strategy.details.orderQuantity.type}
+                  </h3>
+                </div>
+              ) : (
+                <p className="leading-tight text-lg flex-grow py-2 px-4">
+                  Select Type
+                </p>
+              )}
+              <AiFillCaretDown color="white" size="30" />
+            </div>
+          </div>
           {quantityError && <p className="text-red-600">{quantityError}</p>}
         </div>
+        <Dropdown
+          isDropdownActive={quantityTypeDropdown}
+          toggleDropdown={toggleQuantityTypeDropdown}
+          left={typeLeft + "rem"}
+          top={typeTop}
+        >
+          <DropdownButton
+            onClick={() => {
+              props.strategy.details.orderQuantity = { type: "%", amount: 1 };
+              toggleQuantityTypeDropdown();
+              props.updateStrategy();
+            }}
+            name="Percentage of Portfolio"
+            lineBreak={false}
+          />
+          <DropdownButton
+            onClick={() => {
+              props.strategy.details.orderQuantity = {
+                type: "Share(s)",
+                amount: 1,
+              };
+              toggleQuantityTypeDropdown();
+              props.updateStrategy();
+            }}
+            name="Shares"
+            lineBreak={true}
+          />
+        </Dropdown>
       </div>
       <hr className="w-full" />
       {/* <div className="flex justify-between items-center">
@@ -275,6 +368,8 @@ function TradeDetails(props) {
                   <input
                     onMouseEnter={() => setRiskManagementDisabled(true)}
                     onMouseLeave={() => setRiskManagementDisabled(false)}
+                    onTouchStart={() => setDisabled(true)}
+                        onTouchEnd={() => setDisabled(false)}
                     value={riskNum}
                     onChange={riskNumChangeHandler}
                     className={`h-8 ${
@@ -362,8 +457,10 @@ function TradeDetails(props) {
         </Dropdown>
       </div>
       <hr className="w-full" /> */}
-      <div className="flex justify-between items-center">
-        <p className="text-2xl font-semibold flex-grow">Stop-Loss Price:</p>
+      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+        <p className="text-lg sm:text-2xl font-semibold flex-grow">
+          Stop-Loss Price:
+        </p>
         <div className="flex flex-col items-end">
           <div
             ref={stopLossRef}
@@ -390,6 +487,8 @@ function TradeDetails(props) {
                     <input
                       onMouseEnter={() => setDisabled(true)}
                       onMouseLeave={() => setDisabled(false)}
+                      onTouchStart={() => setDisabled(true)}
+                      onTouchEnd={() => setDisabled(false)}
                       value={currentNum}
                       onChange={changeHandler}
                       className={`h-8 ${
@@ -411,6 +510,8 @@ function TradeDetails(props) {
                         }
                         onMouseEnter={() => setDisabled(true)}
                         onMouseLeave={() => setDisabled(false)}
+                        onTouchStart={() => setDisabled(true)}
+                        onTouchEnd={() => setDisabled(false)}
                         className={`border-2 border-white rounded-md duration-300 max-w-[15rem] cursor-pointer ${
                           props.strategy.details.stopLoss.value
                             ? `bg-shaded-500 ${
@@ -517,7 +618,11 @@ function TradeDetails(props) {
                             </>
                           )
                       )}
-                      {error && <p className="text-red-600 w-full text-center">{error}</p>}
+                      {error && (
+                        <p className="text-red-600 w-full text-center">
+                          {error}
+                        </p>
+                      )}
                       <button
                         onClick={restoreDefaults}
                         type="button"
@@ -630,8 +735,10 @@ function TradeDetails(props) {
         </Dropdown>
       </div>
       <hr className="w-full" />
-      <div className="flex justify-between items-center">
-        <p className="text-2xl font-semibold flex-grow">Risk/Reward Ratio:</p>
+      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+        <p className="text-lg sm:text-2xl font-semibold flex-grow">
+          Risk/Reward Ratio:
+        </p>
         <div className="flex flex-col items-end">
           <div className="flex items-center">
             <p className="text-white text-xl font-semibold pr-2">1 :</p>

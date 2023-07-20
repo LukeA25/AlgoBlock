@@ -14,11 +14,11 @@ function Dashboard() {
 
   if (!currentUser) {
     return (
-      <div className="w-screen min-h-[calc(100vh-13.6rem)] relative pt-20">
-        <h1 className="text-white text-7xl text-center font-semibold pt-20">
+      <div className="w-screen min-h-[calc(100vh-12.6rem)] sm:min-h-[calc(100vh-13.6rem)] relative pt-20">
+        <h1 className="text-white text-6xl sm:text-7xl text-center font-semibold pt-20">
           Oops...
         </h1>
-        <h3 className="text-white text-5xl text-center pt-6 m-auto w-2/3">
+        <h3 className="text-white text-3xl sm:text-5xl text-center pt-6 m-auto w-2/3">
           You're not supposed to be here yet. Visit the{" "}
           <Link
             to="/"
@@ -46,7 +46,7 @@ function Dashboard() {
         Dashboard
       </h1>
       <div className="w-3/4 max-w-4xl bg-gray-800 rounded-lg m-auto border-2 border-white mt-10 mb-16">
-        <h2 className="text-white text-5xl font-semibold px-10 py-6">
+        <h2 className="text-white text-3xl sm:text-5xl font-semibold px-[5%] py-6">
           {username}
         </h2>
         <div className="w-[90%] rounded-xl bg-gray-700 m-auto flex p-8 flex-col mb-6 gap-8">

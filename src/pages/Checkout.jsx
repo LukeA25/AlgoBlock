@@ -5,7 +5,7 @@ import { useStrategyContext } from "../components/strategyContext";
 import convertScript from "../StrategyConverter";
 
 function Checkout() {
-  const { strategy } = useStrategyContext();
+  const { strategy, purchaseStrategy } = useStrategyContext();
   const [script, setScript] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -13,16 +13,17 @@ function Checkout() {
     if (strategy.name) {
       const newScript = convertScript(strategy);
       setScript(newScript);
+    //   purchaseStrategy();
     }
   }, []);
 
   if (!strategy.name) {
     return (
-      <div className="w-screen h-[calc(100vh-13.6rem)] relative pt-20">
-        <h1 className="text-white text-7xl text-center font-semibold pt-20">
+      <div className="w-screen min-h-[calc(100vh-12.6rem)] sm:min-h-[calc(100vh-13.6rem)] relative pt-20">
+        <h1 className="text-white text-6xl sm:text-7xl text-center font-semibold pt-20">
           Oops...
         </h1>
-        <h3 className="text-white text-5xl text-center pt-6 m-auto w-2/3">
+        <h3 className="text-white text-3xl sm:text-5xl text-center pt-6 m-auto w-2/3">
           You're not supposed to be here yet. Visit the{" "}
           <Link
             to="/"
@@ -45,7 +46,7 @@ function Checkout() {
       >
         Copied to Clipboard!
       </div>
-      <div className="w-2/3 max-w-4xl bg-gray-800 rounded-lg m-auto my-20 border-2 border-white overflow-hidden">
+      <div className="w-[90%] sm:w-2/3 max-w-4xl bg-gray-800 rounded-lg m-auto my-20 border-2 border-white overflow-hidden">
         <div className="flex justify-between items-center bg-green-600 rounded-t-md p-2 border-b-2 border-white">
           <p className="text-white font-semibold text-3xl">
             "<b className="font-bold">{strategy.name}</b>"{" Script"}

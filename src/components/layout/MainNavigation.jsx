@@ -23,11 +23,11 @@ function MainNavigation(props) {
     >
       <div className="w-1/3">
         <button onClick={props.toggleNavBar}>
-          <CgMenu size="40" color="white" />
+          <CgMenu color="white" className="h-8 w-8 ml-2 sm:m-0 sm:h-10 sm:w-10" />
         </button>
       </div>
       <HashLink replace to="/#top">
-        <img src={logo} className="h-12" />
+        <img src={logo} className="w-48 sm:h-12 sm:w-auto" />
       </HashLink>
       {currentUser ? (
         <div className="w-1/3 flex justify-end">
@@ -37,16 +37,16 @@ function MainNavigation(props) {
           >
             <CgProfile
               size="40"
-              className="mr-2 text-gray-200 group-hover:text-white group-active:text-gray-400 duration-300"
+              className="mr-2 text-gray-200 group-hover:text-white group-active:text-gray-400 duration-300 hidden sm:inline"
             />
-            <p className="text-xl text-gray-200 group-hover:text-white group-active:text-gray-400 duration-300 pt-1 mr-1 ">
+            <p className="text-sm sm:text-xl text-gray-200 group-hover:text-white group-active:text-gray-400 duration-300 pt-1 sm:mr-1 text-right">
               Welcome, <b>{username}</b>!
             </p>
           </button>
         </div>
       ) : (
-        <div className="flex w-1/3 justify-end">
-          <CgProfile size="40" color="white" className="mr-2" />
+        <div className="flex w-1/3 items-center sm:items-start justify-end">
+          <CgProfile color="white" className="mr-1 sm:mr-2 h-6 w-6 sm:h-10 sm:w-10" />
           <button
             onClick={() => {
               if (props.isSignUpActive) {
@@ -56,11 +56,11 @@ function MainNavigation(props) {
                 props.toggleLogin();
               }
             }}
-            className="text-xl text-white pt-1 mr-2 mb-2 font-semibold hover:text-green-600 active:text-green-700 duration-300"
+            className="text-sm sm:text-xl text-white sm:pt-1 mr-2 sm:mb-2 font-semibold hover:text-green-600 active:text-green-700 duration-300"
           >
             Login
           </button>
-          <p className="text-xl text-white pt-1 mr-2">or</p>
+          <p className="sm:text-xl text-white hidden sm:inline pt-1 mr-2">or</p>
           <button
             onClick={() => {
               if (!props.isSignUpActive) {
@@ -70,7 +70,7 @@ function MainNavigation(props) {
                 props.toggleLogin();
               }
             }}
-            className="text-xl text-white pt-1 mr-1 mb-2 font-semibold hover:text-green-600 active:text-green-700 duration-300"
+            className="sm:text-xl text-white hidden sm:inline sm:pt-1 sm:mr-1 sm:mb-2 font-semibold hover:text-green-600 active:text-green-700 duration-300"
           >
             Sign Up
           </button>
@@ -79,7 +79,7 @@ function MainNavigation(props) {
       <Dropdown
         isDropdownActive={isUserDropdownActive}
         toggleDropdown={toggleUserDropdown}
-        left="85vw"
+        right=" right-[2rem]"
         top="4"
       >
         <DropdownButton

@@ -58,47 +58,47 @@ function Footer() {
     <footer className="bg-black w-screen py-10 px-[10%] border-t-2 border-t-white flex relative justify-between gap-8">
       <div className="flex flex-col gap-4">
         <HashLink to="/#top" required>
-          <img src={logo} className="w-64" />
+          <img src={logo} className="w-32 sm:w-64" />
         </HashLink>
         <div className="flex justify-center gap-[16.6%]">
           <a href="https://instagram.com" target="_blank">
-            <AiOutlineInstagram size="40" color="rgb(22, 163, 74)" />
+            <AiOutlineInstagram color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
           </a>
           <a href="https://twitter.com" target="_blank">
-            <AiOutlineTwitter size="40" color="rgb(22, 163, 74)" />
+            <AiOutlineTwitter color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
           </a>
           <a href="https://tiktok.com" target="_blank">
-            <FaTiktok size="40" color="rgb(22, 163, 74)" />
+            <FaTiktok color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
           </a>
         </div>
       </div>
-      <div className="flex flex-col gap-2 w-30">
+      <div className="flex flex-col gap-2 w-30 justify-between sm:justify-start">
+        <Link
+          to="/about-us"
+          className="text-gray-300 hover:text-white active:text-gray-500 sm:text-xl"
+        >
+          About Us
+        </Link>
         <Link
           to="/contact-us"
-          className="text-gray-300 hover:text-white active:text-gray-500 text-xl"
+          className="text-gray-300 hover:text-white active:text-gray-500 sm:text-xl"
         >
           Contact Us
         </Link>
         <Link
           to="/terms-of-service"
-          className="text-gray-300 hover:text-white active:text-gray-500 text-xl"
+          className="text-gray-300 hover:text-white active:text-gray-500 sm:text-xl"
         >
           Terms of Service
         </Link>
         <Link
-          to="/return-policy"
-          className="text-gray-300 hover:text-white active:text-gray-500 text-xl"
-        >
-          Return Policy
-        </Link>
-        <Link
           to="/privacy-policy"
-          className="text-gray-300 hover:text-white active:text-gray-500 text-xl"
+          className="text-gray-300 hover:text-white active:text-gray-500 sm:text-xl"
         >
           Privacy Policy
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="hidden sm:flex flex-col gap-2">
         <div className="flex gap-2">
           <IoIosMail color="white" size="30" />
           <h2 className="text-white text-xl">Stay up to date with AlgoBlock</h2>

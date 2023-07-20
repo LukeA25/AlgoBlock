@@ -13,9 +13,9 @@ function DashboardItem(props) {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:items-center">
         <div className="flex flex-col">
-          <p className="font-semibold text-green-600">{props.title}</p>
+          <p className="font-semibold text-green-600 text-sm sm:text-base">{props.title}</p>
           {edit ? (
             <input
               value={value}
@@ -24,10 +24,10 @@ function DashboardItem(props) {
               onChange={(event) => {
                 setValue(event.target.value);
               }}
-              className="text-xl bg-gray-700 text-white border-b-2 border-white"
+              className="text-lg sm:text-xl bg-gray-700 text-white border-b-2 border-white"
             />
           ) : (
-            <p className="text-xl">
+            <p className="text-lg sm:text-xl">
               {props.title === "EMAIL" ? email : props.editRef}
             </p>
           )}
@@ -53,16 +53,16 @@ function DashboardItem(props) {
               }
               toggleEdit();
             }}
-            className="py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 active:bg-green-800 border-2 border-white duration-300 flex gap-2 items-center"
+            className="py-1 sm:py-2 px-4 rounded-md bg-green-600 hover:bg-green-500 active:bg-green-800 border-2 w-min border-white duration-300 flex gap-2 items-center"
           >
             Update
           </button>
         ) : (
           <button
             onClick={toggleEdit}
-            className="py-2 pl-2 pr-4 rounded-md bg-gray-500 hover:bg-gray-400 active:bg-gray-700 duration-300 flex gap-2 items-center"
+            className="py-1 sm:py-2 pl-2 pr-4 rounded-md bg-gray-500 hover:bg-gray-400 active:bg-gray-700 duration-300 w-min flex gap-2 items-center"
           >
-            <MdEdit size="20" /> Edit
+            <MdEdit className="sm:w-6 sm:h-6" /> Edit
           </button>
         )}
       </div>

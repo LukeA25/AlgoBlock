@@ -8,12 +8,10 @@ function CommunityIndicatorMiniDropdown(props) {
     <>
       <div className="flex-grow">
         <input
-          onMouseEnter={() => {
-            props.setDisabled(true);
-          }}
-          onMouseLeave={() => {
-            props.setDisabled(false);
-          }}
+          onMouseEnter={() => props.setDisabled(true)}
+          onMouseLeave={() => props.setDisabled(false)}
+          onTouchStart={() => props.setDisabled(true)}
+          onTouchEnd={() => props.setDisabled(false)}
           onChange={(event) => {
             setName(event.target.value);
             props.indicator.name = event.target.value;

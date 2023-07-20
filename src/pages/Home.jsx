@@ -87,24 +87,31 @@ function Home() {
       // animate={{ backgroundColor: "grey"}}
       // exit={{ backgroundColor: "grey", transition: {duration: 2000}}}
     >
-      <section id="home" className="w-screen h-[calc(100vh-5rem)] bg-black">
+      <section
+        id="home"
+        className="w-screen h-[calc(100vh-5rem)] bg-black overflow-y-hidden"
+      >
         <article className="h-full w-full rounded-2xl overflow-hidden aspect-[27/20] m-auto">
           <div className="w-full h-[calc(100vh-5rem)] bg-black bg-opacity-75 absolute z-10 border-b-2 border-white">
             <div className="w-2/3 mt-[30vh] mx-auto">
-              <h1 className="text-white text-8xl h-24 mb-4">AlgoBlock</h1>
-              <p className="text-white text-4xl">Making algorithmic</p>
+              <h1 className="text-white text-5xl sm:text-8xl mb-2 sm:mb-4">
+                AlgoBlock
+              </h1>
+              <p className="text-white text-2xl sm:text-4xl">
+                Making algorithmic
+              </p>
               <div className="flex">
-                <p className="text-white text-4xl">
+                <p className="text-white text-2xl sm:text-4xl">
                   trading&nbsp;
                   <b className="font-semibold text-green-600">
                     {changingTitle}
                   </b>
                 </p>
-                <div className="h-8 aspect-[4/7] bg-white relative top-[0.15rem] left-1 my-auto animate-cursor-flash" />
+                <div className="h-[1.25rem] sm:h-8 aspect-[4/7] bg-white relative sm:top-[0.15rem] left-[0.1rem] sm:left-1 my-auto animate-cursor-flash" />
               </div>
               <button
-                className="bg-green-600 hover:bg-green-500 active:bg-green-800 transition-colors duration-300 border-white border-2 w-48 h-12
-          rounded-lg text-white text-2xl font-semibold my-4"
+                className="bg-green-600 hover:bg-green-500 active:bg-green-800 transition-colors duration-300 border-white border-2 w-36 h-8 sm:w-48 sm:h-12
+          rounded-lg text-white sm:text-2xl font-semibold my-4"
                 id="Step-1"
                 onClick={() => window.location.replace("/#what-is-it")}
               >
@@ -120,26 +127,25 @@ function Home() {
       </section>
 
       <section id="what-is-it" className="bg-gray-900 w-screen py-10 px-[10%]">
-        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-6xl font-semibold mb-8">
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-4xl sm:text-6xl font-semibold mb-4 sm:mb-8">
           What is it?
         </h1>
-        <p className="text-white text-2xl" id="Step-2">
-          AlgoBlock allows you to buy and sell stocks automatically by creating
-          your own strategy. This is known as <b>algorithmic trading.</b> This
-          normally requires programming experience, but AlgoBlock makes it
-          simple. By creating a simple user interface, AlgoBlock makes it easier
-          to understand advanced trading concepts, and allows the users to have
-          creative freedom even with limited trading experience.
+        <p className="text-white text-lg sm:text-2xl" id="Step-2">
+          AlgoBlock allows you create a strategy for TradingView without any
+          coding experience. This is perfect for those looking to dive deeper
+          into technical analysis. Rather than learning how to code, you can
+          focus on the logic behind the strategies and backtest them on
+          TradingView to evaluate their performance.
         </p>
       </section>
 
-      <hr className="border-white m-auto w-1/2" />
+      <hr className="border-white m-auto w-5/6 sm:w-1/2" />
 
       <section id="how-does-it-work" className="w-screen py-10 -z-20 px-[10%]">
-        <div className="w-2 h-full ml-[calc(40vw-0.25rem)] absolute -z-10 bg-black" />
-        <div className="w-2 h-28 absolute ml-[calc(40vw-0.25rem)] -mt-10 bg-gray-900" />
-        <div className="w-2 h-16 ml-[calc(40vw-0.25rem)] mt-[4.5rem] absolute bg-gradient-to-b from-gray-900 to-transparent" />
-        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-6xl font-semibold z-50">
+        <div className="w-2 h-[75rem] ml-4 sm:ml-[calc(40vw-0.25rem)] absolute -z-10 bg-black" />
+        <div className="w-2 h-20 absolute ml-4 sm:ml-[calc(40vw-0.25rem)] -mt-10 bg-gray-900" />
+        <div className="w-2 h-16 ml-4 sm:ml-[calc(40vw-0.25rem)] mt-[2.5rem] absolute bg-gradient-to-b from-gray-900 to-transparent" />
+        <h1 className="text-green-600 -mt-6 bg-clip-text absolute bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-4xl sm:text-6xl font-semibold z-30">
           How does it work?
         </h1>
         <ScrollInfo
@@ -153,60 +159,73 @@ function Home() {
           isActive={pos}
           index={1}
           title="Step 2 - Download Your "
-          boldTitle="Program"
-          description="After building your strategy, "
+          boldTitle="Script"
+          description="After building your strategy, AlgoBlock will convert it into Pine script, which can be copied and pasted into TradingView for further use."
         />
         <ScrollInfo
           isActive={pos}
           index={2}
-          title="Step 3 - Connect to Your "
-          boldTitle="Broker"
-          description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
+          title="Step 3 - Backtest Your "
+          boldTitle="Strategy"
+          description="Backtesting is essential to estimate a strategy's future performance. TradingView makes this easy, and you can fine tune the specifics of your strategy."
         />
         <ScrollInfo
           isActive={pos}
           index={3}
           title="Step 4 - Run Your "
-          boldTitle="Program"
-          description="After purchasing your program, download your program, log into your account, and select which strategy you would like to use."
+          boldTitle="Script"
+          description="Using TradingView's built in Trading Panel, you can easily connect your broker and start using your strategy."
         />
-        <div className="w-2 ml-[calc(40vw-0.25rem)] -mt-4 h-[3.5rem] m-auto absolute bg-gray-900" />
-        <div className="w-2 ml-[calc(40vw-0.25rem)] -mt-20 h-16 m-auto absolute bg-gradient-to-t from-gray-900 to-transparent" />
+        <div className="w-2 ml-4 sm:ml-[calc(40vw-0.25rem)] -mt-4 h-[3.5rem] m-auto absolute bg-gray-900" />
+        <div className="w-2 ml-4 sm:ml-[calc(40vw-0.25rem)] -mt-20 h-16 m-auto absolute bg-gradient-to-t from-gray-900 to-transparent" />
       </section>
 
-      <hr className="border-white m-auto w-1/2" />
+      <hr className="border-white m-auto w-5/6 sm:w-1/2" />
 
       <section
         id="why-algoblock"
         className="bg-gray-900 w-screen py-10 px-[10%]"
       >
-        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-20 text-6xl font-semibold mb-8">
+        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-10 sm:h-20 text-4xl sm:text-6xl font-semibold mb-8">
           Why AlgoBlock?
         </h1>
-        <div className="flex flex-col sm:flex-row justify-center gap-[10vw]">
+        <div className="flex flex-col sm:flex-row justify-center gap-16 sm:gap-[10vw] mb-4">
           <InfoCard
-            icon={<TbShieldLockFilled size="150" color="rgb(22, 163, 74)" />}
+            icon={
+              <TbShieldLockFilled
+                color="rgb(22, 163, 74)"
+                className="w-24 h-24 sm:w-36 sm:h-36"
+              />
+            }
             title="Security"
             key="Security"
-            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+            description="AlgoBlock doesn't require any of your financial data to be used, keeping our users safe."
           />
           <InfoCard
             icon={
-              <BsFillLightningChargeFill size="150" color="rgb(22, 163, 74)" />
+              <BsFillLightningChargeFill
+                color="rgb(22, 163, 74)"
+                className="w-24 h-24 sm:w-36 sm:h-36"
+              />
             }
             title="Speed"
             key="Speed"
-            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+            description="With AlgoBlock's simple user interface, strategies can be created and downloaded extremely quickly."
           />
           <InfoCard
-            icon={<AiFillDollarCircle size="150" color="rgb(22, 163, 74)" />}
+            icon={
+              <AiFillDollarCircle
+                color="rgb(22, 163, 74)"
+                className="w-24 h-24 sm:w-36 sm:h-36"
+              />
+            }
             title="Low Price"
             key="Low Price"
-            description="AlgoBlock only requires user data on the client-side, meaning that it is not stored or used online. This makes AlgoBlock's users immune to data breeches, keeping our users safe."
+            description="AlgoBlock provides these services at a low price so that you can spend less and gain more."
           />
         </div>
       </section>
-      <div className="fixed w-2 h-1/2 right-0 top-0 ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
+      <div className="fixed w-2 h-1/2 right-0 top-0 ml-[3.44rem] sm:ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
     </motion.div>
   );
 }
