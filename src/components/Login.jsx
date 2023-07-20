@@ -1,13 +1,14 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import UserContext from "./UserContext";
+import { useUserContext } from "./UserContext";
 
 function Login(props) {
   const [showPassword, setShowPassword] = useState(false);
-  const [failedLogin, setFailedLogin] = useState(false);
-  const { setUserKey, setIsLoggedIn, setUsername } = useContext(UserContext);
-  const usernameRef = useRef();
+  const [error, setError] = useState("");
+  const { login } = useUserContext();
+  const [loading, setLoading] = useState(false);
+  const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
 
@@ -15,59 +16,39 @@ function Login(props) {
     setShowPassword(!showPassword);
   }
 
-  function loginHandler(loginData) {
-    fetch("https://algoblock-4a1c4-default-rtdb.firebaseio.com/userData.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        for (const key in data) {
-          console.log(JSON.stringify(loginData["password"]));
-          console.log(JSON.stringify(data[key]["loginData"]["password"]));
-          console.log(JSON.stringify(data[key]["loginData"]["password"]).localeCompare(JSON.stringify(loginData["password"])));
-          if (JSON.stringify(data[key]["loginData"]["username"]).localeCompare(JSON.stringify(loginData["username"])) == 0 && JSON.stringify(data[key]["loginData"]["password"]).localeCompare(JSON.stringify(loginData["password"])) == 0) {
-            setIsLoggedIn(true);
-            setUsername(loginData["username"]);
-            setUserKey(key);
-            return true;
-          }
-        }
-
-        return false;
-      })
-      .then((key) => {
-        if (key) {
-          props.toggleLogin();
-          navigate("/strategies", { replace: true });
-        } else {
-          setFailedLogin(true);
-          return false;
-        }
-      });
-  }
-
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
-    setFailedLogin(false);
 
-    const loginData = {
-      username: usernameRef.current.value,
-      password: passwordRef.current.value,
-    };
-
-    return loginHandler(loginData);
+    try {
+      setError("");
+      setLoading(true);
+      await login(
+        emailRef.current.value.toLowerCase(),
+        passwordRef.current.value
+      );
+      props.toggleLogin();
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      if (error.code === "auth/user-not-found") {
+        setError("Incorrect email or password");
+      } else {
+        console.error("Login Error:", error);
+        setError("Unable to Log In");
+      }
+    }
+    setLoading(false);
   }
 
   return (
     <form className="flex flex-col" onSubmit={submitHandler}>
-      {failedLogin ? (
-        <p className="text-lg text-red-600 text-center">
-          Incorrect username or password. Please try again.
-        </p>
-      ) : null}
+      {error && (
+        <div className="border-2 border-red-600 w-full h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center">
+          {error}
+        </div>
+      )}
       <div className="flex flex-row w-full justify-between mt-4">
-        <label htmlFor="username-input" className="text-xl font-semibold">
-          Username
+        <label htmlFor="email-input" className="text-xl font-semibold">
+          Email
         </label>
         <p>
           {"Need an account? "}
@@ -81,11 +62,11 @@ function Login(props) {
         </p>
       </div>
       <input
-        id="username-input"
-        type="text"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
+        id="email-input"
+        type="email"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 mx-auto text-black w-96 rounded-lg text-xl pl-2 py-2 mb-4 mt-1 z-10"
         required
-        ref={usernameRef}
+        ref={emailRef}
       />
       <div className="flex flex-row w-full justify-between">
         <label htmlFor="password-input" className="text-xl font-semibold">
@@ -107,11 +88,11 @@ function Login(props) {
       <input
         type={showPassword ? "text" : "password"}
         id="password-input"
-        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 h-16 rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
+        className="border-black border-2 focus:border-[3px] bg-white focus:bg-green-100 transition-colors duration-300 m-auto text-black w-96 rounded-lg text-xl pl-2 py-2 mb-2 mt-1 z-10"
         required
         ref={passwordRef}
       />
-      <div className="flex gap-8 mt-8">
+      <div className="flex gap-8 mt-4">
         <button
           type="button"
           className="w-48  h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-medium"
@@ -119,10 +100,24 @@ function Login(props) {
         >
           Cancel
         </button>
-        <button className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-medium">
+        <button
+          disabled={loading}
+          className={`w-48 h-12 m-auto ${
+            loading
+              ? "bg-green-300"
+              : "bg-green-600 hover:bg-green-500 active:bg-green-700"
+          } transition-all duration-300 border-black border-2 rounded-lg text-white text-2xl font-semibold`}
+        >
           Submit
         </button>
       </div>
+      <button
+        type="button"
+        className="text-green-600 font-bold hover:text-green-400 duration-300 active:text-green-700 mt-4"
+        onClick={props.toggleResetPassword}
+      >
+        Forgot Password?
+      </button>
     </form>
   );
 }

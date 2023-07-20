@@ -1,13 +1,13 @@
 import NavBarItem from "../NavBarItem";
-import { useContext } from "react";
-import UserContext from "../UserContext";
 
 import { AiFillHome } from "react-icons/ai";
-import { BsTools } from "react-icons/bs";
+import { BsPeopleFill, BsTools } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { useUserContext } from "../UserContext";
 
 function NavBar(props) {
-  const { isLoggedIn } = useContext(UserContext);
+  const { currentUser } = useUserContext();
   return (
     <div
       className={
@@ -32,7 +32,7 @@ function NavBar(props) {
             icon={<AiFillHome size="50" />}
             tooltip="Home"
           />
-          {isLoggedIn ? (
+          {currentUser ? (
             <NavBarItem
               to="/strategies"
               toggleActive={props.toggleActive}
@@ -56,11 +56,23 @@ function NavBar(props) {
             </button>
           )}
           <NavBarItem
-            to="/marketplace"
+            to="/about-us"
             toggleActive={props.toggleActive}
-            icon={<FaShoppingCart size="50" />}
-            tooltip="Marketplace (Coming Soon!)"
+            icon={<BsPeopleFill size="50" />}
+            tooltip="About Us"
           />
+          <NavBarItem
+            to="/contact-us"
+            toggleActive={props.toggleActive}
+            icon={<IoIosMail size="50" />}
+            tooltip="Contact Us"
+          />
+          <div className="sidebar-icon group pointer-events-auto">
+            <FaShoppingCart size="50" />
+            <span className="sidebar-tooltip group-hover:scale-100">
+              Marketplace (Coming Soon!)
+            </span>
+          </div>
         </ul>
       </div>
     </div>

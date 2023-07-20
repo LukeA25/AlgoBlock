@@ -1,8 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "../pages/Home";
-import Strategies from "../pages/Strategies";
-import Marketplace from "../pages/Marketplace";
-import Workspace from "../pages/Workspace";
+
 
 import { AnimatePresence } from "framer-motion";
 

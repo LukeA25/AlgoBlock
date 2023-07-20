@@ -1,0 +1,666 @@
+{
+  "crossover": {
+    "name": "Crossover",
+    "values": ["", "", ""],
+    "info": {
+      "text": "crosses",
+      "items": [
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        },
+        {
+          "prompt": "Direction",
+          "options": ["Above", "Below", "Either"]
+        },
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        }
+      ]
+    }
+  },
+  "thresholdCross": {
+    "name": "Threshold Cross",
+    "values": ["", "", ""],
+    "info": {
+      "text": "crosses",
+      "items": [
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        },
+        {
+          "prompt": "Direction",
+          "options": ["Above", "Below", "Either"]
+        },
+        {
+          "prompt": "Value",
+          "options": [{ "name": "Enter Value", "value": 0 }]
+        }
+      ]
+    }
+  },
+  "trend": {
+    "name": "Trend",
+    "values": ["", "", ""],
+    "info": {
+      "text": "has a slope",
+      "items": [
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        },
+        {
+          "prompt": "Inequality",
+          "options": ["Greater Than", "Less Than"]
+        },
+        {
+          "prompt": "Choose Value",
+          "options": [{ "name": "Enter Value", "value": 0 }]
+        }
+      ]
+    }
+  },
+  "time": {
+    "name": "Time",
+    "values": ["", ""],
+    "info": {
+      "text": "is",
+      "items": [
+        {
+          "prompt": "time"
+        },
+        {
+          "prompt": "Inequality",
+          "options": ["Earlier Than", "Later Than", "Equal To"]
+        },
+        {
+          "prompt": "Choose Time",
+          "options": [{ "name": "Enter Time", "value": "00:00" }]
+        }
+      ]
+    }
+  },
+  "thresholdComparison": {
+    "name": "Threshold Comparison",
+    "values": ["", "", ""],
+    "info": {
+      "text": "is",
+      "items": [
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        },
+        {
+          "prompt": "Inequality",
+          "options": ["Greater Than", "Less Than"]
+        },
+        {
+          "prompt": "Choose Value",
+          "options": [{ "name": "Enter Value", "value": 0 }]
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "name": "Comparison",
+    "values": ["", "", ""],
+    "info": {
+      "text": "is",
+      "items": [
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        },
+        {
+          "prompt": "Inequality",
+          "options": ["Greater Than", "Less Than"]
+        },
+        {
+          "prompt": "Choose Indicator",
+          "options": "indicators"
+        }
+      ]
+    }
+  },
+  "indicators": [
+    {
+      "name": "Arnaud Legoux Moving Average",
+      "function": "alma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" },
+        {
+          "name": "Offset",
+          "defaultValue": 0.85,
+          "value": 0.85,
+          "type": "real"
+        },
+        { "name": "Sigma", "defaultValue": 6, "value": 6, "type": "real" }
+      ],
+      "output": {
+        "name": "alma",
+        "color": "color.blue",
+        "plot": true,
+        "title": "ALMA"
+      }
+    },
+    {
+      "name": "Average True Range",
+      "function": "atr",
+      "inputs": [
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "atr",
+        "plot": false
+      }
+    },
+    {
+      "name": "Bollinger Bands",
+      "function": "bb",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" },
+        {
+          "name": "Standard Deviation",
+          "defaultValue": 2,
+          "value": 2,
+          "type": "real"
+        }
+      ],
+      "activeOutput": "Upper Band",
+      "outputs": [
+        {
+          "displayName": "Middle Band",
+          "varName": "middleBand",
+          "color": "color.orange",
+          "plot": true,
+          "title": "Middle Band"
+        },
+        {
+          "displayName": "Upper Band",
+          "varName": "upperBand",
+          "color": "color.blue",
+          "plot": true,
+          "title": "Upper Band"
+        },
+        {
+          "displayName": "Lower Band",
+          "varName": "lowerBand",
+          "color": "color.blue",
+          "plot": true,
+          "title": "Lower Band"
+        }
+      ]
+    },
+    {
+      "name": "Bollinger Bands Width",
+      "function": "bbw",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" },
+        {
+          "name": "Standard Deviation",
+          "defaultValue": 2,
+          "value": 2,
+          "type": "real"
+        }
+      ],
+      "output": {
+        "name": "bbandsWidth",
+        "plot": false
+      }
+    },
+    {
+      "name": "Commodity Channel Index",
+      "function": "cci",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" }
+      ],
+      "output": {
+        "name": "cci",
+        "plot": false
+      }
+    },
+    {
+      "name": "Chande Momentum Oscillator",
+      "function": "cmo",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "cmo",
+        "plot": false
+      }
+    },
+    {
+      "name": "Center of Gravity",
+      "function": "cog",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "cog",
+        "plot": false
+      }
+    },
+    {
+      "name": "Deviation",
+      "function": "dev",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "dev",
+        "plot": false
+      }
+    },
+    {
+      "name": "Directional Movement Index",
+      "function": "dmi",
+      "inputs": [
+        "close",
+        { "name": "DI Length", "defaultValue": 14, "value": 14, "type": "int" },
+        {
+          "name": "ADX Smoothing",
+          "defaultValue": 14,
+          "value": 14,
+          "type": "int"
+        }
+      ],
+      "activeOutput": "+DI",
+      "outputs": [
+        {
+          "displayName": "+DI",
+          "varName": "diplus",
+          "plot": false
+        },
+        {
+          "displayName": "-DI",
+          "varName": "diminus",
+          "plot": false
+        },
+        {
+          "displayName": "ADX",
+          "varName": "adx",
+          "plot": false
+        }
+      ]
+    },
+    {
+      "name": "Exponential Moving Average",
+      "function": "ema",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "ema",
+        "color": "color.white",
+        "plot": true,
+        "title": "EMA"
+      }
+    },
+    {
+      "name": "Hull Moving Average",
+      "function": "hma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "hma",
+        "color": "color.yellow",
+        "plot": true,
+        "title": "HMA"
+      }
+    },
+    {
+      "name": "Keltner Channels",
+      "function": "kc",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" },
+        { "name": "Multiplier", "defaultValue": 2, "value": 2, "type": "real" }
+      ],
+      "activeOutput": "Upper",
+      "outputs": [
+        {
+          "displayName": "Middle",
+          "varName": "middleKC",
+          "color": "color.blue",
+          "plot": true,
+          "title": "Middle"
+        },
+        {
+          "displayName": "Upper",
+          "varName": "upperKC",
+          "color": "color.blue",
+          "plot": true,
+          "title": "Upper"
+        },
+        {
+          "displayName": "Lower",
+          "varName": "lowerKC",
+          "color": "color.blue",
+          "plot": true,
+          "title": "Lower"
+        }
+      ]
+    },
+    {
+      "name": "Keltner Channels Width",
+      "function": "kcw",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" },
+        {
+          "name": "Standard Deviation",
+          "defaultValue": 2,
+          "value": 2,
+          "type": "real"
+        }
+      ],
+      "output": {
+        "name": "KCWidth",
+        "plot": false
+      }
+    },
+    {
+      "name": "Linear Regression",
+      "function": "linreg",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" },
+        { "name": "Offset", "defaultValue": 2, "value": 2, "type": "real" }
+      ],
+      "output": {
+        "name": "bbandsWidth",
+        "plot": false
+      }
+    },
+    {
+      "name": "Moving Average Convergence/Divergence",
+      "function": "macd",
+      "inputs": [
+        "close",
+        {
+          "name": "Fast Length",
+          "defaultValue": 12,
+          "value": 12,
+          "type": "int"
+        },
+        {
+          "name": "Slow Length",
+          "defaultValue": 26,
+          "value": 26,
+          "type": "int"
+        },
+        {
+          "name": "Signal Length",
+          "defaultValue": 9,
+          "value": 9,
+          "type": "int"
+        }
+      ],
+      "activeOutput": "MACD Line",
+      "outputs": [
+        {
+          "displayName": "MACD Line",
+          "varName": "macdLine",
+          "plot": false
+        },
+        {
+          "displayName": "Signal Line",
+          "varName": "signalLine",
+          "plot": false
+        },
+        {
+          "displayName": "Histogram Line",
+          "varName": "histLine",
+          "plot": false
+        }
+      ]
+    },
+    {
+      "name": "Money Flow Index",
+      "function": "mfi",
+      "inputs": [
+        "hlc3",
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "mfi",
+        "plot": false
+      }
+    },
+    {
+      "name": "RSI Moving Average",
+      "function": "rma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "rma",
+        "color": "color.yellow",
+        "plot": true,
+        "title": "RMA"
+      }
+    },
+    {
+      "name": "Rate of Change",
+      "function": "roc",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "roc",
+        "plot": false
+      }
+    },
+    {
+      "name": "Relative Strength Index",
+      "function": "rsi",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "rsi",
+        "plot": false
+      }
+    },
+    {
+      "name": "Parabolic SAR",
+      "function": "sar",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "sar",
+        "plot": true,
+        "color": "color.blue",
+        "style": "plot.style_circles",
+        "linewidth": "2",
+        "title": "Parabolic SAR"
+      }
+    },
+    {
+      "name": "Simple Moving Average",
+      "function": "sma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "sma",
+        "plot": true,
+        "color": "color.yellow",
+        "title": "SMA"
+      }
+    },
+    {
+      "name": "Standard Deviation",
+      "function": "stdev",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" }
+      ],
+      "output": {
+        "name": "stdev",
+        "plot": false
+      }
+    },
+    {
+      "name": "Stochastic",
+      "function": "stoch",
+      "inputs": [
+        "close",
+        "high",
+        "low",
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "stoch",
+        "plot": false
+      }
+    },
+    {
+      "name": "Supertrend",
+      "function": "supertrend",
+      "inputs": [
+        { "name": "Factor", "defaultValue": 3, "value": 3, "type": "real" },
+        { "name": "ATR Period", "defaultValue": 10, "value": 10, "type": "int" }
+      ],
+      "activeOutput": "Supertrend",
+      "outputs": [
+        {
+          "displayName": "Supertrend",
+          "varName": "supertrend",
+          "plot": true,
+          "plotSpecial": "plot(direction < 0 ? supertrend : na, \"Up  direction\", color = color.green, style = plot.style_linebr)"
+        },
+        {
+          "displayName": "Direction",
+          "varName": "direction",
+          "plot": true,
+          "plotSpecial": "plot(direction > 0 ? supertrend : na, \"Down  direction\", color = color.red, style = plot.style_linebr)"
+        }
+      ]
+    },
+    {
+      "name": "Symmetrically Weighted Moving Average",
+      "function": "swma",
+      "inputs": ["close"],
+      "output": {
+        "name": "swma",
+        "plot": true,
+        "color": "color.yellow",
+        "title": "SWMA"
+      }
+    },
+    {
+      "name": "True Range",
+      "function": "tr",
+      "inputs": [],
+      "output": {
+        "name": "tr",
+        "plot": false
+      }
+    },
+    {
+      "name": "True Strength Index",
+      "function": "tsi",
+      "inputs": [
+        "close",
+        {
+          "name": "Short Length",
+          "defaultValue": 13,
+          "value": 13,
+          "type": "int"
+        },
+        {
+          "name": "Long Length",
+          "defaultValue": 25,
+          "value": 25,
+          "type": "int"
+        }
+      ],
+      "output": {
+        "name": "tsi",
+        "plot": false
+      }
+    },
+    {
+      "name": "Variance",
+      "function": "variance",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "variance",
+        "plot": false
+      }
+    },
+    {
+      "name": "Volume Weighted Average Price",
+      "function": "vwap",
+      "inputs": ["close"],
+      "output": {
+        "name": "vwap",
+        "plot": true,
+        "color": "color.blue",
+        "title": "VWAP"
+      }
+    },
+    {
+      "name": "Volume Weighted Moving Average",
+      "function": "vwma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 20, "value": 20, "type": "int" }
+      ],
+      "output": {
+        "name": "vwma",
+        "plot": true,
+        "color": "color.blue",
+        "title": "VWMA"
+      }
+    },
+    {
+      "name": "Weighted Moving Average",
+      "function": "wma",
+      "inputs": [
+        "close",
+        { "name": "Length", "defaultValue": 9, "value": 9, "type": "int" }
+      ],
+      "output": {
+        "name": "wma",
+        "plot": true,
+        "color": "color.yellow",
+        "title": "WMA"
+      }
+    },
+    {
+      "name": "Williams %R",
+      "function": "wpr",
+      "inputs": [
+        { "name": "Length", "defaultValue": 14, "value": 14, "type": "int" }
+      ],
+      "output": {
+        "name": "wpr",
+        "plot": false
+      }
+    }
+  ]
+}
