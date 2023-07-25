@@ -7,16 +7,25 @@ import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { AiFillCaretDown, AiOutlineLoading } from "react-icons/ai";
 import ConditionDropdown from "../components/workspace/ConditionDropdown";
 import { FaTrashAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TradeDetails from "../components/workspace/TradeDetails";
 import StrategyContext from "../components/strategyContext";
+import convertScript from "../StrategyConverter";
 
 function Workspace() {
-  const { strategy, setStrategy, updateStrategy, disregardChanges } =
-    useContext(StrategyContext);
+  const {
+    strategy,
+    setStrategy,
+    updateStrategy,
+    disregardChanges,
+    checkStrategy,
+  } = useContext(StrategyContext);
   const [isLoading, setIsLoading] = useState(true);
   const [hasStrategyChanged, setHasStrategyChanged] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [strategyError, setStrategyError] = useState("");
+
+  const navigate = useNavigate();
 
   const dropdownRef = useRef();
   const [dropdownLeft, setDropdownLeft] = useState(0.0);
@@ -49,10 +58,9 @@ function Workspace() {
 
   function disregardStrategyChanges() {
     setIsUpdateLoading(true);
-    disregardChanges().then(() => {
-      setHasStrategyChanged(false);
-      setIsUpdateLoading(false);
-    });
+    disregardChanges();
+    setHasStrategyChanged(false);
+    setIsUpdateLoading(false);
   }
 
   function saveStrategyChanges() {
@@ -73,6 +81,11 @@ function Workspace() {
 
   function toggleConditionsDropdown() {
     setIsConditionDropdownActive(!isConditionDropdownActive);
+  }
+
+  function strategyChanged() {
+    setHasStrategyChanged(true);
+    setStrategyError("");
   }
 
   if (!strategy.name) {
@@ -123,11 +136,7 @@ function Workspace() {
       >
         <h1 className="text-white sm:text-xl">You have unsaved changes.</h1>
         {isUpdateLoading ? (
-          <AiOutlineLoading
-            size="24"
-            color="white"
-            className="animate-spin"
-          />
+          <AiOutlineLoading size="24" color="white" className="animate-spin" />
         ) : (
           <div className="flex gap-2 sm:gap-4">
             <button
@@ -152,7 +161,7 @@ function Workspace() {
       >
         <article className="w-full sm:w-96 border-2 boder-white rounded-xl bg-shaded-750 p-4 mx-auto">
           <h1 className="text-white text-center text-2xl sm:text-3xl mb-4 font-semibold">
-            Trigger
+            Trigger*
           </h1>
           <hr className="w-4/5 m-auto" />
           {strategy?.trigger ? (
@@ -162,14 +171,14 @@ function Workspace() {
                 object={strategy.trigger}
                 toggleDropdown={toggleTriggerDropdown}
                 auto="m-auto"
-                updateStrategy={() => setHasStrategyChanged(true)}
+                updateStrategy={strategyChanged}
                 path="trigger"
                 dropdown={
                   <TriggerDropdown
                     toggleDropdown={toggleTriggerDropdown}
                     isTriggerDropdownActive={isTriggerDropdownActive}
                     cond={strategy}
-                    updateStrategy={() => setHasStrategyChanged(true)}
+                    updateStrategy={strategyChanged}
                   />
                 }
               />
@@ -183,7 +192,7 @@ function Workspace() {
               <p className="text-lg">Choose Trigger</p>
               <AiFillCaretDown size="40" color="white" />
               <TriggerDropdown
-                updateStrategy={() => setHasStrategyChanged(true)}
+                updateStrategy={strategyChanged}
                 toggleDropdown={toggleTriggerDropdown}
                 isTriggerDropdownActive={isTriggerDropdownActive}
               />
@@ -205,7 +214,7 @@ function Workspace() {
                   object={condition}
                   icon={<FaTrashAlt size="22" color="white" />}
                   index={index}
-                  updateStrategy={() => setHasStrategyChanged(true)}
+                  updateStrategy={strategyChanged}
                   path={`entryConditions[${index}]`}
                 />
               ))}
@@ -217,7 +226,7 @@ function Workspace() {
               <p className="text-lg">Add Condition</p>
               <MdOutlineAddCircleOutline size="40" color="white" />
               <ConditionDropdown
-                updateStrategy={() => setHasStrategyChanged(true)}
+                updateStrategy={strategyChanged}
                 toggleDropdown={toggleConditionsDropdown}
                 isConditionDropdownActive={isConditionDropdownActive}
                 cond={"entryConditions"}
@@ -239,7 +248,7 @@ function Workspace() {
             {strategy.exitConditions &&
               strategy.exitConditions.map((exitCondition, index) => (
                 <InputButton
-                  updateStrategy={() => setHasStrategyChanged(true)}
+                  updateStrategy={strategyChanged}
                   strategy={strategy}
                   object={exitCondition}
                   icon={<FaTrashAlt size="22" color="white" />}
@@ -257,7 +266,7 @@ function Workspace() {
               <p className="text-lg">Add Condition</p>
               <MdOutlineAddCircleOutline size="40" color="white" />
               <ConditionDropdown
-                updateStrategy={() => setHasStrategyChanged(true)}
+                updateStrategy={strategyChanged}
                 toggleDropdown={toggleSellConditionsDropdown}
                 isConditionDropdownActive={isSellConditionDropdownActive}
                 cond={"exitConditions"}
@@ -277,20 +286,40 @@ function Workspace() {
           <hr className="w-4/5 m-auto" />
           {Object.keys(strategy).length != 0 && (
             <TradeDetails
-              updateStrategy={() => setHasStrategyChanged(true)}
+              updateStrategy={strategyChanged}
               strategy={strategy}
             />
           )}
         </article>
       </section>
 
-      <div className="w-full flex justify-center">
-        <Link
-          to="/checkout"
-          className="p-4 bg-green-600 border-2 border-white duration-300 hover:bg-green-500 active:bg-green-800 text-white text-2xl sm:text-4xl rounded-lg mt-16 font-semibold"
+      <div className="w-full flex flex-col items-center gap-4 justify-center">
+        <button
+          onClick={() => {
+            if (checkStrategy()) {
+              if (hasStrategyChanged) {
+                disregardChanges();
+              }
+              if (strategy.purchased) {
+                navigate("/scriptcopy", { replace: true });
+              } else {
+                navigate("/checkout", { replace: true });
+              }
+            } else {
+              setStrategyError(
+                "Please fill in all necessary fields before downloading."
+              );
+            }
+          }}
+          className="p-4 w-fit bg-green-600 border-2 border-white duration-300 hover:bg-green-500 active:bg-green-800 text-white text-2xl sm:text-4xl rounded-lg mt-16 font-semibold"
         >
           Download Strategy
-        </Link>
+        </button>
+        {strategyError && (
+          <h3 className="text-red-600 bg-red-200 border-2 py-2 px-4 border-red-600 rounded-lg">
+            Please fill in all necessary fields before downloading.
+          </h3>
+        )}
       </div>
       {/* <WorkspaceTutorial id={["selectTrigger", "Crossover"]} /> */}
     </motion.div>

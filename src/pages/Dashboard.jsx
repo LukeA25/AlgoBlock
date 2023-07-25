@@ -42,7 +42,7 @@ function Dashboard() {
       >
         Changes Saved!
       </div>
-      <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-24 font-semibold text-7xl text-center relative top-8">
+      <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-24 font-semibold text-5xl sm:text-7xl text-center relative top-8">
         Dashboard
       </h1>
       <div className="w-3/4 max-w-4xl bg-gray-800 rounded-lg m-auto border-2 border-white mt-10 mb-16">

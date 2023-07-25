@@ -16,7 +16,6 @@ export function StrategyProvider(props) {
       creator: username,
       purchased: false,
       details: {
-        orderQuantity: 1,
         riskReward: 1,
       },
     };
@@ -53,13 +52,12 @@ export function StrategyProvider(props) {
       });
   }
 
-  function purchaseStrategy() {
+  function getPurchased() {
     const updateStrategyRef = ref(
       database,
-      `userData/${currentUser.uid}/strategies/${strategyKey}`
+      `userData/${currentUser.uid}/strategies/${strategyKey}/purchased`
     );
-    strategy.purchased = true;
-    return set(updateStrategyRef, strategy);
+    return get(updateStrategyRef);
   }
 
   function updateStrategy() {
@@ -85,6 +83,68 @@ export function StrategyProvider(props) {
       });
   }
 
+  function checkStrategy() {
+    for (const value of strategy.trigger.values) {
+      if (typeof value !== "string" && value.title) {
+        if (!value.name) {
+          return false;
+        }
+      }
+      if (typeof value !== "string" && value.name === "Enter Value") {
+        if (!value.value) {
+          return false;
+        }
+      }
+      if (value === "") {
+        return false;
+      }
+    }
+    if (strategy.entryConditions) {
+      for (const condition of strategy.entryConditions) {
+        for (const value of condition.values) {
+          if (typeof value !== "string" && value.title) {
+            if (!value.name) {
+              return false;
+            }
+          }
+          if (typeof value !== "string" && value.name === "Enter Value") {
+            if (!value.value) {
+              return false;
+            }
+          }
+          if (value === "") {
+            return false;
+          }
+        }
+      }
+    }
+    if (strategy.exitConditions) {
+      for (const condition of strategy.exitConditions) {
+        for (const value of condition.values) {
+          if (typeof value !== "string" && value.title) {
+            if (!value.name) {
+              return false;
+            }
+          }
+          if (typeof value !== "string" && value.name === "Enter Value") {
+            if (!value.value) {
+              return false;
+            }
+          }
+          if (value === "") {
+            return false;
+          }
+        }
+      }
+    }
+    if (!strategy.details.stopLoss) return false;
+    if (!strategy.details.orderType) return false;
+    if (!strategy.details.orderQuantity.amount) return false;
+    if (!strategy.details.orderQuantity.type) return false;
+
+    return true;
+  }
+
   const value = {
     strategy,
     setStrategy,
@@ -95,7 +155,8 @@ export function StrategyProvider(props) {
     deleteStrategy,
     updateStrategy,
     disregardChanges,
-    purchaseStrategy,
+    getPurchased,
+    checkStrategy,
   };
 
   return (

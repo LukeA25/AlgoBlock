@@ -1,20 +1,40 @@
 import { useEffect, useState } from "react";
-import { AiFillCopy } from "react-icons/ai";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { FaStripe } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useStrategyContext } from "../components/strategyContext";
-import convertScript from "../StrategyConverter";
+import StripeCheckout from "../components/StripeCheckout";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const initStripe = async () => {
+  const res = await axios.get("/api/publishable-key");
+  const publishableKey = await res.data.publishable_key;
+
+  return loadStripe(publishableKey);
+};
 
 function Checkout() {
-  const { strategy, purchaseStrategy } = useStrategyContext();
-  const [script, setScript] = useState("");
-  const [copied, setCopied] = useState(false);
+  const stripePromise = initStripe();
+  const { strategy } = useStrategyContext();
+
+  const [clientSecretSettings, setClientSecretSettings] = useState({
+    clientSecret: "",
+    loading: true,
+  });
 
   useEffect(() => {
-    if (strategy.name) {
-      const newScript = convertScript(strategy);
-      setScript(newScript);
-    //   purchaseStrategy();
+    async function createPaymentIntent() {
+      const response = await axios.post(`/api/create-payment-intent`, {});
+
+      setClientSecretSettings({
+        clientSecret: response.data.client_secret,
+        loading: false,
+      });
     }
+
+    createPaymentIntent();
   }, []);
 
   if (!strategy.name) {
@@ -37,36 +57,49 @@ function Checkout() {
       </div>
     );
   }
+
   return (
-    <div className="pt-20">
-      <div
-        className={`w-56 h-12 fixed bg-gray-700 z-50 rounded-full left-[calc(50vw-7rem)] top-32 p-4 duration-500 flex justify-center items-center text-white text-xl ${
-          !copied && "scale-x-50 scale-y-0 -translate-y-[8rem]"
-        }`}
-      >
-        Copied to Clipboard!
-      </div>
-      <div className="w-[90%] sm:w-2/3 max-w-4xl bg-gray-800 rounded-lg m-auto my-20 border-2 border-white overflow-hidden">
-        <div className="flex justify-between items-center bg-green-600 rounded-t-md p-2 border-b-2 border-white">
-          <p className="text-white font-semibold text-3xl">
-            "<b className="font-bold">{strategy.name}</b>"{" Script"}
-          </p>
-          <button
-            onClick={() => {
-              setCopied(true);
-              navigator.clipboard.writeText(script);
-              setTimeout(() => setCopied(false), 2000);
-            }}
-          >
-            <AiFillCopy
-              size="40"
-              className="text-gray-200 hover:text-white active:text-gray-400 cursor-pointer"
-            />
-          </button>
+    <div className="w-screen min-h-[calc(100vh-12.6rem)] sm:min-h-[calc(100vh-13.6rem)] relative pt-20">
+      <div className="p-8 sm:p-20 flex flex-col sm:flex-row justify-between min-h-[70vh]">
+        <div className="w-full sm:w-1/2 flex-grow flex flex-col justify-end">
+          <Link to="/workspace" className="flex gap-2 items-center group">
+            <AiOutlineArrowLeft className="text-green-600 text-lg group-hover:text-green-400 duration-300 group-active:text-green-700" />
+            <p className="text-green-600 text-lg group-hover:text-green-400 duration-300 group-active:text-green-700">
+              Back to <b>Workspace</b>
+            </p>
+          </Link>
+          <h3 className="text-xl mt-4 text-gray-400">AlgoBlock Script</h3>
+          <h1 className="text-5xl text-white">$9.99</h1>
+          <div className="flex justify-between mt-8">
+            <div className="flex flex-col">
+              <h3 className="text-white min-w-max">{strategy.name}</h3>
+              <h4 className="text-gray-400">Qty: 1</h4>
+            </div>
+            <h3 className="text-white">$9.99</h3>
+          </div>
+          <div className="flex items-end flex-grow">
+            <div className="flex gap-1 items-center">
+              <p className="text-lg text-white">Powered by</p>
+              <FaStripe size="50" color="white" />
+            </div>
+          </div>
         </div>
-        <pre className="text-white p-4 w-full whitespace-pre-wrap overflow-auto">
-          {script}
-        </pre>
+        <div className="w-full h-[0.1rem] sm:w-[0.1rem] sm:h-auto sm:flex-grow my-4 sm:my-0 sm:mx-12 bg-gray-600 shadow-gray-500" />
+        <div className="bg-white rounded-lg p-8 mt-4 sm:my-auto w-full sm:w-3/4 mx-auto">
+          {clientSecretSettings.loading ? (
+            <h1>Loading ...</h1>
+          ) : (
+            <Elements
+              stripe={stripePromise}
+              options={{
+                clientSecret: clientSecretSettings.clientSecret,
+                appearance: { theme: "stripe" },
+              }}
+            >
+              <StripeCheckout />
+            </Elements>
+          )}
+        </div>
       </div>
     </div>
   );

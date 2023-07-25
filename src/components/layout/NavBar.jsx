@@ -2,9 +2,9 @@ import NavBarItem from "../NavBarItem";
 
 import { AiFillHome } from "react-icons/ai";
 import { BsPeopleFill, BsTools } from "react-icons/bs";
-import { FaShoppingCart } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { useUserContext } from "../UserContext";
+import { FaBook } from "react-icons/fa";
 
 function NavBar(props) {
   const { currentUser } = useUserContext();
@@ -60,6 +60,12 @@ function NavBar(props) {
               </span>
             </div>
           )}
+          <NavBarItem
+            to="/tutorial"
+            toggleActive={props.toggleActive}
+            icon={<FaBook className="w-6 h-6 sm:w-10 sm:h-10" />}
+            tooltip="Tutorial"
+          />
           <NavBarItem
             to="/about-us"
             toggleActive={props.toggleActive}

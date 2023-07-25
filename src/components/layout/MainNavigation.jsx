@@ -27,7 +27,7 @@ function MainNavigation(props) {
         </button>
       </div>
       <HashLink replace to="/#top">
-        <img src={logo} className="w-48 sm:h-12 sm:w-auto" />
+        <img src={logo} className="w-48 sm:h-16 sm:w-auto" />
       </HashLink>
       {currentUser ? (
         <div className="w-1/3 flex justify-end">

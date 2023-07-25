@@ -131,11 +131,12 @@ function Home() {
           What is it?
         </h1>
         <p className="text-white text-lg sm:text-2xl" id="Step-2">
-          AlgoBlock allows you create a strategy for TradingView without any
-          coding experience. This is perfect for those looking to dive deeper
-          into technical analysis. Rather than learning how to code, you can
-          focus on the logic behind the strategies and backtest them on
-          TradingView to evaluate their performance.
+          AlgoBlock allows you create a strategy for TradingView by using your
+          inputs and generating a Pine script. This is perfect for those looking
+          to dive deeper into technical analysis without coding experience.
+          Rather than learning how to code, you can focus on the logic behind
+          the strategies, giving you a head start on your journey into
+          algorithmic trading.
         </p>
       </section>
 

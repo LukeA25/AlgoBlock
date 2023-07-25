@@ -206,7 +206,7 @@ function TradeDetails(props) {
     <div className="sm:w-5/6 flex flex-col justify-between gap-4 mt-4 border-2 border-white rounded-lg sm:bg-shaded-500 m-auto text-white p-4">
       <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
-          Order Type:
+          Order Type*:
         </p>
         <div
           ref={typeRef}
@@ -260,7 +260,7 @@ function TradeDetails(props) {
       <hr className="w-full" />
       <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
-          Order Quantity:
+          Order Quantity*:
         </p>
         <div className="flex flex-col items-end">
           <div className="flex gap-2 items-center">
@@ -459,7 +459,7 @@ function TradeDetails(props) {
       <hr className="w-full" /> */}
       <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
-          Stop-Loss Price:
+          Stop-Loss Price*:
         </p>
         <div className="flex flex-col items-end">
           <div
@@ -737,7 +737,7 @@ function TradeDetails(props) {
       <hr className="w-full" />
       <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
-          Risk/Reward Ratio:
+          Risk/Reward Ratio*:
         </p>
         <div className="flex flex-col items-end">
           <div className="flex items-center">

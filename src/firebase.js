@@ -16,7 +16,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
 export const database = getDatabase(app, "https://algoblock-4a1c4-default-rtdb.firebaseio.com/");
 export const auth = getAuth(app);
 export default app;

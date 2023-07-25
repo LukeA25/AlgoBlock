@@ -1,8 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import commonjs from "vite-plugin-commonjs"; // Import the plugin
 
 export default defineConfig({
-  plugins: [react(), commonjs()],
-  assetsInclude: ["**/*.node"]
+  plugins: [react()],
+  server: {
+    port: 4242,
+    proxy: {
+      "/api": {
+        target: "http://localhost:5252",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });

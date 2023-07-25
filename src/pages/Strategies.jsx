@@ -3,7 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { BiDownload } from "react-icons/bi";
 
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Popup from "../components/Popup";
 import { useUserContext } from "../components/UserContext";
@@ -19,6 +19,7 @@ function Strategies() {
     getUserStrategies,
     setStrategyKey,
     deleteStrategy,
+    checkStrategy,
   } = useStrategyContext();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedStrategies, setLoadedStrategies] = useState([]);
@@ -26,6 +27,8 @@ function Strategies() {
   const [deleteName, setDeleteName] = useState("");
   const [formValue, setFormValue] = useState("");
   const [createStratError, setCreateStratError] = useState("");
+  const [strategyError, setStrategyError] = useState(false);
+  const navigate = useNavigate();
 
   function toggleStratActive() {
     setCreateStratError("");
@@ -90,6 +93,13 @@ function Strategies() {
       className="relative pt-20 min-h-[calc(100vh-13.6rem)]" /*initial={{width: 0}} animate={{width: "100%"}} exit={{x: window.innerWidth, transition: {duration: 0.1}}}*/
     >
       <div>
+        <div
+          className={`w-72 sm:w-[28rem] sm:h-12 fixed bg-gray-700 z-50 rounded-3xl sm:rounded-full left-[calc(50vw-9rem)] sm:left-[calc(50vw-14rem)] top-32 p-4 duration-500 flex justify-center items-center text-white text-xl ${
+            !strategyError && "scale-x-50 scale-y-0 -translate-y-[8rem]"
+          }`}
+        >
+          Please finish the strategy before downloading!
+        </div>
         <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-16 sm:h-24 font-semibold text-5xl sm:text-7xl text-center relative top-8">
           Strategies
         </h1>
@@ -129,18 +139,29 @@ function Strategies() {
                           <p className="text-white text-sm sm:text-lg">Edit</p>
                         </Link>
                         <div className="flex justify-center gap-4">
-                          <Link
-                            to="/checkout"
+                          <button
                             onClick={() => {
                               const { id, ...strategyWithoutId } = strategy;
                               setStrategy(strategyWithoutId);
                               setStrategyKey(strategy.id);
+                              if (strategy.purchased) {
+                                navigate("/scriptcopy", { replace: true });
+                              } else {
+                                if (checkStrategy()) {
+                                  navigate("/checkout", { replace: true });
+                                } else {
+                                  setStrategyError(true);
+                                  setTimeout(() => setStrategyError(false), 2000);
+                                }
+                              }
                             }}
                             className="bg-shaded-500 w-20 h-20 sm:w-24 sm:h-24 rounded-md group active:bg-black active:opacity-80 hover:bg-shaded-750 duration-300 py-[7.5%] flex flex-col items-center"
                           >
                             <BiDownload size="30" color="white" />
-                            <p className="text-white text-sm sm:text-lg">Download</p>
-                          </Link>
+                            <p className="text-white text-sm sm:text-lg">
+                              Download
+                            </p>
+                          </button>
                           <button
                             onClick={() => {
                               setDeleteName(strategy.name);
@@ -150,7 +171,9 @@ function Strategies() {
                             className="bg-shaded-500 w-20 h-20 sm:w-24 sm:h-24 rounded-md active:bg-black active:opacity-80 hover:bg-shaded-750 duration-300 py-[7.5%] flex flex-col items-center"
                           >
                             <FaTrashAlt size="30" color="white" />
-                            <p className="text-white text-sm sm:text-lg">Delete</p>
+                            <p className="text-white text-sm sm:text-lg">
+                              Delete
+                            </p>
                           </button>
                         </div>
                       </div>
@@ -187,7 +210,10 @@ function Strategies() {
           onSubmit={submitHandler}
           id="stratNamePopup"
         >
-          <label htmlFor="strat-name" className="text-lg sm:text-xl font-semibold">
+          <label
+            htmlFor="strat-name"
+            className="text-lg sm:text-xl font-semibold"
+          >
             Strategy Name
           </label>
           <input
