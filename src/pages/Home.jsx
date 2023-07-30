@@ -3,16 +3,23 @@ import { useState, useEffect } from "react";
 import stocks from "../assets/Stocks.png";
 import InfoCard from "../components/InfoCard";
 import ScrollInfo from "../components/ScrollInfo";
+import AlgoBlockPlusPopup from "../components/AlgoBlockPlusPopup";
 
 import { TbShieldLockFilled } from "react-icons/tb";
 import { BsFillLightningChargeFill } from "react-icons/bs";
 import { AiFillDollarCircle } from "react-icons/ai";
+import AlgoBlockPlusIcon from "../assets/AlgoBlockPlusIcon.png";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
   const [pos, setPos] = useState(0);
   const words = ["simpler", "faster", "smarter"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [plusPopup, setPlusPopup] = useState(false);
+
+  function togglePlusPopup() {
+    setPlusPopup(!plusPopup);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -175,7 +182,7 @@ function Home() {
           index={3}
           title="Step 4 - Run Your "
           boldTitle="Script"
-          description="Using TradingView's built in Trading Panel, you can easily connect your broker and start using your strategy."
+          description="Using TradingView's built in Trading Panel, you can easily connect your broker and start using your strategy. Alternatively, you can set up TradingView alerts and get notifications to buy and sell."
         />
         <div className="w-2 ml-4 sm:ml-[calc(40vw-0.25rem)] -mt-4 h-[3.5rem] m-auto absolute bg-gray-900" />
         <div className="w-2 ml-4 sm:ml-[calc(40vw-0.25rem)] -mt-20 h-16 m-auto absolute bg-gradient-to-t from-gray-900 to-transparent" />
@@ -227,6 +234,13 @@ function Home() {
         </div>
       </section>
       <div className="fixed w-2 h-1/2 right-0 top-0 ml-[3.44rem] sm:ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
+      <button
+        onClick={togglePlusPopup}
+        className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 rounded-full bg-black border-2 border-white w-16 h-16 sm:w-24 sm:h-24 z-50 flex items-center justify-center"
+      >
+        <img src={AlgoBlockPlusIcon} className="w-[90%]" />
+      </button>
+      <AlgoBlockPlusPopup toggle={togglePlusPopup} getActive={plusPopup} />
     </motion.div>
   );
 }

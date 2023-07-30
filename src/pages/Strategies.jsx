@@ -8,11 +8,13 @@ import { useState, useEffect, useRef } from "react";
 import Popup from "../components/Popup";
 import { useUserContext } from "../components/UserContext";
 import { useStrategyContext } from "../components/strategyContext";
+import AlgoBlockPlusPopup from "../components/AlgoBlockPlusPopup";
+import axios from "axios";
 
 function Strategies() {
   const [isNewStratActive, setNewStratActive] = useState(false);
   const strategyNameRef = useRef();
-  const { currentUser } = useUserContext();
+  const { currentUser, getFreeStrategy, getSubscriptionId } = useUserContext();
   const {
     newStrategy,
     setStrategy,
@@ -28,11 +30,18 @@ function Strategies() {
   const [formValue, setFormValue] = useState("");
   const [createStratError, setCreateStratError] = useState("");
   const [strategyError, setStrategyError] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [plusPopup, setPlusPopup] = useState(false);
   const navigate = useNavigate();
 
   function toggleStratActive() {
     setCreateStratError("");
     setNewStratActive(!isNewStratActive);
+  }
+
+  function togglePlusPopup() {
+    setPlusPopup(!plusPopup);
   }
 
   function toggleDeleteStratActive() {
@@ -58,7 +67,26 @@ function Strategies() {
       }
     }
 
+    async function getSubscribed() {
+      const subscriptionId = await getSubscriptionId();
+      if (subscriptionId) {
+        const response = await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info", {
+          subscriptionId: subscriptionId,
+        });
+
+        if (!response.data.canceled) {
+          setSubscribed(true);
+          return;
+        }
+      }
+      setSubscribed(false);
+    }
+
     fetchStrategies();
+    if (!checked) {
+      getSubscribed();
+      setChecked(true);
+    }
   }, [deleteHandler, submitHandler]);
 
   function deleteHandler(event) {
@@ -140,19 +168,25 @@ function Strategies() {
                         </Link>
                         <div className="flex justify-center gap-4">
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               const { id, ...strategyWithoutId } = strategy;
                               setStrategy(strategyWithoutId);
                               setStrategyKey(strategy.id);
-                              if (strategy.purchased) {
-                                navigate("/scriptcopy", { replace: true });
-                              } else {
-                                if (checkStrategy()) {
-                                  navigate("/checkout", { replace: true });
+                              const freeStrategy = await getFreeStrategy();
+                              if (checkStrategy()) {
+                                if (subscribed) {
+                                  navigate("/scriptcopy", { replace: true });
+                                } else if (freeStrategy) {
+                                  await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/use-free-strategy", {
+                                    uid: currentUser.uid,
+                                  });
+                                  navigate("/scriptcopy", { replace: true });
                                 } else {
-                                  setStrategyError(true);
-                                  setTimeout(() => setStrategyError(false), 2000);
+                                  togglePlusPopup();
                                 }
+                              } else {
+                                setStrategyError(true);
+                                setTimeout(() => setStrategyError(false), 2000);
                               }
                             }}
                             className="bg-shaded-500 w-20 h-20 sm:w-24 sm:h-24 rounded-md group active:bg-black active:opacity-80 hover:bg-shaded-750 duration-300 py-[7.5%] flex flex-col items-center"
@@ -328,6 +362,7 @@ function Strategies() {
           id={["newStratButton", "stratNamePopup", tutorialName]}
         />
       )} */}
+      <AlgoBlockPlusPopup toggle={togglePlusPopup} getActive={plusPopup} />
     </motion.div>
   );
 }

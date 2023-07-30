@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function ContactUs() {
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function submitHandler(event) {
     event.preventDefault();
+    setIsLoading(true);
 
     const inputs = event.target.elements;
     const data = {};
@@ -17,8 +20,12 @@ function ContactUs() {
     }
 
     try {
-      await axios.post("/api/send-email", data);
+      await axios.post(
+        "https://algoblock-backend-5df4fb859f35.herokuapp.com/send-email",
+        data
+      );
       setSubmitMessage("Thanks for your feedback!");
+      setIsLoading(false);
     } catch (error) {
       console.error("Error sending email:", error);
     }
@@ -58,12 +65,20 @@ function ContactUs() {
             />
           </div>
           <div className="flex items-center">
-            <button
-              className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 duration-300 border-white border-2 rounded-lg text-white text-xl sm:text-2xl font-semibold"
-              type="submit"
-            >
-              Submit
-            </button>
+            {isLoading ? (
+              <AiOutlineLoading
+                size="24"
+                color="rgb(22, 163, 74)"
+                className="animate-spin m-auto"
+              />
+            ) : (
+              <button
+                className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 duration-300 border-white border-2 rounded-lg text-white text-xl sm:text-2xl font-semibold"
+                type="submit"
+              >
+                Submit
+              </button>
+            )}
           </div>
           {submitMessage && (
             <div className="text-center text-green-600 bg-green-200 border-2 border-green-600 rounded-md m-auto mt-4 sm:text-xl py-2">

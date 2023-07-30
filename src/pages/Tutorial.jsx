@@ -7,6 +7,9 @@ import RunStrategy from "../assets/tutorialSS/RunStrategy.png";
 import StrategySettings from "../assets/tutorialSS/StrategySettings.png";
 import StrategySettingsOpen from "../assets/tutorialSS/StrategySettingsOpen.png";
 import SelectIndicator from "../assets/tutorialSS/SelectIndicator.png";
+import SelectAlert from "../assets/tutorialSS/SelectAlert.png";
+import AlertSelectStrategy from "../assets/tutorialSS/AlertSelectStrategy.png";
+import AlertSettings from "../assets/tutorialSS/AlertSettings.png";
 
 function Tutorial() {
   const [workspace, setWorkspace] = useState(true);
@@ -101,7 +104,9 @@ function Tutorial() {
                   position will be closed.
                 </li>
                 <li>
-                  Exit Conditions are not required to download a strategy.
+                  Exit Conditions are not required to download a strategy if you
+                  have a stop loss and take profit level set. You are also
+                  allowed to have both.
                 </li>
               </ol>
               <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
@@ -121,13 +126,16 @@ function Tutorial() {
                 <li>
                   <b>Stop Loss Price:</b> This is the stop price for each order.
                   If the instrument price reaches this, the trade will be exited
-                  for a loss.
+                  for a loss. If no stop loss is selected, you must add exit
+                  conditions to your strategy. You are also allowed to have a
+                  stop loss and exit conditions.
                 </li>
                 <li>
                   <b>Risk/Reward Ratio:</b> This is the ratio of your stop loss
                   and take profit prices. If your Risk/Reward Ratio was 1:3,
                   then your take profit level would be 3 times greater than your
-                  stop loss level.
+                  stop loss level. This is only required if you have a stop loss
+                  price set.
                 </li>
               </ol>
               <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
@@ -177,7 +185,10 @@ function Tutorial() {
               </ol>
               <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-8 mb-10">
                 <img src={PineEditor} className="sm:w-[calc(50%-1rem)]" />
-                <img src={CopyPasted} className="sm:w-[calc(50%-1rem)] object-cover object-left" />
+                <img
+                  src={CopyPasted}
+                  className="sm:w-[calc(50%-1rem)] object-cover object-left"
+                />
               </div>
               <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
                 Backtesting your Strategy
@@ -195,6 +206,24 @@ function Tutorial() {
               <img src={BacktestStrategy} className="m-auto mb-10" />
               <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
                 Executing your Strategy
+              </h3>
+              <ol className="sm:text-xl mb-4 list-disc ml-10">
+                <li>
+                  For executing your strategy, there are two main options.
+                </li>
+                <li>
+                  For short-term day trading strategies, executing your strategy
+                  through TradingView would most likely be the best fit for your
+                  strategy.
+                </li>
+                <li>
+                  For long-term position trading strategies, executing your
+                  strategy manually and using TradingView Alerts would most
+                  likely be the best fit for your strategy.
+                </li>
+              </ol>
+              <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
+                TradingView Execution
               </h3>
               <ol className="sm:text-xl mb-4 list-disc ml-10">
                 <li>
@@ -216,7 +245,33 @@ function Tutorial() {
                   (VPS).
                 </li>
               </ol>
-              <img src={RunStrategy} className="m-auto" />
+              <img src={RunStrategy} className="m-auto mb-4" />
+              <h3 className="text-green-500 text-2xl sm:text-4xl font-semibold mb-2">
+                TradingView Alerts
+              </h3>
+              <ol className="sm:text-xl mb-4 list-disc ml-10">
+                <li>
+                  To activate TradingView Alerts to recieve notifications on
+                  your computer, or on your phone, start by selecting "Alerts"
+                  in the top left.
+                </li>
+                <img src={SelectAlert} className="mx-auto my-4" />
+                <li>
+                  In the dropdown menu, select the strategy that you would like
+                  to recieve alerts on. The strategy must be active on your
+                  chart to do this.
+                </li>
+                <img src={AlertSelectStrategy} className="mx-auto my-4" />
+                <li>
+                  If you'd like, you can select the "Notifications" tab and edit
+                  the notification settings for where you would like to recieve
+                  the alerts.
+                </li>
+                <img src={AlertSettings} className="mx-auto my-4" />
+                <li>
+                  Finally, you can select "Create", and your alert will be all set up!
+                </li>
+              </ol>
             </div>
           )}
           {community && (

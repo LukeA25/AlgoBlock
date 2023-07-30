@@ -8,7 +8,8 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { auth, database } from "../firebase";
-import { ref, get, set } from "firebase/database";
+import { ref, get, set, remove } from "firebase/database";
+import axios from "axios";
 
 const UserContext = createContext();
 
@@ -17,11 +18,13 @@ export function UserProvider(props) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
-  function saveUserDataToDatabase(user, username) {
+  function saveUserDataToDatabase(user, username, customerId) {
     const userRef = ref(database, `userData/${user.uid}/loginData`);
     set(userRef, {
       email: user.email,
       username: username,
+      customerId: customerId,
+      subscription: "",
     })
       .then(() => {
         setUsername(username);
@@ -32,10 +35,18 @@ export function UserProvider(props) {
       });
   }
 
-  function signup(email, password, username) {
+  async function signup(email, password, username) {
+    const response = await axios.post(`https://algoblock-backend-5df4fb859f35.herokuapp.com/create-customer`, {
+      email: email,
+    });
+
     return createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
-        saveUserDataToDatabase(userCredential.user, username);
+        saveUserDataToDatabase(
+          userCredential.user,
+          username,
+          response.data.customerId
+        );
         return userCredential;
       }
     );
@@ -51,6 +62,62 @@ export function UserProvider(props) {
 
   function resetPassword(email) {
     return sendPasswordResetEmail(auth, email);
+  }
+
+  async function getFreeStrategy() {
+    const freeStrategyRef = ref(
+      database,
+      `userData/${currentUser.uid}/loginData/freeStrategy`
+    )
+    var freeStrategy = false;
+    await get(freeStrategyRef).then((bool) => {
+      freeStrategy = bool.val();
+    })
+    if (freeStrategy) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  async function getCustomerId() {
+    const idRef = ref(
+      database,
+      `userData/${currentUser.uid}/loginData/customerId`
+    );
+    var customerId = "";
+    await get(idRef).then((id) => {
+      customerId = id.val();
+    });
+    return customerId;
+  }
+
+  function setSubscriptionId(subscriptionId) {
+    const subscriptionRef = ref(
+      database,
+      `userData/${currentUser.uid}/loginData/subscription`
+    );
+    set(subscriptionRef, subscriptionId);
+  }
+
+  async function getSubscriptionId() {
+    const subscriptionRef = ref(
+      database,
+      `userData/${currentUser.uid}/loginData/subscription`
+    );
+    var subscriptionId = "";
+    await get(subscriptionRef).then((id) => {
+      subscriptionId = id.val();
+    });
+    return subscriptionId;
+  }
+
+  function cancelSubscription() {
+    const subscriptionRef = ref(
+      database,
+      `userData/${currentUser.uid}/loginData/subscription`
+    );
+    delete remove(subscriptionRef);
   }
 
   async function usernameHandler(newUsername, setError) {
@@ -75,7 +142,7 @@ export function UserProvider(props) {
       return newEmail;
     } catch (error) {
       if (error.code === "auth/requires-recent-login") {
-        setError("Please logout and try again")
+        setError("Please logout and try again");
       } else {
         setError("Error updating email");
         console.error(error);
@@ -89,7 +156,7 @@ export function UserProvider(props) {
       await updatePassword(currentUser, newPassword);
     } catch (error) {
       if (error.code === "auth/requires-recent-login") {
-        setError("Please logout and try again")
+        setError("Please logout and try again");
       } else {
         setError("Error updating password");
         console.error(error);
@@ -125,6 +192,11 @@ export function UserProvider(props) {
     usernameHandler,
     emailHandler,
     passwordHandler,
+    getCustomerId,
+    setSubscriptionId,
+    cancelSubscription,
+    getSubscriptionId,
+    getFreeStrategy,
   };
 
   return (

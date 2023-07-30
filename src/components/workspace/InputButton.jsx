@@ -89,10 +89,6 @@ function InputButton(props) {
         onMouseLeave={() => {
           props.icon ? null : setIsButtonActive(true);
         }}
-        onTouchStart={() => setIsButtonActive(false)}
-        onTouchEnd={() => {
-          props.icon ? null : setIsButtonActive(true);
-        }}
         className="bg-shaded-500 border-2 border-white rounded-lg w-full p-4 flex flex-col gap-2"
       >
         <h3 className="text-xl font-semibold">If</h3>

@@ -137,7 +137,7 @@ export function StrategyProvider(props) {
         }
       }
     }
-    if (!strategy.details.stopLoss) return false;
+    if (!strategy.details.stopLoss && (!strategy.exitConditions || strategy.exitConditions.length == 0)) return false;
     if (!strategy.details.orderType) return false;
     if (!strategy.details.orderQuantity.amount) return false;
     if (!strategy.details.orderQuantity.type) return false;

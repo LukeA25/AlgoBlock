@@ -37,17 +37,6 @@ function TriggerDropdown(props) {
         }}
         name="Threshold Cross"
         icon={<img src={thresholdCross} className="h-16 w-16" />}
-      />
-      <DropdownButton
-        onClick={() => {
-          props.cond.trigger = {
-            name: "Pattern Breakout",
-            values: [""],
-          };
-          props.updateStrategy();
-        }}
-        name="Pattern Breakout"
-        icon={<img src={patternBreakout} className="h-16 w-16" />}
         lineBreak={true}
       />
     </Dropdown>

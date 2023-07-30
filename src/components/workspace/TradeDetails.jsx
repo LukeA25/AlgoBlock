@@ -6,6 +6,7 @@ import Popup from "../Popup";
 import IndicatorMiniDropdown from "./IndicatorMiniDropdown";
 import IndicatorInputValue from "./IndicatorInputValue";
 import blocks from "../../blocks.json";
+import CommunityIndicatorMiniDropdown from "./CommunityIndicatorMiniDropdown";
 
 function TradeDetails(props) {
   const [stopLossDropdown, setStopLossDropdown] = useState(false);
@@ -316,8 +317,8 @@ function TradeDetails(props) {
         <Dropdown
           isDropdownActive={quantityTypeDropdown}
           toggleDropdown={toggleQuantityTypeDropdown}
-          left={typeLeft + "rem"}
-          top={typeTop}
+          left={quantTypeLeft + "rem"}
+          top={quantTypeTop}
         >
           <DropdownButton
             onClick={() => {
@@ -459,7 +460,7 @@ function TradeDetails(props) {
       <hr className="w-full" /> */}
       <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
-          Stop-Loss Price*:
+          Stop-Loss Price:
         </p>
         <div className="flex flex-col items-end">
           <div
@@ -481,14 +482,13 @@ function TradeDetails(props) {
                 </h3>
                 {props.strategy.details.stopLoss.type !== "Indicator Price" ? (
                   <div className="flex items-center gap-2 pb-2 px-2">
-                    <p className="font-semibold">
+                    <p className="font-semibold text-sm">
                       {props.strategy.details.stopLoss.prompt}
                     </p>
                     <input
                       onMouseEnter={() => setDisabled(true)}
                       onMouseLeave={() => setDisabled(false)}
                       onTouchStart={() => setDisabled(true)}
-                      onTouchEnd={() => setDisabled(false)}
                       value={currentNum}
                       onChange={changeHandler}
                       className={`h-8 ${
@@ -509,9 +509,9 @@ function TradeDetails(props) {
                             : toggleIndicatorDropdown
                         }
                         onMouseEnter={() => setDisabled(true)}
-                        onMouseLeave={() => setDisabled(false)}
+                        // onMouseLeave={() => setDisabled(false)}
                         onTouchStart={() => setDisabled(true)}
-                        onTouchEnd={() => setDisabled(false)}
+                        // onTouchEnd={() => setDisabled(false)}
                         className={`border-2 border-white rounded-md duration-300 max-w-[15rem] cursor-pointer ${
                           props.strategy.details.stopLoss.value
                             ? `bg-shaded-500 ${
@@ -522,14 +522,27 @@ function TradeDetails(props) {
                         }`}
                       >
                         {props.strategy.details.stopLoss.value ? (
-                          <div className="flex justify-between items-center gap-2 pl-2">
-                            <IndicatorMiniDropdown
-                              toggleDropdown={toggleMiniIndicatorDropdown}
-                              setDisabled={setMiniButtonDisabled}
-                              indicator={props.strategy.details.stopLoss.value}
-                              togglePopup={toggleIndicatorPopup}
-                              searchValue={searchValue}
-                            />
+                          <div className="flex justify-between items-center gap-2 py-2 pl-2">
+                            {props.strategy.details.stopLoss.value.title ===
+                            "Community Indicator" ? (
+                              <CommunityIndicatorMiniDropdown
+                                setDisabled={setMiniButtonDisabled}
+                                indicator={
+                                  props.strategy.details.stopLoss.value
+                                }
+                                updateStrategy={props.updateStrategy}
+                              />
+                            ) : (
+                              <IndicatorMiniDropdown
+                                toggleDropdown={toggleMiniIndicatorDropdown}
+                                setDisabled={setMiniButtonDisabled}
+                                indicator={
+                                  props.strategy.details.stopLoss.value
+                                }
+                                togglePopup={toggleIndicatorPopup}
+                                searchValue={searchValue}
+                              />
+                            )}
                           </div>
                         ) : (
                           <div className="flex gap-2 px-2 py-1 items-center">
@@ -570,6 +583,19 @@ function TradeDetails(props) {
                   />
                 </li>
                 <hr />
+                <DropdownButton
+                  searchValue={props.searchValue}
+                  onClick={() => {
+                    props.strategy.details.stopLoss.value = {
+                      title: "Community Indicator",
+                      name: "",
+                    };
+                    props.updateStrategy();
+                    toggleIndicatorDropdown();
+                  }}
+                  name="Community Indicator"
+                  lineBreak={false}
+                />
                 {blocks["indicators"].map((indicator, index) => (
                   <DropdownButton
                     searchValue={searchValue}
@@ -730,12 +756,31 @@ function TradeDetails(props) {
               props.updateStrategy();
             }}
             name="Previous Candles"
+            lineBreak={false}
+          />
+          <DropdownButton
+            onClick={() => {
+              props.strategy.details.stopLoss = null;
+              setNum(1);
+              setError("");
+              toggleStopLossDropdown();
+              props.updateStrategy();
+            }}
+            name="None"
             lineBreak={true}
           />
         </Dropdown>
       </div>
-      <hr className="w-full" />
-      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center">
+      <hr
+        className={`${
+          props.strategy.details.stopLoss ? "flex" : "hidden"
+        } w-full`}
+      />
+      <div
+        className={`${
+          props.strategy.details.stopLoss ? "flex" : "hidden"
+        } flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center`}
+      >
         <p className="text-lg sm:text-2xl font-semibold flex-grow">
           Risk/Reward Ratio*:
         </p>

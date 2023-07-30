@@ -5,19 +5,16 @@ import {
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
-import { useStrategyContext } from "./strategyContext";
-import axios from "axios";
 import { useUserContext } from "./UserContext";
 import { AiOutlineLoading } from "react-icons/ai";
 
-function StripeCheckout() {
+function StripeCheckout(props) {
   const stripe = useStripe();
   const elements = useElements();
 
   const [tos, setTos] = useState(false);
   const navigate = useNavigate();
-  const { strategyKey } = useStrategyContext();
-  const { currentUser } = useUserContext();
+  const { setSubscriptionId } = useUserContext();
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,7 +34,7 @@ function StripeCheckout() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:4242/scriptcopy",
+        return_url: "http://algoblock.net/dashboard",
       },
       redirect: "if_required",
     });
@@ -46,11 +43,9 @@ function StripeCheckout() {
       setErrorMessage(error.message);
     } else {
       setIsLoading(false);
-      await axios.post("/api/purchaseStrategy", {
-        uid: currentUser.uid,
-        strategyKey: strategyKey,
-      });
-      navigate("/scriptcopy", { replace: true });
+
+      setSubscriptionId(props.subscriptionId);
+      navigate("/dashboard", { replace: true });
     }
   }
 
@@ -78,7 +73,11 @@ function StripeCheckout() {
           </p>
         </div>
         {isLoading ? (
-          <AiOutlineLoading size="24" color="rgb(22, 163, 74)" className="animate-spin" />
+          <AiOutlineLoading
+            size="24"
+            color="rgb(22, 163, 74)"
+            className="animate-spin"
+          />
         ) : (
           <button
             className="px-4 py-2 w-min bg-green-600 hover:bg-green-500 active:bg-green-800 duration-300 rounded-lg text-white border-2 border-gray-800"

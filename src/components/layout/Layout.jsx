@@ -7,7 +7,6 @@ import Signup from "../Signup";
 import { useState } from "react";
 import Footer from "./Footer";
 import ResetPassword from "../ResetPassword";
-import AlgoBlockIcon from "../../assets/AlgoBlockIcon.png";
 
 function Layout(props) {
   const [isNavBarActive, setIsNavBarActive] = useState(false);

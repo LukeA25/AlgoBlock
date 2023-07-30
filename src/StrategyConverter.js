@@ -4,7 +4,11 @@ export default function convertScript(strategy) {
 // © AlgoBlock
 
 //@version=5
-strategy("${strategy.name}", overlay=true, default_qty_type=${strategy.details.orderQuantity.type === "%" ? "strategy.percent_of_equity" : "strategy.fixed"}, default_qty_value=${strategy.details.orderQuantity.amount})
+strategy("${strategy.name}", overlay=true, default_qty_type=${
+    strategy.details.orderQuantity.type === "%"
+      ? "strategy.percent_of_equity"
+      : "strategy.fixed"
+  }, default_qty_value=${strategy.details.orderQuantity.amount})
 `;
 
   function appendFile(content) {
@@ -15,7 +19,7 @@ strategy("${strategy.name}", overlay=true, default_qty_type=${strategy.details.o
 
   var inputLines = [
     `riskRewardRatio = input.float(${strategy.details.riskReward}, title="Risk/Reward Ratio")`,
-    `orderQuantity = input.int(${strategy.details.orderQuantity.amount}, title="Order Quantity")`
+    `orderQuantity = input.int(${strategy.details.orderQuantity.amount}, title="Order Quantity")`,
   ];
   var calculationLines = [];
   var plotLines = [];
@@ -31,10 +35,11 @@ strategy("${strategy.name}", overlay=true, default_qty_type=${strategy.details.o
     strategy.details.orderType === "Buy Long"
       ? "strategy.long"
       : "strategy.short";
-//   var riskManagement = strategy.riskManagement ? " and riskManagement" : "";
-//   var riskManagementLine = "";
+  //   var riskManagement = strategy.riskManagement ? " and riskManagement" : "";
+  //   var riskManagementLine = "";
   var stopLoss = "";
   var takeProfit = "";
+  var stopLossExit = false;
 
   function communityIndicator(indicator) {
     var exists = false;
@@ -223,71 +228,73 @@ strategy("${strategy.name}", overlay=true, default_qty_type=${strategy.details.o
     }
   }
 
-  if (strategy.details.stopLoss.type === "ATR Multiple") {
-    const atr = {
-      name: "Average True Range",
-      function: "atr",
-      inputs: [{ name: "Length", defaultValue: 14, value: 14, type: "int" }],
-      output: {
-        name: "atr",
-        plot: false,
-      },
-    };
+  if (strategy.details.stopLoss) {
+    stopLossExit = true;
+    if (strategy.details.stopLoss.type === "ATR Multiple") {
+      const atr = {
+        name: "Average True Range",
+        function: "atr",
+        inputs: [{ name: "Length", defaultValue: 14, value: 14, type: "int" }],
+        output: {
+          name: "atr",
+          plot: false,
+        },
+      };
 
-    addIndicator(atr);
-    inputLines.push(
-      `atrScale = input.float(${strategy.details.stopLoss.value}, title="ATR Scale")`
-    );
-    stopLoss =
-      orderName === "Long"
-        ? "close - (atr * atrScale)"
-        : "close + (atr * atrScale)";
-    takeProfit =
-      orderName === "Long"
-        ? "close + (atr * atrScale"
-        : "close - (atr * atrScale";
-  } else if (strategy.details.stopLoss.type === "Previous Candles") {
-    inputLines.push(
-      `candlesBack = input.int(${strategy.details.stopLoss.value}, title="Candle(s) Back")`
-    );
-    stopLoss = "close[-candlesBack]";
-    takeProfit =
-      orderName === "Long"
-        ? "close + math.abs((close - close[-candlesBack])"
-        : "close - math.abs((close - close[-candlesBack])";
-  } else if (strategy.details.stopLoss.type === "Swing Low/High") {
-    inputLines.push(
-      orderName === "Long"
-        ? `swingCandlesBack = input.int(${strategy.details.stopLoss.value}, title="Swing Low of Previous X Candle(s)")`
-        : `swingCandlesBack = input.int(${strategy.details.stopLoss.value}, title="Swing High of Previous X Candle(s)")`
-    );
-    calculationLines.push(
-      orderName === "Long"
-        ? `swingLow = ta.lowest(swingCandlesBack)`
-        : `swingHigh = ta.highest(swingCandlesBack)`
-    );
-    stopLoss = orderName === "Long" ? `swingLow` : `swingHigh`;
-    takeProfit =
-      orderName === "Long"
-        ? `close + math.abs((close - ${stopLoss})`
-        : `close - math.abs((close - ${stopLoss})`;
-  } else {
-    addIndicator(strategy.details.stopLoss.value);
-    stopLoss = getIndicatorVarName(strategy.details.stopLoss.value);
-    takeProfit =
-      orderName === "Long"
-        ? `close + math.abs((close - ${stopLoss})`
-        : `close - math.abs((close - ${stopLoss})`;
+      addIndicator(atr);
+      inputLines.push(
+        `atrScale = input.float(${strategy.details.stopLoss.value}, title="ATR Scale")`
+      );
+      stopLoss =
+        orderName === "Long"
+          ? "close - (atr * atrScale)"
+          : "close + (atr * atrScale)";
+      takeProfit =
+        orderName === "Long"
+          ? "close + (atr * atrScale"
+          : "close - (atr * atrScale";
+    } else if (strategy.details.stopLoss.type === "Previous Candles") {
+      inputLines.push(
+        `candlesBack = input.int(${strategy.details.stopLoss.value}, title="Candle(s) Back")`
+      );
+      stopLoss = "close[-candlesBack]";
+      takeProfit =
+        orderName === "Long"
+          ? "close + math.abs((close - close[-candlesBack])"
+          : "close - math.abs((close - close[-candlesBack])";
+    } else if (strategy.details.stopLoss.type === "Swing Low/High") {
+      inputLines.push(
+        orderName === "Long"
+          ? `swingCandlesBack = input.int(${strategy.details.stopLoss.value}, title="Swing Low of Previous X Candle(s)")`
+          : `swingCandlesBack = input.int(${strategy.details.stopLoss.value}, title="Swing High of Previous X Candle(s)")`
+      );
+      calculationLines.push(
+        orderName === "Long"
+          ? `swingLow = ta.lowest(swingCandlesBack)`
+          : `swingHigh = ta.highest(swingCandlesBack)`
+      );
+      stopLoss = orderName === "Long" ? `swingLow` : `swingHigh`;
+      takeProfit =
+        orderName === "Long"
+          ? `close + math.abs((close - ${stopLoss})`
+          : `close - math.abs((close - ${stopLoss})`;
+    } else if (strategy.details.stopLoss.type === "Indicator Price") {
+      stopLoss = indicatorCondition(strategy.details.stopLoss.value);
+      takeProfit =
+        orderName === "Long"
+          ? `close + math.abs((close - ${stopLoss})`
+          : `close - math.abs((close - ${stopLoss})`;
+    }
   }
 
   var enterTrade = `var float stopLossPrice = na
 var float takeProfitPrice = na
     
 if entryCondition
-    strategy.entry("${orderName}", ${orderType}, qty=orderQuantity)
+    strategy.entry("${orderName}", ${orderType}, qty=orderQuantity)${stopLossExit ? `
     stopLossPrice := ${stopLoss}
-    takeProfitPrice := ${takeProfit} * riskRewardRatio)
-    strategy.exit("Exit", "${orderName}", stop=stopLossPrice, limit=takeProfitPrice)`;
+    takeProfitPrice := ${takeProfit} * riskRewardRatio)` : ""}
+    strategy.exit("Exit", "${orderName}"${stopLossExit ? ", stop=stopLossPrice, limit=takeProfitPrice" : ""})`;
 
   if (
     strategy.trigger.name === "Crossover" ||
@@ -461,17 +468,10 @@ if entryCondition
     enterTrade =
       enterTrade +
       `
+
 if exitCondition
     strategy.close("${orderName}")`;
   }
-
-//   if (strategy.riskManagement) {
-//     if (strategy.riskManagement.title === "Limit on Open Trades") {
-//       riskManagementLine = `riskManagement = strategy.opentrades < ${strategy.riskManagement.value}`;
-//     } else if (strategy.riskManagement.title === "Percentage of Portfolio") {
-
-//     }
-//   }
 
   calculationLines.push("inTrade = strategy.opentrades > 0");
   if (orderName === "Long") {

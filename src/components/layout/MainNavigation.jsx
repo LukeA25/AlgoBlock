@@ -88,14 +88,6 @@ function MainNavigation(props) {
             navigate("/dashboard", { replace: true });
           }}
           name="Dashboard"
-          lineBreak={true}
-        />
-        <DropdownButton
-          onClick={() => {
-            toggleUserDropdown();
-          }}
-          name="Settings"
-          lineBreak={false}
         />
         <DropdownButton
           onClick={() => {

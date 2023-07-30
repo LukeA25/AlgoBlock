@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import InputButton from "../components/workspace/InputButton";
 import TriggerDropdown from "../components/workspace/TriggerDropdown";
@@ -9,8 +9,11 @@ import ConditionDropdown from "../components/workspace/ConditionDropdown";
 import { FaTrashAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import TradeDetails from "../components/workspace/TradeDetails";
-import StrategyContext from "../components/strategyContext";
-import convertScript from "../StrategyConverter";
+import { useUserContext } from "../components/UserContext";
+
+import axios from "axios";
+import { useStrategyContext } from "../components/strategyContext";
+import AlgoBlockPlusPopup from "../components/AlgoBlockPlusPopup";
 
 function Workspace() {
   const {
@@ -19,11 +22,14 @@ function Workspace() {
     updateStrategy,
     disregardChanges,
     checkStrategy,
-  } = useContext(StrategyContext);
+  } = useStrategyContext();
+  const { currentUser, getFreeStrategy, getSubscriptionId } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
   const [hasStrategyChanged, setHasStrategyChanged] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [strategyError, setStrategyError] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [plusPopup, setPlusPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -40,6 +46,25 @@ function Workspace() {
     useState(false);
   const [isSellConditionDropdownActive, setIsSellConditionDropdownActive] =
     useState(false);
+
+  useEffect(() => {
+    async function getSubscribed() {
+      const subscriptionId = await getSubscriptionId();
+      if (subscriptionId) {
+        const response = await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info", {
+          subscriptionId: subscriptionId,
+        });
+
+        if (!response.data.canceled) {
+          setSubscribed(true);
+          return;
+        }
+      }
+      setSubscribed(false);
+    }
+
+    getSubscribed();
+  }, []);
 
   useEffect(() => {
     if (isLoading) {
@@ -69,6 +94,10 @@ function Workspace() {
       setHasStrategyChanged(false);
       setIsUpdateLoading(false);
     });
+  }
+
+  function togglePlusPopup() {
+    setPlusPopup(!plusPopup);
   }
 
   function toggleTriggerDropdown() {
@@ -123,8 +152,8 @@ function Workspace() {
     <motion.div
       className="pb-20 relative pt-20" /*initial={{width: 0 border-2 border-white}} animate={{width: "100%"}} exit={{x: window.innerWidth, transition: {duration: 0 border-2 border-white.1}}}*/
     >
-      <div className="flex items-center justify-center mt-8 gap-4 bg-green-600 max-w-[80%] sm:w-fit m-auto px-8 pt-4 rounded-lg border-4 border-white">
-        <h1 className="text-white w-fit h-20 font-semibold text-3xl sm:text-6xl text-center">
+      <div className="flex items-center justify-center mt-8 gap-4 bg-green-600 max-w-[80%] w-min sm:w-fit m-auto px-8 py-4 rounded-lg border-4 border-white">
+        <h1 className="text-white w-fit font-semibold text-3xl sm:text-6xl text-center">
           {strategy.name}
         </h1>
       </div>
@@ -295,15 +324,21 @@ function Workspace() {
 
       <div className="w-full flex flex-col items-center gap-4 justify-center">
         <button
-          onClick={() => {
+          onClick={async () => {
+            const freeStrategy = await getFreeStrategy();
             if (checkStrategy()) {
               if (hasStrategyChanged) {
                 disregardChanges();
               }
-              if (strategy.purchased) {
+              if (subscribed) {
+                navigate("/scriptcopy", { replace: true });
+              } else if (freeStrategy) {
+                await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/use-free-strategy", {
+                  uid: currentUser.uid,
+                });
                 navigate("/scriptcopy", { replace: true });
               } else {
-                navigate("/checkout", { replace: true });
+                togglePlusPopup();
               }
             } else {
               setStrategyError(
@@ -317,10 +352,11 @@ function Workspace() {
         </button>
         {strategyError && (
           <h3 className="text-red-600 bg-red-200 border-2 py-2 px-4 border-red-600 rounded-lg">
-            Please fill in all necessary fields before downloading.
+            Please fill in all necessary fields before downloading. Check the "Tutorial" page for extra help.
           </h3>
         )}
       </div>
+      <AlgoBlockPlusPopup toggle={togglePlusPopup} getActive={plusPopup} />
       {/* <WorkspaceTutorial id={["selectTrigger", "Crossover"]} /> */}
     </motion.div>
   );

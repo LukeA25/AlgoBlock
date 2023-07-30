@@ -49,13 +49,6 @@ function ScriptCopy() {
       >
         Copied to Clipboard!
       </div>
-      <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-16 sm:h-24 font-semibold text-5xl sm:text-7xl text-center relative top-8">
-        Thanks for your purchase!
-      </h1>
-      <h3 className="text-white text-2xl pt-6 text-center m-auto w-[90%] sm:w-3/4">
-        As long as no changes have been made, you can access this anytime by
-        selecting "Download" on the "Strategies" page.
-      </h3>
       <CopyToClipboard text={script}>
         <div className="w-[90%] sm:w-2/3 max-w-4xl bg-gray-800 rounded-lg m-auto my-10 border-2 border-white overflow-hidden">
           <div className="flex justify-between items-center bg-green-600 rounded-t-md p-2 border-b-2 border-white">

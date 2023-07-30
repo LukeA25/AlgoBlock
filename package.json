@@ -4,13 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npm run development",
-    "development": "node_env=development concurrently --kill-others \"npm run client\" \"npm run server\"",
-    "client": "vite",
-    "server": "node server.cjs",
     "build": "vite build",
-    "preview": "vite preview",
-    "dev": "NODE_ENV=development vite --host"
+    "serve": "vite preview"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.1.1",
@@ -30,6 +25,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-reddit-pixel": "^1.0.0",
     "react-router-dom": "^6.9.0",
     "react-router-hash-link": "^2.4.3",
     "stripe": "^12.14.0",

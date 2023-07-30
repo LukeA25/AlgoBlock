@@ -1,5 +1,4 @@
 import Layout from "./components/layout/Layout";
-import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Strategies from "./pages/Strategies";
 import Workspace from "./pages/Workspace";
@@ -11,6 +10,8 @@ import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+
+import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProvider } from "./components/UserContext";
 import { StrategyProvider } from "./components/StrategyContext";
 

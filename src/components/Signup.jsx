@@ -32,7 +32,10 @@ function Signup(props) {
       navigate("/dashboard", { replace: true });
     } catch (error) {
       console.error("Signup Error:", error);
-      if (
+      if (error.code === "auth/weak-password") {
+        setError("Please make your password longer than 6 characters.")
+      }
+      else if (
         error.code === "auth/email-already-in-use"
       ) {
         setError("This email already has an account.");
