@@ -17,6 +17,7 @@ export function UserProvider(props) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
+  const [cookieConsent, setCookieConsent] = useState(false);
 
   function saveUserDataToDatabase(user, username, customerId) {
     const userRef = ref(database, `userData/${user.uid}/loginData`);
@@ -197,6 +198,8 @@ export function UserProvider(props) {
     cancelSubscription,
     getSubscriptionId,
     getFreeStrategy,
+    cookieConsent,
+    setCookieConsent,
   };
 
   return (

@@ -4,11 +4,14 @@ import stocks from "../assets/Stocks.png";
 import InfoCard from "../components/InfoCard";
 import ScrollInfo from "../components/ScrollInfo";
 import AlgoBlockPlusPopup from "../components/AlgoBlockPlusPopup";
+import { HashLink } from "react-router-hash-link";
+import ReactPixel from "react-facebook-pixel";
 
 import { TbShieldLockFilled } from "react-icons/tb";
 import { BsFillLightningChargeFill } from "react-icons/bs";
 import { AiFillDollarCircle } from "react-icons/ai";
 import AlgoBlockPlusIcon from "../assets/AlgoBlockPlusIcon.png";
+import { useUserContext } from "../components/UserContext";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
@@ -16,12 +19,17 @@ function Home() {
   const words = ["simpler", "faster", "smarter"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [plusPopup, setPlusPopup] = useState(false);
+  const [cookiesPopup, setCookiesPopup] = useState(false);
+  const { cookieConsent, setCookieConsent } = useUserContext();
 
   function togglePlusPopup() {
     setPlusPopup(!plusPopup);
   }
 
   useEffect(() => {
+    if (!cookieConsent) {
+      setTimeout(() => setCookiesPopup(true), 1000);
+    }
     const handleScroll = () => {
       const target = window.screen.height / 2 - 80;
       const scrollTo3 = document.getElementById("scrollTo-3");
@@ -234,6 +242,48 @@ function Home() {
         </div>
       </section>
       <div className="fixed w-2 h-1/2 right-0 top-0 ml-[3.44rem] sm:ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
+      <div
+        className={`fixed bottom-8 left-8 rounded-md p-4 z-50 bg-white duration-500 ${
+          cookiesPopup ? "" : "-translate-x-[30rem]"
+        }`}
+      >
+        <h3 className="font-semibold text-2xl min-w-max text-center">
+          We Value Your Privacy
+        </h3>
+        <p className="w-96">
+          AlgoBlock uses cookies to enhance your experience and analyze our
+          traffic. By clicking "Accept All", you consent our use of our cookies.{" "}
+          <HashLink
+            replace
+            to="/privacy-policy/#cookies"
+            className="text-green-600 hover:text-green-500 active:text-green-800"
+          >
+            Cookie Policy
+          </HashLink>
+        </p>
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={() => {
+              setCookieConsent(true);
+              setCookiesPopup(false);
+            }}
+            className="w-48 h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-xl font-semibold"
+          >
+            Reject All
+          </button>
+          <button
+            onClick={() => {
+              setCookieConsent(true);
+              ReactPixel.grantConsent();
+              ReactPixel.pageView();
+              setCookiesPopup(false);
+            }}
+            className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-xl font-semibold"
+          >
+            Accept All
+          </button>
+        </div>
+      </div>
       <button
         onClick={togglePlusPopup}
         className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 rounded-full bg-black border-2 border-white w-16 h-16 sm:w-24 sm:h-24 z-50 flex items-center justify-center"

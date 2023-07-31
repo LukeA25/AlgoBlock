@@ -6,6 +6,7 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { useUserContext } from "./UserContext";
+import ReactPixel from "react-facebook-pixel";
 import { AiOutlineLoading } from "react-icons/ai";
 
 function StripeCheckout(props) {
@@ -45,6 +46,11 @@ function StripeCheckout(props) {
       setIsLoading(false);
 
       setSubscriptionId(props.subscriptionId);
+      ReactPixel.track("Subscribe", {
+        currency: "USD",
+        predicted_ltv: 39.98,
+        value: 19.99,
+      });
       navigate("/dashboard", { replace: true });
     }
   }

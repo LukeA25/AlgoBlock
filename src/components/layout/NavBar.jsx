@@ -40,25 +40,25 @@ function NavBar(props) {
               tooltip="Strategies"
             />
           ) : (
-            <div className="flex justify-start items-center">
-              <button
-                className="sidebar-icon group pointer-events-auto"
-                onClick={() => {
-                  if (props.isSignUpActive) {
-                    props.toggleSignUp();
-                  }
-                  props.toggleLogin();
-                }}
-              >
+            <button
+              onClick={() => {
+                if (props.isSignUpActive) {
+                  props.toggleSignUp();
+                }
+                props.toggleLogin();
+              }}
+              className="flex justify-start items-center group active:bg-shaded-500 sm:active:bg-transparent duration-300 w-full"
+            >
+              <div className="sidebar-icon pointer-events-auto">
                 <BsTools className="w-8 h-8 sm:w-12 sm:h-12" />
                 <span className="sidebar-tooltip group-hover:scale-100">
                   Strategies
                 </span>
-              </button>
+              </div>
               <span className="ml-2 min-w-max inline sm:hidden text-green-600 font-bold">
                 Strategies
               </span>
-            </div>
+            </button>
           )}
           <NavBarItem
             to="/tutorial"

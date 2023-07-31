@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
 import { useUserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import ReactPixel from "react-facebook-pixel";
 
 function Signup(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,15 +30,17 @@ function Signup(props) {
         usernameRef.current.value
       );
       props.toggleLogin();
+      ReactPixel.track("CompleteRegistration", {
+        currency: "USD",
+        status: true,
+        content_name: "signup",
+      });
       navigate("/dashboard", { replace: true });
     } catch (error) {
       console.error("Signup Error:", error);
       if (error.code === "auth/weak-password") {
-        setError("Please make your password longer than 6 characters.")
-      }
-      else if (
-        error.code === "auth/email-already-in-use"
-      ) {
+        setError("Please make your password longer than 6 characters.");
+      } else if (error.code === "auth/email-already-in-use") {
         setError("This email already has an account.");
       } else {
         setError("Unable to Sign Up.");
@@ -54,7 +57,10 @@ function Signup(props) {
         </div>
       )}
       <div className="flex flex-row w-full justify-between mt-4">
-        <label htmlFor="email-input" className="text-lg sm:text-xl font-semibold">
+        <label
+          htmlFor="email-input"
+          className="text-lg sm:text-xl font-semibold"
+        >
           E-mail
         </label>
         <p>
@@ -75,7 +81,10 @@ function Signup(props) {
         required
         ref={emailRef}
       />
-      <label htmlFor="username-input" className="text-lg sm:text-xl font-semibold mt-4">
+      <label
+        htmlFor="username-input"
+        className="text-lg sm:text-xl font-semibold mt-4"
+      >
         Username
       </label>
       <input
@@ -86,7 +95,10 @@ function Signup(props) {
         ref={usernameRef}
       />
       <div className="flex flex-row w-full justify-between">
-        <label htmlFor="password-input" className="text-lg sm:text-xl font-semibold">
+        <label
+          htmlFor="password-input"
+          className="text-lg sm:text-xl font-semibold"
+        >
           Password
         </label>
         <button

@@ -5,7 +5,7 @@ function TermsOfService() {
         Terms of Service
       </h1>
       <div className="w-[90%] sm:w-3/4 m-auto text-white my-10">
-        <p className="text-lg mb-10">Last Updated: 07/24/2023</p>
+        <p className="text-lg mb-10">Last Updated: 07/31/2023</p>
         <h3 className="text-3xl mb-2 font-semibold">1. Introduction</h3>
         <p className="text-lg mb-10">
           Welcome to AlgoBlock! These Terms of Service ("Terms") govern your
@@ -42,9 +42,9 @@ function TermsOfService() {
         </p>
         <h3 className="text-3xl mb-2 font-semibold">5. Payments and Fees</h3>
         <p className="text-lg mb-10">
-          To access the Pine Script conversion service, there is a nominal fee
-          of $9.99 per algorithm. Payments are processed securely through
-          Stripe, ensuring a seamless and safe transaction process.
+          To access the Pine Script conversion service, there is a recurring fee
+          of $19.99 per month. Payments are processed securely through Stripe,
+          ensuring a seamless and safe transaction process.
         </p>
         <h3 className="text-3xl mb-2 font-semibold">
           6. User Responsibilities

@@ -4,15 +4,17 @@ import Popup from "../Popup";
 import Login from "../Login";
 import Signup from "../Signup";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import ResetPassword from "../ResetPassword";
+import { useLocation } from "react-router-dom";
 
 function Layout(props) {
   const [isNavBarActive, setIsNavBarActive] = useState(false);
   const [isLoginActive, setIsLoginActive] = useState(false);
   const [isSignUpActive, setIsSignUpActive] = useState(false);
   const [resetPasswordActive, setResetPassword] = useState(false);
+  const location = useLocation();
 
   function toggleNavBar() {
     setIsNavBarActive(!isNavBarActive);
@@ -29,6 +31,13 @@ function Layout(props) {
   function toggleResetPassword() {
     setResetPassword(!resetPasswordActive);
   }
+
+  useEffect(() => {
+    if (location.hash === "#signup") {
+      toggleLogin();
+      toggleSignUp();
+    }
+  }, [])
 
   return (
     <div>

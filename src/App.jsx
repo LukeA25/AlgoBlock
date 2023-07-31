@@ -14,9 +14,16 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProvider } from "./components/UserContext";
 import { StrategyProvider } from "./components/StrategyContext";
+import ReactPixel from "react-facebook-pixel";
 
 function App() {
   const location = useLocation();
+  const options = {
+    autoConfig: true,
+    debug: false,
+  };
+  ReactPixel.init("295604156292526", null, options);
+  ReactPixel.revokeConsent();
 
   return (
     <UserProvider>

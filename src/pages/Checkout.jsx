@@ -39,6 +39,13 @@ function Checkout() {
     }
 
     createSetupIntent();
+
+    ReactPixel.track("InitiateCheckout", {
+      contents: ["AlgoBlock+ Subscription"],
+      currency: "USD",
+      num_items: 1,
+      value: 19.99,
+    });
   }, []);
 
   if (!currentUser) {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { AiOutlineLoading } from "react-icons/ai";
+import ReactPixel from "react-facebook-pixel";
 
 function ContactUs() {
   const [submitMessage, setSubmitMessage] = useState("");
@@ -24,6 +25,7 @@ function ContactUs() {
         "https://algoblock-backend-5df4fb859f35.herokuapp.com/send-email",
         data
       );
+      ReactPixel.track("Contact");
       setSubmitMessage("Thanks for your feedback!");
       setIsLoading(false);
     } catch (error) {
