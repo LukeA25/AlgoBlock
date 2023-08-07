@@ -22,13 +22,18 @@ function AlgoBlockPlusPopup(props) {
           <img src={Banner} className="mx-auto mt-2 rounded-lg w-[97%]" />
           <h1 className="text-black text-left text-2xl sm:text-3xl mb-4 font-semibold pt-4 px-6 sm:px-12">
             Unleash your potential with{" "}
-            <b className="text-green-600 font-semibold text-4xl sm:text-5xl">AlgoBlock+</b>
+            <b className="text-green-600 font-semibold text-4xl sm:text-5xl">
+              AlgoBlock+
+            </b>
           </h1>
-          <p className="px-6 sm:px-12 text-lg sm:text-xl">
+          <p className="px-6 sm:px-12 text-lg sm:text-xl mb-2">
             Generate powerful trading strategies without needing to code.
           </p>
-          <p className="px-6 sm:px-12 text-lg sm:text-xl my-2">
+          <p className="px-6 sm:px-12 text-lg sm:text-xl">
             Create and backtest unlimited algorithmic trading strategies today.
+          </p>
+          <p className="px-6 sm:px-12 text-lg sm:text-xl my-2">
+            Cancel anytime.
           </p>
           <div className="w-full flex items-center justify-center my-6">
             <button

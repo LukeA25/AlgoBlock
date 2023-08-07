@@ -9,6 +9,7 @@ import Popup from "../components/Popup";
 import { useUserContext } from "../components/UserContext";
 import { useStrategyContext } from "../components/strategyContext";
 import AlgoBlockPlusPopup from "../components/AlgoBlockPlusPopup";
+import ReactPixel from "react-facebook-pixel";
 import axios from "axios";
 
 function Strategies() {
@@ -180,6 +181,7 @@ function Strategies() {
                                   await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/use-free-strategy", {
                                     uid: currentUser.uid,
                                   });
+                                  ReactPixel.track("StartTrial");
                                   navigate("/scriptcopy", { replace: true });
                                 } else {
                                   togglePlusPopup();

@@ -95,7 +95,7 @@ function InputButton(props) {
         {!isLoading &&
           loadedItems.map((item, index) => (
             <>
-              {"time".localeCompare(item.prompt) != 0 && (
+              {"time" !== item.prompt && (
                 <MiniDropdown
                   left={left}
                   item={item}

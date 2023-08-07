@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import InputButton from "../components/workspace/InputButton";
 import TriggerDropdown from "../components/workspace/TriggerDropdown";
+import ReactPixel from "react-facebook-pixel";
 
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { AiFillCaretDown, AiOutlineLoading } from "react-icons/ai";
@@ -30,6 +31,7 @@ function Workspace() {
   const [strategyError, setStrategyError] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [plusPopup, setPlusPopup] = useState(false);
+  const [update, setUpdate] = useState(0);
 
   const navigate = useNavigate();
 
@@ -48,12 +50,17 @@ function Workspace() {
     useState(false);
 
   useEffect(() => {
+    ReactPixel.track("ViewContent", { content_name: "Workspace" });
+
     async function getSubscribed() {
       const subscriptionId = await getSubscriptionId();
       if (subscriptionId) {
-        const response = await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info", {
-          subscriptionId: subscriptionId,
-        });
+        const response = await axios.post(
+          "https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info",
+          {
+            subscriptionId: subscriptionId,
+          }
+        );
 
         if (!response.data.canceled) {
           setSubscribed(true);
@@ -74,18 +81,36 @@ function Workspace() {
     }
 
     if (!isLoading) {
-      setDropdownLeft(dropdownRef.current.offsetLeft * 0.0625);
-      setDropdownTop(dropdownRef.current.offsetTop * 0.0625 + 4);
-      setSellDropdownLeft(sellDropdownRef.current.offsetLeft * 0.0625);
-      setSellDropdownTop(sellDropdownRef.current.offsetTop * 0.0625 + 4);
+      setDropdownLeft(
+        (dropdownRef.current.offsetLeft + dropdownRef.current.offsetWidth / 2) *
+          0.0625 -
+          6
+      );
+      setDropdownTop(
+        (dropdownRef.current.offsetTop + dropdownRef.current.offsetHeight) *
+          0.0625
+      );
+      setSellDropdownLeft(
+        (sellDropdownRef.current.offsetLeft +
+          sellDropdownRef.current.offsetWidth / 2) *
+          0.0625 -
+          6
+      );
+      setSellDropdownTop(
+        (sellDropdownRef.current.offsetTop +
+          sellDropdownRef.current.offsetHeight) *
+          0.0625
+      );
     }
-  }, [dropdownRef, sellDropdownRef, isLoading, updateStrategy]);
+  }, [dropdownRef, sellDropdownRef, isLoading, update]);
 
   function disregardStrategyChanges() {
     setIsUpdateLoading(true);
-    disregardChanges();
-    setHasStrategyChanged(false);
-    setIsUpdateLoading(false);
+    disregardChanges().then(() => {
+      setHasStrategyChanged(false);
+      setIsUpdateLoading(false);
+      setUpdate(update + 1);
+    });
   }
 
   function saveStrategyChanges() {
@@ -113,6 +138,7 @@ function Workspace() {
   }
 
   function strategyChanged() {
+    setUpdate(update + 1);
     setHasStrategyChanged(true);
     setStrategyError("");
   }
@@ -315,6 +341,7 @@ function Workspace() {
           <hr className="w-4/5 m-auto" />
           {Object.keys(strategy).length != 0 && (
             <TradeDetails
+              update={update}
               updateStrategy={strategyChanged}
               strategy={strategy}
             />
@@ -333,9 +360,13 @@ function Workspace() {
               if (subscribed) {
                 navigate("/scriptcopy", { replace: true });
               } else if (freeStrategy) {
-                await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/use-free-strategy", {
-                  uid: currentUser.uid,
-                });
+                await axios.post(
+                  "https://algoblock-backend-5df4fb859f35.herokuapp.com/use-free-strategy",
+                  {
+                    uid: currentUser.uid,
+                  }
+                );
+                ReactPixel.track("StartTrial");
                 navigate("/scriptcopy", { replace: true });
               } else {
                 togglePlusPopup();
@@ -352,7 +383,8 @@ function Workspace() {
         </button>
         {strategyError && (
           <h3 className="text-red-600 bg-red-200 border-2 py-2 px-4 border-red-600 rounded-lg">
-            Please fill in all necessary fields before downloading. Check the "Tutorial" page for extra help.
+            Please fill in all necessary fields before downloading. Check the
+            "Tutorial" page for extra help.
           </h3>
         )}
       </div>

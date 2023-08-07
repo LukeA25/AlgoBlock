@@ -69,12 +69,12 @@ export function StrategyProvider(props) {
     return set(updateStrategyRef, strategy);
   }
 
-  function disregardChanges() {
+  async function disregardChanges() {
     const disregardChangesRef = ref(
       database,
       `userData/${currentUser.uid}/strategies/${strategyKey}`
     );
-    get(disregardChangesRef)
+    return get(disregardChangesRef)
       .then((response) => {
         return response.val();
       })
@@ -137,7 +137,11 @@ export function StrategyProvider(props) {
         }
       }
     }
-    if (!strategy.details.stopLoss && (!strategy.exitConditions || strategy.exitConditions.length == 0)) return false;
+    if (
+      !strategy.details.stopLoss &&
+      (!strategy.exitConditions || strategy.exitConditions.length == 0)
+    )
+      return false;
     if (!strategy.details.orderType) return false;
     if (!strategy.details.orderQuantity.amount) return false;
     if (!strategy.details.orderQuantity.type) return false;

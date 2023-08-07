@@ -43,7 +43,7 @@ function TermsOfService() {
         <h3 className="text-3xl mb-2 font-semibold">5. Payments and Fees</h3>
         <p className="text-lg mb-10">
           To access the Pine Script conversion service, there is a recurring fee
-          of $19.99 per month. Payments are processed securely through Stripe,
+          of $9.99 per month. Payments are processed securely through Stripe,
           ensuring a seamless and safe transaction process.
         </p>
         <h3 className="text-3xl mb-2 font-semibold">

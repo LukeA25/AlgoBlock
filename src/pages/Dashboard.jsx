@@ -43,24 +43,35 @@ function Dashboard() {
     setDateString(date);
   }
 
-  useEffect(() => {
-    async function getSubscription() {
-      if (getSubscriptionId()) {
-        const subscriptionId = await getSubscriptionId();
-        setSubscriptionId(subscriptionId);
+  async function getSubscription() {
+    if (getSubscriptionId()) {
+      const subscriptionId = await getSubscriptionId();
+      setSubscriptionId(subscriptionId);
 
-        const response = await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info", {
+      const response = await axios.post(
+        "https://algoblock-backend-5df4fb859f35.herokuapp.com/get-subscription-info",
+        {
           subscriptionId: subscriptionId,
-        });
-        setPurchaseData(response.data);
-        getFormattedDate(response.data.endDate);
-
-        if (new Date(response.data.startDate * 1000).toDateString() === new Date().toDateString()) {
-          setMessage("Thank you for your purchase!");
         }
+      );
+
+      setPurchaseData(response.data);
+      getFormattedDate(response.data.endDate);
+
+      if (
+        new Date(response.data.startDate * 1000).toDateString() ===
+        new Date().toDateString()
+      ) {
+        setMessage("Thank you for your purchase!");
+      }
+
+      if (purchaseData.cancelSoon && new Date(response.data.endDate * 1000) > new Date()) {
+        purchaseData.subscriptionEnded = true;
       }
     }
+  }
 
+  useEffect(() => {
     getSubscription();
   }, []);
 
@@ -97,7 +108,11 @@ function Dashboard() {
       <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 h-20 sm:h-24 font-semibold text-5xl sm:text-7xl text-center relative top-8 mb-6">
         Dashboard
       </h1>
-      {message && <div className="bg-green-100 border-2 border-green-600 text-green-600 p-4 rounded-lg text-xl m-auto w-3/4">{message}</div>}
+      {message && (
+        <div className="bg-green-100 border-2 border-green-600 text-green-600 p-4 rounded-lg text-xl m-auto w-3/4">
+          {message}
+        </div>
+      )}
       <div className="w-3/4 max-w-4xl bg-gray-800 rounded-lg m-auto border-2 border-white mt-6 mb-16">
         <h2 className="text-white text-3xl sm:text-5xl font-semibold px-[5%] py-6">
           {username}
@@ -121,7 +136,7 @@ function Dashboard() {
             submitHandler={passwordHandler}
             setChangesSaved={setChangesSaved}
           />
-          {subscriptionId && !purchaseData.canceled ? (
+          {subscriptionId && !purchaseData.subscriptionEnded ? (
             <>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:items-center">
                 <div className="flex flex-col">
@@ -150,7 +165,7 @@ function Dashboard() {
                 <p className="font-semibold text-green-600 text-sm sm:text-base">
                   TOTAL
                 </p>
-                <p className="text-lg sm:text-xl">$19.99 / month</p>
+                <p className="text-lg sm:text-xl">$9.99 / month</p>
               </div>
               <div className="flex flex-col">
                 <p className="font-semibold text-green-600 text-sm sm:text-base">
@@ -184,9 +199,12 @@ function Dashboard() {
                   <form
                     onSubmit={async (event) => {
                       event.preventDefault();
-                      await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/restore-subscription", {
-                        subscriptionId: subscriptionId,
-                      });
+                      await axios.post(
+                        "https://algoblock-backend-5df4fb859f35.herokuapp.com/restore-subscription",
+                        {
+                          subscriptionId: subscriptionId,
+                        }
+                      );
                       getSubscription();
                       toggleRestorePopup();
                     }}
@@ -221,9 +239,12 @@ function Dashboard() {
                   <form
                     onSubmit={async (event) => {
                       event.preventDefault();
-                      await axios.post("https://algoblock-backend-5df4fb859f35.herokuapp.com/cancel-subscription", {
-                        subscriptionId: subscriptionId,
-                      });
+                      await axios.post(
+                        "https://algoblock-backend-5df4fb859f35.herokuapp.com/cancel-subscription",
+                        {
+                          subscriptionId: subscriptionId,
+                        }
+                      );
                       getSubscription();
                       toggleCancelPopup();
                     }}

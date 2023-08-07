@@ -8,7 +8,7 @@ strategy("${strategy.name}", overlay=true, default_qty_type=${
     strategy.details.orderQuantity.type === "%"
       ? "strategy.percent_of_equity"
       : "strategy.fixed"
-  }, default_qty_value=${strategy.details.orderQuantity.amount})
+  }, default_qty_value=${strategy.details.orderQuantity.amount}, initial_capital=1000)
 `;
 
   function appendFile(content) {
@@ -293,8 +293,8 @@ var float takeProfitPrice = na
 if entryCondition
     strategy.entry("${orderName}", ${orderType}, qty=orderQuantity)${stopLossExit ? `
     stopLossPrice := ${stopLoss}
-    takeProfitPrice := ${takeProfit} * riskRewardRatio)` : ""}
-    strategy.exit("Exit", "${orderName}"${stopLossExit ? ", stop=stopLossPrice, limit=takeProfitPrice" : ""})`;
+    takeProfitPrice := ${takeProfit} * riskRewardRatio)
+    strategy.exit("Exit", "${orderName}", stop=stopLossPrice, limit=takeProfitPrice)` : ""}`;
 
   if (
     strategy.trigger.name === "Crossover" ||

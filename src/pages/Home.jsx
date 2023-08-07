@@ -9,9 +9,11 @@ import ReactPixel from "react-facebook-pixel";
 
 import { TbShieldLockFilled } from "react-icons/tb";
 import { BsFillLightningChargeFill } from "react-icons/bs";
-import { AiFillDollarCircle } from "react-icons/ai";
+import { AiFillDollarCircle, AiOutlineArrowLeft } from "react-icons/ai";
 import AlgoBlockPlusIcon from "../assets/AlgoBlockPlusIcon.png";
 import { useUserContext } from "../components/UserContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [changingTitle, setChangingTitle] = useState("");
@@ -21,6 +23,7 @@ function Home() {
   const [plusPopup, setPlusPopup] = useState(false);
   const [cookiesPopup, setCookiesPopup] = useState(false);
   const { cookieConsent, setCookieConsent } = useUserContext();
+  const navigate = useNavigate();
 
   function togglePlusPopup() {
     setPlusPopup(!plusPopup);
@@ -122,16 +125,15 @@ function Home() {
                     {changingTitle}
                   </b>
                 </p>
-                <div className="h-[1.25rem] sm:h-8 aspect-[4/7] bg-white relative sm:top-[0.15rem] left-[0.1rem] sm:left-1 my-auto animate-cursor-flash" />
+                <div className="h-[1.25rem] sm:h-8 aspect-[4/7] bg-white relative sm:top-[0.15rem] left-[0.1rem] sm:left-1 animate-cursor-flash mb-8" />
               </div>
-              <button
-                className="bg-green-600 hover:bg-green-500 active:bg-green-800 transition-colors duration-300 border-white border-2 w-36 h-8 sm:w-48 sm:h-12
-          rounded-lg text-white sm:text-2xl font-semibold my-4"
+              <Link
+                to="/tutorial"
                 id="Step-1"
-                onClick={() => window.location.replace("/#what-is-it")}
+                className="bg-green-600 hover:bg-green-500 active:bg-green-800 transition-colors duration-300 border-white border-2 py-2 px-4 rounded-lg text-white sm:text-2xl font-semibold mt-12"
               >
-                Learn More
-              </button>
+                Learn the Ropes
+              </Link>
             </div>
           </div>
           <div className="m-auto h-full w-full relative">
@@ -145,7 +147,7 @@ function Home() {
         <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-green-400 via-green-600 to-gray-500 text-4xl sm:text-6xl font-semibold mb-4 sm:mb-8">
           What is it?
         </h1>
-        <p className="text-white text-lg sm:text-2xl" id="Step-2">
+        <p className="text-white text-lg sm:text-2xl mb-4" id="Step-2">
           AlgoBlock allows you create a strategy for TradingView by using your
           inputs and generating a Pine script. This is perfect for those looking
           to dive deeper into technical analysis without coding experience.
@@ -153,6 +155,12 @@ function Home() {
           the strategies, giving you a head start on your journey into
           algorithmic trading.
         </p>
+        <Link to="/tutorial" className="flex gap-2 items-center group">
+          <AiOutlineArrowLeft className="text-green-600 text-lg group-hover:text-green-400 duration-300 group-active:text-green-700" />
+          <p className="text-green-600 text-lg group-hover:text-green-400 duration-300 group-active:text-green-700">
+            To learn how it works, check out the <b>Tutorial</b>
+          </p>
+        </Link>
       </section>
 
       <hr className="border-white m-auto w-5/6 sm:w-1/2" />
@@ -243,14 +251,14 @@ function Home() {
       </section>
       <div className="fixed w-2 h-1/2 right-0 top-0 ml-[3.44rem] sm:ml-[calc(50vw-0.25rem)] left-0 -z-10 bg-gradient-to-t from-green-600 to-gray-600" />
       <div
-        className={`fixed bottom-8 left-8 rounded-md p-4 z-50 bg-white duration-500 ${
+        className={`fixed bottom-4 left-4 sm:bottom-8 sm:left-8 rounded-md p-4 z-50 bg-white duration-500 ${
           cookiesPopup ? "" : "-translate-x-[30rem]"
         }`}
       >
-        <h3 className="font-semibold text-2xl min-w-max text-center">
+        <h3 className="font-semibold text-lg sm:text-2xl min-w-max text-center">
           We Value Your Privacy
         </h3>
-        <p className="w-96">
+        <p className="w-56 sm:w-96 text-sm sm:text-base">
           AlgoBlock uses cookies to enhance your experience and analyze our
           traffic. By clicking "Accept All", you consent our use of our cookies.{" "}
           <HashLink
@@ -267,7 +275,7 @@ function Home() {
               setCookieConsent(true);
               setCookiesPopup(false);
             }}
-            className="w-48 h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-xl font-semibold"
+            className="w-28 h-10 sm:w-48 sm:h-12 m-auto bg-gray-600 hover:bg-gray-500 active:bg-gray-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-lg sm:text-xl font-semibold"
           >
             Reject All
           </button>
@@ -278,7 +286,7 @@ function Home() {
               ReactPixel.pageView();
               setCookiesPopup(false);
             }}
-            className="w-48 h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-xl font-semibold"
+            className="w-28 h-10 sm:w-48 sm:h-12 m-auto bg-green-600 hover:bg-green-500 active:bg-green-700 transition-all duration-300 border-black border-2 rounded-lg text-white text-lg sm:text-xl font-semibold"
           >
             Accept All
           </button>

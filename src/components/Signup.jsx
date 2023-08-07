@@ -35,7 +35,7 @@ function Signup(props) {
         status: true,
         content_name: "signup",
       });
-      navigate("/dashboard", { replace: true });
+      navigate("/tutorial", { replace: true });
     } catch (error) {
       console.error("Signup Error:", error);
       if (error.code === "auth/weak-password") {

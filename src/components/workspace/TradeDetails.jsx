@@ -200,7 +200,7 @@ function TradeDetails(props) {
     riskManagementRef,
     stopLossRef,
     quantityTypeRef,
-    props.updateStrategy,
+    props.update,
   ]);
 
   return (
@@ -509,9 +509,7 @@ function TradeDetails(props) {
                             : toggleIndicatorDropdown
                         }
                         onMouseEnter={() => setDisabled(true)}
-                        // onMouseLeave={() => setDisabled(false)}
                         onTouchStart={() => setDisabled(true)}
-                        // onTouchEnd={() => setDisabled(false)}
                         className={`border-2 border-white rounded-md duration-300 max-w-[15rem] cursor-pointer ${
                           props.strategy.details.stopLoss.value
                             ? `bg-shaded-500 ${

@@ -1,6 +1,6 @@
 import logo from "../../assets/AlgoBlock.png";
 import { FaTiktok } from "react-icons/fa";
-import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
+import { AiFillLinkedin, AiFillFacebook } from "react-icons/ai";
 import { IoIosMail } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -61,14 +61,14 @@ function Footer() {
           <img src={logo} className="w-32 sm:w-64" />
         </HashLink>
         <div className="flex justify-center gap-[16.6%]">
-          <a href="https://instagram.com" target="_blank">
-            <AiOutlineInstagram color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
+          <a href="https://www.linkedin.com/company/96349037/" target="_blank">
+            <AiFillLinkedin className="h-8 w-8 sm:h-10 sm:w-10 text-green-600 hover:text-green-500 active:text-green-800" />
           </a>
-          <a href="https://twitter.com" target="_blank">
-            <AiOutlineTwitter color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
+          <a href="https://www.facebook.com/profile.php?id=100095237123096" target="_blank">
+            <AiFillFacebook className="h-8 w-8 sm:h-10 sm:w-10 text-green-600 hover:text-green-500 active:text-green-800" />
           </a>
-          <a href="https://tiktok.com" target="_blank">
-            <FaTiktok color="rgb(22, 163, 74)" className="h-8 w-8 sm:h-10 sm:w-10" />
+          <a href="https://www.tiktok.com/@algoblock?lang=en" target="_blank">
+            <FaTiktok className="h-8 w-8 sm:h-10 sm:w-10 text-green-600 hover:text-green-500 active:text-green-800" />
           </a>
         </div>
       </div>

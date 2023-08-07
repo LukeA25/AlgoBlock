@@ -212,10 +212,10 @@ function MiniDropdownExtras(props) {
               (option, index) => (
                 <DropdownButton
                   searchValue={props.searchValue}
-                  onClick={() => {
+                  onClick={() => {                    
                     props.miniDropdownProps.object.values[
                       props.miniDropdownProps.index
-                    ] = option;
+                    ] = JSON.parse(JSON.stringify(option));
                     props.miniDropdownProps.updateStrategy();
                     props.toggleDropdown();
                   }}

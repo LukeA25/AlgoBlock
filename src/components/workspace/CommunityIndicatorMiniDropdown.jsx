@@ -11,7 +11,6 @@ function CommunityIndicatorMiniDropdown(props) {
           onMouseEnter={() => props.setDisabled(true)}
           onMouseLeave={() => props.setDisabled(false)}
           onTouchStart={() => props.setDisabled(true)}
-          onTouchEnd={() => props.setDisabled(false)}
           onChange={(event) => {
             setName(event.target.value);
             props.indicator.name = event.target.value;

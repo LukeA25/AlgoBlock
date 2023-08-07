@@ -10,8 +10,7 @@ function ValueMiniDropdown(props) {
         <input
           onMouseEnter={() => props.setDisabled(true)}
           onMouseLeave={() => props.setDisabled(false)}
-          onTouchStart={() => setDisabled(true)}
-          onTouchEnd={() => setDisabled(false)}
+          onTouchStart={() => props.setDisabled(true)}
           value={currentNum}
           onChange={(event) => {
             setNum(event.target.value);

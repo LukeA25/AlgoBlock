@@ -85,49 +85,14 @@ function PrivacyPolicy() {
           purposes to understand user engagement, improve our services, and
           enhance the user experience.
         </p>
-        <section id="cookies">
-          <h3 className="text-3xl mb-2 font-semibold">9. Use of Cookies</h3>
-          <p className="text-lg mb-10">
-            Meta Pixel may use cookies and similar tracking technologies to
-            gather data about user interactions on our website. Cookies are
-            small text files stored on your device that help us identify your
-            browser and capture certain information. You can control the use of
-            cookies through your browser settings.
-          </p>
-          <h3 className="text-3xl mb-2 font-semibold">
-            10. Data Sharing with Meta Pixel
-          </h3>
-          <p className="text-lg mb-10">
-            We may share anonymized and aggregated data with Meta Pixel for
-            analytical and tracking purposes. This data does not contain any
-            personally identifiable information and is used solely for improving
-            our website's performance and usability.
-          </p>
-          <h3 className="text-3xl mb-2 font-semibold">11. Opt-Out Options</h3>
-          <p className="text-lg mb-10">
-            If you prefer not to be tracked by Meta Pixel, you can adjust your
-            browser settings to disable cookies or use browser add-ons that
-            block tracking scripts. Please note that opting out of tracking may
-            affect your experience on our website.
-          </p>
-          <h3 className="text-3xl mb-2 font-semibold">
-            12. Third-Paty Tracking
-          </h3>
-          <p className="text-lg mb-10">
-            Meta Pixel is a third-party service, and its data collection and
-            usage practices are governed by their own privacy policy. We
-            encourage you to review Meta Pixel's privacy policy to understand
-            how they handle your information.
-          </p>
-        </section>
-        <h3 className="text-3xl mb-2 font-semibold">13. Policy Updates</h3>
+        <h3 className="text-3xl mb-2 font-semibold">8. Policy Updates</h3>
         <p className="text-lg mb-10">
           We may update this Privacy Policy from time to time to reflect changes
           to our practices or for legal, regulatory, or operational reasons. Any
           revisions will be posted on this page, and the effective date will be
           updated accordingly.
         </p>
-        <h3 className="text-3xl mb-2 font-semibold">14. Contact Us</h3>
+        <h3 className="text-3xl mb-2 font-semibold">9. Contact Us</h3>
         <p className="text-lg mb-10">
           If you have any questions, concerns, or requests related to this
           Privacy Policy or your personal information, please contact us at{" "}

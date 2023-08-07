@@ -27,7 +27,7 @@ function Login(props) {
         passwordRef.current.value
       );
       props.toggleLogin();
-      navigate("/dashboard", { replace: true });
+      navigate("/strategies", { replace: true });
     } catch (error) {
       if (error.code === "auth/user-not-found") {
         setError("Incorrect email or password");

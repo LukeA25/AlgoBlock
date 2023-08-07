@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Error from "./pages/Error";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProvider } from "./components/UserContext";
@@ -41,6 +42,7 @@ function App() {
             <Route path="/contact-us" exact element={<ContactUs />} />
             <Route path="/terms-of-service" exact element={<TermsOfService />} />
             <Route path="/privacy-policy" exact element={<PrivacyPolicy />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </Layout>
       </StrategyProvider>

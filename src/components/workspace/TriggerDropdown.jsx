@@ -29,7 +29,7 @@ function TriggerDropdown(props) {
       />
       <DropdownButton
         onClick={() => {
-          props.cond.trigger = {
+          strategy.trigger = {
             name: "Threshold Cross",
             values: ["", "", ""],
           };

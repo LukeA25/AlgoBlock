@@ -6,8 +6,8 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { useUserContext } from "./UserContext";
-import ReactPixel from "react-facebook-pixel";
 import { AiOutlineLoading } from "react-icons/ai";
+import ReactPixel from "react-facebook-pixel";
 
 function StripeCheckout(props) {
   const stripe = useStripe();
@@ -28,6 +28,7 @@ function StripeCheckout(props) {
     }
 
     if (!tos) {
+      setIsLoading(false);
       setErrorMessage("Please accept the Terms of Service.");
       return;
     }
@@ -41,6 +42,7 @@ function StripeCheckout(props) {
     });
 
     if (error) {
+      setIsLoading(false);
       setErrorMessage(error.message);
     } else {
       setIsLoading(false);
@@ -48,8 +50,8 @@ function StripeCheckout(props) {
       setSubscriptionId(props.subscriptionId);
       ReactPixel.track("Subscribe", {
         currency: "USD",
-        predicted_ltv: 39.98,
-        value: 19.99,
+        predicted_ltv: 19.98,
+        value: 9.99,
       });
       navigate("/dashboard", { replace: true });
     }
